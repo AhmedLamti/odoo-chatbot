@@ -8,5 +8,8 @@ venv/
 env/
 .env/
 
+# Test results
+tests/results/*.json
+
 # Exclude documentation repo
 /documentation/

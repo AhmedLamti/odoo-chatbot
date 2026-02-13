@@ -249,25 +249,39 @@ chunk_size = 1000      # Taille max d'un morceau
 chunk_overlap = 200    # Chevauchement entre morceaux
 ```
 
-## 🧪 Tests
+## 🧪 Tests & Benchmarks
 
-### Tester le Router
+Le projet inclut un système de tests complet pour évaluer les performances et la qualité des réponses.
 
-```bash
-python app/router.py
-```
-
-### Tester le Moteur SQL
+### Lancer le benchmark complet
 
 ```bash
-python app/sql_engine.py
+python tests/benchmark.py
 ```
 
-### Tester le RAG
+### Tests par composant
 
 ```bash
-python app/rag_engine.py
+# Router uniquement
+python tests/benchmark.py --router-only
+
+# Moteur SQL uniquement
+python tests/benchmark.py --sql-only
+
+# Moteur RAG uniquement
+python tests/benchmark.py --rag-only
 ```
+
+### Métriques évaluées
+
+- ✅ **Précision du router** : Classification SQL vs RAG
+- 🎯 **Qualité SQL** : Requêtes valides et pertinentes
+- 📚 **Qualité RAG** : Réponses complètes avec mots-clés pertinents
+- ⏱️ **Performances** : Temps de génération et d'exécution
+
+Les rapports sont sauvegardés dans `tests/results/` au format JSON.
+
+📖 Voir [tests/README.md](tests/README.md) pour plus de détails.
 
 ## 📊 Performances
 

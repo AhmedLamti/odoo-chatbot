@@ -1,0 +1,158 @@
+{
+  "sql_questions": [
+    {
+      "id": "sql_001",
+      "question": "Combien de clients j'ai dans la base ?",
+      "expected_sql_pattern": "SELECT COUNT\\(\\*\\) FROM res_partner WHERE customer_rank > 0",
+      "expected_result_type": "count",
+      "category": "aggregate",
+      "difficulty": "easy"
+    },
+    {
+      "id": "sql_002",
+      "question": "Liste les 5 derniers clients créés",
+      "expected_sql_pattern": "SELECT .* FROM res_partner .* ORDER BY create_date DESC LIMIT 5",
+      "expected_result_type": "list",
+      "category": "selection",
+      "difficulty": "easy"
+    },
+    {
+      "id": "sql_003",
+      "question": "Quel est le montant total des ventes ?",
+      "expected_sql_pattern": "SELECT SUM\\(.+\\) FROM (sale_order|account_move)",
+      "expected_result_type": "sum",
+      "category": "aggregate",
+      "difficulty": "medium"
+    },
+    {
+      "id": "sql_004",
+      "question": "Combien de produits sont en stock ?",
+      "expected_sql_pattern": "SELECT .* FROM (product_template|product_product|stock_quant)",
+      "expected_result_type": "count",
+      "category": "inventory",
+      "difficulty": "medium"
+    },
+    {
+      "id": "sql_005",
+      "question": "Quels sont les 10 produits les plus vendus ?",
+      "expected_sql_pattern": "SELECT .* FROM sale_order_line .* GROUP BY .* ORDER BY .* DESC LIMIT 10",
+      "expected_result_type": "list",
+      "category": "complex_join",
+      "difficulty": "hard"
+    },
+    {
+      "id": "sql_006",
+      "question": "Combien de commandes sont en attente ?",
+      "expected_sql_pattern": "SELECT COUNT\\(\\*\\) FROM sale_order WHERE state",
+      "expected_result_type": "count",
+      "category": "filter",
+      "difficulty": "medium"
+    },
+    {
+      "id": "sql_007",
+      "question": "Liste les clients qui ont acheté plus de 5 fois",
+      "expected_sql_pattern": "SELECT .* FROM res_partner .* JOIN sale_order .* GROUP BY .* HAVING COUNT",
+      "expected_result_type": "list",
+      "category": "complex_join",
+      "difficulty": "hard"
+    },
+    {
+      "id": "sql_008",
+      "question": "Quel est le prix moyen des produits ?",
+      "expected_sql_pattern": "SELECT AVG\\(.+\\) FROM product_template",
+      "expected_result_type": "average",
+      "category": "aggregate",
+      "difficulty": "easy"
+    }
+  ],
+  "rag_questions": [
+    {
+      "id": "rag_001",
+      "question": "Comment créer une facture dans Odoo ?",
+      "keywords": ["facture", "invoice", "créer", "comptabilité"],
+      "category": "accounting",
+      "difficulty": "easy"
+    },
+    {
+      "id": "rag_002",
+      "question": "Quelle est la différence entre un devis et une commande ?",
+      "keywords": ["devis", "quotation", "commande", "sale order"],
+      "category": "sales",
+      "difficulty": "easy"
+    },
+    {
+      "id": "rag_003",
+      "question": "Comment configurer les taxes dans Odoo ?",
+      "keywords": ["taxes", "TVA", "configuration", "comptabilité"],
+      "category": "accounting",
+      "difficulty": "medium"
+    },
+    {
+      "id": "rag_004",
+      "question": "Explique le workflow d'une vente dans Odoo",
+      "keywords": ["workflow", "vente", "processus", "étapes"],
+      "category": "sales",
+      "difficulty": "medium"
+    },
+    {
+      "id": "rag_005",
+      "question": "Comment gérer les retours clients ?",
+      "keywords": ["retour", "SAV", "client", "reverse"],
+      "category": "inventory",
+      "difficulty": "hard"
+    },
+    {
+      "id": "rag_006",
+      "question": "Qu'est-ce qu'une règle de réassort ?",
+      "keywords": ["réassort", "stock", "réapprovisionnement", "orderpoint"],
+      "category": "inventory",
+      "difficulty": "medium"
+    },
+    {
+      "id": "rag_007",
+      "question": "Comment valider un bon de livraison ?",
+      "keywords": ["bon de livraison", "delivery", "picking", "valider"],
+      "category": "inventory",
+      "difficulty": "easy"
+    },
+    {
+      "id": "rag_008",
+      "question": "Quelle est la différence entre une nomenclature et une gamme de fabrication ?",
+      "keywords": ["nomenclature", "BOM", "gamme", "routing", "fabrication"],
+      "category": "manufacturing",
+      "difficulty": "hard"
+    }
+  ],
+  "router_questions": [
+    {
+      "id": "router_001",
+      "question": "Combien de clients j'ai ?",
+      "expected_route": "SQL"
+    },
+    {
+      "id": "router_002",
+      "question": "Comment créer un client ?",
+      "expected_route": "RAG"
+    },
+    {
+      "id": "router_003",
+      "question": "Liste mes produits",
+      "expected_route": "SQL"
+    },
+    {
+      "id": "router_004",
+      "question": "Explique comment fonctionne la gestion des stocks",
+      "expected_route": "RAG"
+    },
+    {
+      "id": "router_005",
+      "question": "Quel est le total des ventes du mois ?",
+      "expected_route": "SQL"
+    },
+    {
+      "id": "router_006",
+      "question": "C'est quoi un bon de commande ?",
+      "expected_route": "RAG"
+    }
+  ]
+}
