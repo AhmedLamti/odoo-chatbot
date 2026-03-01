@@ -1,0 +1,4823 @@
+account_account:
+  columns:
+  - column_default: nextval('account_account_id_seq'::regclass)
+    column_name: id
+    data_type: integer
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: message_main_attachment_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: currency_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: company_id
+    data_type: integer
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: group_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: root_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: create_uid
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: write_uid
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: name
+    data_type: character varying
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: code
+    data_type: character varying
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: account_type
+    data_type: character varying
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: internal_group
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: note
+    data_type: text
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: deprecated
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: include_initial_balance
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: reconcile
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: is_off_balance
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: non_trade
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: create_date
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: write_date
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  foreign_keys:
+  - column_name: message_main_attachment_id
+    foreign_column: id
+    foreign_table: ir_attachment
+  - column_name: currency_id
+    foreign_column: id
+    foreign_table: res_currency
+  - column_name: company_id
+    foreign_column: id
+    foreign_table: res_company
+  - column_name: group_id
+    foreign_column: id
+    foreign_table: account_group
+  - column_name: create_uid
+    foreign_column: id
+    foreign_table: res_users
+  - column_name: write_uid
+    foreign_column: id
+    foreign_table: res_users
+account_move:
+  columns:
+  - column_default: nextval('account_move_id_seq'::regclass)
+    column_name: id
+    data_type: integer
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: sequence_number
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: message_main_attachment_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: journal_id
+    data_type: integer
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: company_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: payment_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: statement_line_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: tax_cash_basis_rec_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: tax_cash_basis_origin_move_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: auto_post_origin_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: secure_sequence_number
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: invoice_payment_term_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: partner_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: commercial_partner_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: partner_shipping_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: partner_bank_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: fiscal_position_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: currency_id
+    data_type: integer
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: reversed_entry_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: invoice_user_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: invoice_incoterm_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: invoice_cash_rounding_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: create_uid
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: write_uid
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: sequence_prefix
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: access_token
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: name
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: ref
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: state
+    data_type: character varying
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: move_type
+    data_type: character varying
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: auto_post
+    data_type: character varying
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: inalterable_hash
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: payment_reference
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: qr_code_method
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: payment_state
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: invoice_source_email
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: invoice_partner_display_name
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: invoice_origin
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: date
+    data_type: date
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: auto_post_until
+    data_type: date
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: invoice_date
+    data_type: date
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: invoice_date_due
+    data_type: date
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: narration
+    data_type: text
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: amount_untaxed
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: amount_tax
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: amount_total
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: amount_residual
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: amount_untaxed_signed
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: amount_tax_signed
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: amount_total_signed
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: amount_total_in_currency_signed
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: amount_residual_signed
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: quick_edit_total_amount
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: is_storno
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: always_tax_exigible
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: to_check
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: posted_before
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: is_move_sent
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: create_date
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: write_date
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: edi_state
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: campaign_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: source_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: medium_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: team_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: stock_move_id
+    data_type: integer
+    is_nullable: 'YES'
+  foreign_keys:
+  - column_name: message_main_attachment_id
+    foreign_column: id
+    foreign_table: ir_attachment
+  - column_name: journal_id
+    foreign_column: id
+    foreign_table: account_journal
+  - column_name: company_id
+    foreign_column: id
+    foreign_table: res_company
+  - column_name: payment_id
+    foreign_column: id
+    foreign_table: account_payment
+  - column_name: statement_line_id
+    foreign_column: id
+    foreign_table: account_bank_statement_line
+  - column_name: tax_cash_basis_rec_id
+    foreign_column: id
+    foreign_table: account_partial_reconcile
+  - column_name: tax_cash_basis_origin_move_id
+    foreign_column: id
+    foreign_table: account_move
+  - column_name: auto_post_origin_id
+    foreign_column: id
+    foreign_table: account_move
+  - column_name: invoice_payment_term_id
+    foreign_column: id
+    foreign_table: account_payment_term
+  - column_name: partner_id
+    foreign_column: id
+    foreign_table: res_partner
+  - column_name: commercial_partner_id
+    foreign_column: id
+    foreign_table: res_partner
+  - column_name: partner_shipping_id
+    foreign_column: id
+    foreign_table: res_partner
+  - column_name: partner_bank_id
+    foreign_column: id
+    foreign_table: res_partner_bank
+  - column_name: fiscal_position_id
+    foreign_column: id
+    foreign_table: account_fiscal_position
+  - column_name: currency_id
+    foreign_column: id
+    foreign_table: res_currency
+  - column_name: reversed_entry_id
+    foreign_column: id
+    foreign_table: account_move
+  - column_name: invoice_user_id
+    foreign_column: id
+    foreign_table: res_users
+  - column_name: invoice_incoterm_id
+    foreign_column: id
+    foreign_table: account_incoterms
+  - column_name: invoice_cash_rounding_id
+    foreign_column: id
+    foreign_table: account_cash_rounding
+  - column_name: create_uid
+    foreign_column: id
+    foreign_table: res_users
+  - column_name: write_uid
+    foreign_column: id
+    foreign_table: res_users
+  - column_name: campaign_id
+    foreign_column: id
+    foreign_table: utm_campaign
+  - column_name: source_id
+    foreign_column: id
+    foreign_table: utm_source
+  - column_name: medium_id
+    foreign_column: id
+    foreign_table: utm_medium
+  - column_name: team_id
+    foreign_column: id
+    foreign_table: crm_team
+  - column_name: stock_move_id
+    foreign_column: id
+    foreign_table: stock_move
+account_move_line:
+  columns:
+  - column_default: nextval('account_move_line_id_seq'::regclass)
+    column_name: id
+    data_type: integer
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: move_id
+    data_type: integer
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: journal_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: company_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: company_currency_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: sequence
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: account_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: currency_id
+    data_type: integer
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: partner_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: reconcile_model_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: payment_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: statement_line_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: statement_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: group_tax_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: tax_line_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: tax_group_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: tax_repartition_line_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: full_reconcile_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: account_root_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: product_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: product_uom_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: create_uid
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: write_uid
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: move_name
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: parent_state
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: ref
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: name
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: tax_audit
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: matching_number
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: display_type
+    data_type: character varying
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: date
+    data_type: date
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: date_maturity
+    data_type: date
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: discount_date
+    data_type: date
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: analytic_distribution
+    data_type: jsonb
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: debit
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: credit
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: balance
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: amount_currency
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: tax_base_amount
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: amount_residual
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: amount_residual_currency
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: quantity
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: price_unit
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: price_subtotal
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: price_total
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: discount
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: discount_amount_currency
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: discount_balance
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: tax_tag_invert
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: reconciled
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: blocked
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: create_date
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: write_date
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: discount_percentage
+    data_type: double precision
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: is_downpayment
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: vehicle_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: purchase_line_id
+    data_type: integer
+    is_nullable: 'YES'
+  foreign_keys:
+  - column_name: move_id
+    foreign_column: id
+    foreign_table: account_move
+  - column_name: journal_id
+    foreign_column: id
+    foreign_table: account_journal
+  - column_name: company_id
+    foreign_column: id
+    foreign_table: res_company
+  - column_name: company_currency_id
+    foreign_column: id
+    foreign_table: res_currency
+  - column_name: account_id
+    foreign_column: id
+    foreign_table: account_account
+  - column_name: currency_id
+    foreign_column: id
+    foreign_table: res_currency
+  - column_name: partner_id
+    foreign_column: id
+    foreign_table: res_partner
+  - column_name: reconcile_model_id
+    foreign_column: id
+    foreign_table: account_reconcile_model
+  - column_name: payment_id
+    foreign_column: id
+    foreign_table: account_payment
+  - column_name: statement_line_id
+    foreign_column: id
+    foreign_table: account_bank_statement_line
+  - column_name: statement_id
+    foreign_column: id
+    foreign_table: account_bank_statement
+  - column_name: group_tax_id
+    foreign_column: id
+    foreign_table: account_tax
+  - column_name: tax_line_id
+    foreign_column: id
+    foreign_table: account_tax
+  - column_name: tax_group_id
+    foreign_column: id
+    foreign_table: account_tax_group
+  - column_name: tax_repartition_line_id
+    foreign_column: id
+    foreign_table: account_tax_repartition_line
+  - column_name: full_reconcile_id
+    foreign_column: id
+    foreign_table: account_full_reconcile
+  - column_name: product_id
+    foreign_column: id
+    foreign_table: product_product
+  - column_name: product_uom_id
+    foreign_column: id
+    foreign_table: uom_uom
+  - column_name: create_uid
+    foreign_column: id
+    foreign_table: res_users
+  - column_name: write_uid
+    foreign_column: id
+    foreign_table: res_users
+  - column_name: vehicle_id
+    foreign_column: id
+    foreign_table: fleet_vehicle
+  - column_name: purchase_line_id
+    foreign_column: id
+    foreign_table: purchase_order_line
+account_payment:
+  columns:
+  - column_default: nextval('account_payment_id_seq'::regclass)
+    column_name: id
+    data_type: integer
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: message_main_attachment_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: move_id
+    data_type: integer
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: partner_bank_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: paired_internal_transfer_payment_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: payment_method_line_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: payment_method_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: currency_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: partner_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: outstanding_account_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: destination_account_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: destination_journal_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: create_uid
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: write_uid
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: payment_type
+    data_type: character varying
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: partner_type
+    data_type: character varying
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: payment_reference
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: amount
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: amount_company_currency_signed
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: is_reconciled
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: is_matched
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: is_internal_transfer
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: create_date
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: write_date
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: payment_transaction_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: payment_token_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: source_payment_id
+    data_type: integer
+    is_nullable: 'YES'
+  foreign_keys:
+  - column_name: message_main_attachment_id
+    foreign_column: id
+    foreign_table: ir_attachment
+  - column_name: move_id
+    foreign_column: id
+    foreign_table: account_move
+  - column_name: partner_bank_id
+    foreign_column: id
+    foreign_table: res_partner_bank
+  - column_name: paired_internal_transfer_payment_id
+    foreign_column: id
+    foreign_table: account_payment
+  - column_name: payment_method_line_id
+    foreign_column: id
+    foreign_table: account_payment_method_line
+  - column_name: payment_method_id
+    foreign_column: id
+    foreign_table: account_payment_method
+  - column_name: currency_id
+    foreign_column: id
+    foreign_table: res_currency
+  - column_name: partner_id
+    foreign_column: id
+    foreign_table: res_partner
+  - column_name: outstanding_account_id
+    foreign_column: id
+    foreign_table: account_account
+  - column_name: destination_account_id
+    foreign_column: id
+    foreign_table: account_account
+  - column_name: destination_journal_id
+    foreign_column: id
+    foreign_table: account_journal
+  - column_name: create_uid
+    foreign_column: id
+    foreign_table: res_users
+  - column_name: write_uid
+    foreign_column: id
+    foreign_table: res_users
+  - column_name: payment_transaction_id
+    foreign_column: id
+    foreign_table: payment_transaction
+  - column_name: payment_token_id
+    foreign_column: id
+    foreign_table: payment_token
+  - column_name: source_payment_id
+    foreign_column: id
+    foreign_table: account_payment
+crm_lead:
+  columns:
+  - column_default: nextval('crm_lead_id_seq'::regclass)
+    column_name: id
+    data_type: integer
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: campaign_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: source_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: medium_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: message_main_attachment_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: message_bounce
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: user_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: team_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: company_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: stage_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: color
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: recurring_plan
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: partner_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: title
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: lang_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: state_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: country_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: lost_reason_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: create_uid
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: write_uid
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: phone_sanitized
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: email_normalized
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: email_cc
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: name
+    data_type: character varying
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: referred
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: type
+    data_type: character varying
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: priority
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: contact_name
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: partner_name
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: function
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: email_from
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: phone
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: mobile
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: phone_state
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: email_state
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: website
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: street
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: street2
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: zip
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: city
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: date_deadline
+    data_type: date
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: lead_properties
+    data_type: jsonb
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: description
+    data_type: text
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: expected_revenue
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: prorated_revenue
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: recurring_revenue
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: recurring_revenue_monthly
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: recurring_revenue_monthly_prorated
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: active
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: date_closed
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: date_action_last
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: date_open
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: date_last_stage_update
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: date_conversion
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: create_date
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: write_date
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: day_open
+    data_type: double precision
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: day_close
+    data_type: double precision
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: probability
+    data_type: double precision
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: automated_probability
+    data_type: double precision
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: reveal_id
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: iap_enrich_done
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: lead_mining_request_id
+    data_type: integer
+    is_nullable: 'YES'
+  foreign_keys:
+  - column_name: campaign_id
+    foreign_column: id
+    foreign_table: utm_campaign
+  - column_name: source_id
+    foreign_column: id
+    foreign_table: utm_source
+  - column_name: medium_id
+    foreign_column: id
+    foreign_table: utm_medium
+  - column_name: message_main_attachment_id
+    foreign_column: id
+    foreign_table: ir_attachment
+  - column_name: user_id
+    foreign_column: id
+    foreign_table: res_users
+  - column_name: team_id
+    foreign_column: id
+    foreign_table: crm_team
+  - column_name: company_id
+    foreign_column: id
+    foreign_table: res_company
+  - column_name: stage_id
+    foreign_column: id
+    foreign_table: crm_stage
+  - column_name: recurring_plan
+    foreign_column: id
+    foreign_table: crm_recurring_plan
+  - column_name: partner_id
+    foreign_column: id
+    foreign_table: res_partner
+  - column_name: title
+    foreign_column: id
+    foreign_table: res_partner_title
+  - column_name: lang_id
+    foreign_column: id
+    foreign_table: res_lang
+  - column_name: state_id
+    foreign_column: id
+    foreign_table: res_country_state
+  - column_name: country_id
+    foreign_column: id
+    foreign_table: res_country
+  - column_name: lost_reason_id
+    foreign_column: id
+    foreign_table: crm_lost_reason
+  - column_name: create_uid
+    foreign_column: id
+    foreign_table: res_users
+  - column_name: write_uid
+    foreign_column: id
+    foreign_table: res_users
+  - column_name: lead_mining_request_id
+    foreign_column: id
+    foreign_table: crm_iap_lead_mining_request
+hr_department:
+  columns:
+  - column_default: nextval('hr_department_id_seq'::regclass)
+    column_name: id
+    data_type: integer
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: message_main_attachment_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: company_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: parent_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: manager_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: color
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: master_department_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: create_uid
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: write_uid
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: name
+    data_type: character varying
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: complete_name
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: parent_path
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: note
+    data_type: text
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: active
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: create_date
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: write_date
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  foreign_keys:
+  - column_name: message_main_attachment_id
+    foreign_column: id
+    foreign_table: ir_attachment
+  - column_name: company_id
+    foreign_column: id
+    foreign_table: res_company
+  - column_name: parent_id
+    foreign_column: id
+    foreign_table: hr_department
+  - column_name: manager_id
+    foreign_column: id
+    foreign_table: hr_employee
+  - column_name: master_department_id
+    foreign_column: id
+    foreign_table: hr_department
+  - column_name: create_uid
+    foreign_column: id
+    foreign_table: res_users
+  - column_name: write_uid
+    foreign_column: id
+    foreign_table: res_users
+hr_employee:
+  columns:
+  - column_default: nextval('hr_employee_id_seq'::regclass)
+    column_name: id
+    data_type: integer
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: resource_id
+    data_type: integer
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: company_id
+    data_type: integer
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: resource_calendar_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: message_main_attachment_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: color
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: department_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: job_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: address_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: work_contact_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: work_location_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: user_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: parent_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: coach_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: address_home_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: country_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: children
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: country_of_birth
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: bank_account_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: km_home_work
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: departure_reason_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: create_uid
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: write_uid
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: name
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: job_title
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: work_phone
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: mobile_phone
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: work_email
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: employee_type
+    data_type: character varying
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: gender
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: marital
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: spouse_complete_name
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: place_of_birth
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: ssnid
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: sinid
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: identification_id
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: passport_id
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: permit_no
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: visa_no
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: certificate
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: study_field
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: study_school
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: emergency_contact
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: emergency_phone
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: barcode
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: pin
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: spouse_birthdate
+    data_type: date
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: birthday
+    data_type: date
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: visa_expire
+    data_type: date
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: work_permit_expiration_date
+    data_type: date
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: departure_date
+    data_type: date
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: additional_note
+    data_type: text
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: notes
+    data_type: text
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: departure_description
+    data_type: text
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: active
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: work_permit_scheduled_activity
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: create_date
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: write_date
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: mobility_card
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: contract_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: vehicle
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: first_contract_date
+    data_type: date
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: contract_warning
+    data_type: boolean
+    is_nullable: 'YES'
+  foreign_keys:
+  - column_name: resource_id
+    foreign_column: id
+    foreign_table: resource_resource
+  - column_name: company_id
+    foreign_column: id
+    foreign_table: res_company
+  - column_name: resource_calendar_id
+    foreign_column: id
+    foreign_table: resource_calendar
+  - column_name: message_main_attachment_id
+    foreign_column: id
+    foreign_table: ir_attachment
+  - column_name: department_id
+    foreign_column: id
+    foreign_table: hr_department
+  - column_name: job_id
+    foreign_column: id
+    foreign_table: hr_job
+  - column_name: address_id
+    foreign_column: id
+    foreign_table: res_partner
+  - column_name: work_contact_id
+    foreign_column: id
+    foreign_table: res_partner
+  - column_name: work_location_id
+    foreign_column: id
+    foreign_table: hr_work_location
+  - column_name: user_id
+    foreign_column: id
+    foreign_table: res_users
+  - column_name: parent_id
+    foreign_column: id
+    foreign_table: hr_employee
+  - column_name: coach_id
+    foreign_column: id
+    foreign_table: hr_employee
+  - column_name: address_home_id
+    foreign_column: id
+    foreign_table: res_partner
+  - column_name: country_id
+    foreign_column: id
+    foreign_table: res_country
+  - column_name: country_of_birth
+    foreign_column: id
+    foreign_table: res_country
+  - column_name: bank_account_id
+    foreign_column: id
+    foreign_table: res_partner_bank
+  - column_name: departure_reason_id
+    foreign_column: id
+    foreign_table: hr_departure_reason
+  - column_name: create_uid
+    foreign_column: id
+    foreign_table: res_users
+  - column_name: write_uid
+    foreign_column: id
+    foreign_table: res_users
+  - column_name: contract_id
+    foreign_column: id
+    foreign_table: hr_contract
+product_category:
+  columns:
+  - column_default: nextval('product_category_id_seq'::regclass)
+    column_name: id
+    data_type: integer
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: parent_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: create_uid
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: write_uid
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: name
+    data_type: character varying
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: complete_name
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: parent_path
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: create_date
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: write_date
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: removal_strategy_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: packaging_reserve_method
+    data_type: character varying
+    is_nullable: 'YES'
+  foreign_keys:
+  - column_name: parent_id
+    foreign_column: id
+    foreign_table: product_category
+  - column_name: create_uid
+    foreign_column: id
+    foreign_table: res_users
+  - column_name: write_uid
+    foreign_column: id
+    foreign_table: res_users
+  - column_name: removal_strategy_id
+    foreign_column: id
+    foreign_table: product_removal
+product_product:
+  columns:
+  - column_default: nextval('product_product_id_seq'::regclass)
+    column_name: id
+    data_type: integer
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: message_main_attachment_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: product_tmpl_id
+    data_type: integer
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: create_uid
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: write_uid
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: default_code
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: barcode
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: combination_indices
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: volume
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: weight
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: active
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: can_image_variant_1024_be_zoomed
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: create_date
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: write_date
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  foreign_keys:
+  - column_name: message_main_attachment_id
+    foreign_column: id
+    foreign_table: ir_attachment
+  - column_name: product_tmpl_id
+    foreign_column: id
+    foreign_table: product_template
+  - column_name: create_uid
+    foreign_column: id
+    foreign_table: res_users
+  - column_name: write_uid
+    foreign_column: id
+    foreign_table: res_users
+product_template:
+  columns:
+  - column_default: nextval('product_template_id_seq'::regclass)
+    column_name: id
+    data_type: integer
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: message_main_attachment_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: sequence
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: categ_id
+    data_type: integer
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: uom_id
+    data_type: integer
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: uom_po_id
+    data_type: integer
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: company_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: color
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: create_uid
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: write_uid
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: detailed_type
+    data_type: character varying
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: type
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: default_code
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: priority
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: name
+    data_type: jsonb
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: description
+    data_type: jsonb
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: description_purchase
+    data_type: jsonb
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: description_sale
+    data_type: jsonb
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: list_price
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: volume
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: weight
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: sale_ok
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: purchase_ok
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: active
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: can_image_1024_be_zoomed
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: has_configurable_attributes
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: create_date
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: write_date
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: service_type
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: sale_line_warn
+    data_type: character varying
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: expense_policy
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: invoice_policy
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: sale_line_warn_msg
+    data_type: text
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: purchase_method
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: purchase_line_warn
+    data_type: character varying
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: purchase_line_warn_msg
+    data_type: text
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: tracking
+    data_type: character varying
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: description_picking
+    data_type: jsonb
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: description_pickingout
+    data_type: jsonb
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: description_pickingin
+    data_type: jsonb
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: sale_delay
+    data_type: double precision
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: service_tracking
+    data_type: character varying
+    is_nullable: 'YES'
+  foreign_keys:
+  - column_name: message_main_attachment_id
+    foreign_column: id
+    foreign_table: ir_attachment
+  - column_name: categ_id
+    foreign_column: id
+    foreign_table: product_category
+  - column_name: uom_id
+    foreign_column: id
+    foreign_table: uom_uom
+  - column_name: uom_po_id
+    foreign_column: id
+    foreign_table: uom_uom
+  - column_name: company_id
+    foreign_column: id
+    foreign_table: res_company
+  - column_name: create_uid
+    foreign_column: id
+    foreign_table: res_users
+  - column_name: write_uid
+    foreign_column: id
+    foreign_table: res_users
+project_project:
+  columns:
+  - column_default: nextval('project_project_id_seq'::regclass)
+    column_name: id
+    data_type: integer
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: message_main_attachment_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: alias_id
+    data_type: integer
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: sequence
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: partner_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: company_id
+    data_type: integer
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: analytic_account_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: color
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: user_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: stage_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: last_update_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: create_uid
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: write_uid
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: access_token
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: partner_email
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: partner_phone
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: privacy_visibility
+    data_type: character varying
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: rating_status
+    data_type: character varying
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: rating_status_period
+    data_type: character varying
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: last_update_status
+    data_type: character varying
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: date_start
+    data_type: date
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: date
+    data_type: date
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: name
+    data_type: jsonb
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: label_tasks
+    data_type: jsonb
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: task_properties_definition
+    data_type: jsonb
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: description
+    data_type: text
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: active
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: allow_subtasks
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: allow_recurring_tasks
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: allow_task_dependencies
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: allow_milestones
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: rating_active
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: rating_request_deadline
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: create_date
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: write_date
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: sale_line_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: allow_billable
+    data_type: boolean
+    is_nullable: 'YES'
+  foreign_keys:
+  - column_name: message_main_attachment_id
+    foreign_column: id
+    foreign_table: ir_attachment
+  - column_name: alias_id
+    foreign_column: id
+    foreign_table: mail_alias
+  - column_name: partner_id
+    foreign_column: id
+    foreign_table: res_partner
+  - column_name: company_id
+    foreign_column: id
+    foreign_table: res_company
+  - column_name: analytic_account_id
+    foreign_column: id
+    foreign_table: account_analytic_account
+  - column_name: user_id
+    foreign_column: id
+    foreign_table: res_users
+  - column_name: stage_id
+    foreign_column: id
+    foreign_table: project_project_stage
+  - column_name: last_update_id
+    foreign_column: id
+    foreign_table: project_update
+  - column_name: create_uid
+    foreign_column: id
+    foreign_table: res_users
+  - column_name: write_uid
+    foreign_column: id
+    foreign_table: res_users
+  - column_name: sale_line_id
+    foreign_column: id
+    foreign_table: sale_order_line
+project_task:
+  columns:
+  - column_default: nextval('project_task_id_seq'::regclass)
+    column_name: id
+    data_type: integer
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: message_main_attachment_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: sequence
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: stage_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: project_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: display_project_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: partner_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: company_id
+    data_type: integer
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: color
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: displayed_image_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: parent_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: ancestor_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: milestone_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: recurrence_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: analytic_account_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: create_uid
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: write_uid
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: email_cc
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: access_token
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: name
+    data_type: character varying
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: priority
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: kanban_state
+    data_type: character varying
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: partner_email
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: partner_phone
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: email_from
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: date_deadline
+    data_type: date
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: task_properties
+    data_type: jsonb
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: description
+    data_type: text
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: working_hours_open
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: working_hours_close
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: active
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: is_closed
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: is_blocked
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: recurring_task
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: is_analytic_account_id_changed
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: create_date
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: write_date
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: date_end
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: date_assign
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: date_last_stage_update
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: rating_last_value
+    data_type: double precision
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: planned_hours
+    data_type: double precision
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: working_days_open
+    data_type: double precision
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: working_days_close
+    data_type: double precision
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: sale_order_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: sale_line_id
+    data_type: integer
+    is_nullable: 'YES'
+  foreign_keys:
+  - column_name: message_main_attachment_id
+    foreign_column: id
+    foreign_table: ir_attachment
+  - column_name: stage_id
+    foreign_column: id
+    foreign_table: project_task_type
+  - column_name: project_id
+    foreign_column: id
+    foreign_table: project_project
+  - column_name: display_project_id
+    foreign_column: id
+    foreign_table: project_project
+  - column_name: partner_id
+    foreign_column: id
+    foreign_table: res_partner
+  - column_name: company_id
+    foreign_column: id
+    foreign_table: res_company
+  - column_name: displayed_image_id
+    foreign_column: id
+    foreign_table: ir_attachment
+  - column_name: parent_id
+    foreign_column: id
+    foreign_table: project_task
+  - column_name: ancestor_id
+    foreign_column: id
+    foreign_table: project_task
+  - column_name: milestone_id
+    foreign_column: id
+    foreign_table: project_milestone
+  - column_name: recurrence_id
+    foreign_column: id
+    foreign_table: project_task_recurrence
+  - column_name: analytic_account_id
+    foreign_column: id
+    foreign_table: account_analytic_account
+  - column_name: create_uid
+    foreign_column: id
+    foreign_table: res_users
+  - column_name: write_uid
+    foreign_column: id
+    foreign_table: res_users
+  - column_name: sale_order_id
+    foreign_column: id
+    foreign_table: sale_order
+  - column_name: sale_line_id
+    foreign_column: id
+    foreign_table: sale_order_line
+purchase_order:
+  columns:
+  - column_default: nextval('purchase_order_id_seq'::regclass)
+    column_name: id
+    data_type: integer
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: message_main_attachment_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: partner_id
+    data_type: integer
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: dest_address_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: currency_id
+    data_type: integer
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: invoice_count
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: fiscal_position_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: payment_term_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: incoterm_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: user_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: company_id
+    data_type: integer
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: create_uid
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: write_uid
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: access_token
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: name
+    data_type: character varying
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: priority
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: origin
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: partner_ref
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: state
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: invoice_status
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: notes
+    data_type: text
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: amount_untaxed
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: amount_tax
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: amount_total
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: mail_reminder_confirmed
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: mail_reception_confirmed
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: date_order
+    data_type: timestamp without time zone
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: date_approve
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: date_planned
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: date_calendar_start
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: create_date
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: write_date
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: currency_rate
+    data_type: double precision
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: picking_type_id
+    data_type: integer
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: group_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: incoterm_location
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: receipt_status
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: effective_date
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  foreign_keys:
+  - column_name: message_main_attachment_id
+    foreign_column: id
+    foreign_table: ir_attachment
+  - column_name: partner_id
+    foreign_column: id
+    foreign_table: res_partner
+  - column_name: dest_address_id
+    foreign_column: id
+    foreign_table: res_partner
+  - column_name: currency_id
+    foreign_column: id
+    foreign_table: res_currency
+  - column_name: fiscal_position_id
+    foreign_column: id
+    foreign_table: account_fiscal_position
+  - column_name: payment_term_id
+    foreign_column: id
+    foreign_table: account_payment_term
+  - column_name: incoterm_id
+    foreign_column: id
+    foreign_table: account_incoterms
+  - column_name: user_id
+    foreign_column: id
+    foreign_table: res_users
+  - column_name: company_id
+    foreign_column: id
+    foreign_table: res_company
+  - column_name: create_uid
+    foreign_column: id
+    foreign_table: res_users
+  - column_name: write_uid
+    foreign_column: id
+    foreign_table: res_users
+  - column_name: picking_type_id
+    foreign_column: id
+    foreign_table: stock_picking_type
+  - column_name: group_id
+    foreign_column: id
+    foreign_table: procurement_group
+purchase_order_line:
+  columns:
+  - column_default: nextval('purchase_order_line_id_seq'::regclass)
+    column_name: id
+    data_type: integer
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: sequence
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: product_uom
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: product_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: order_id
+    data_type: integer
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: company_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: partner_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: currency_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: product_packaging_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: create_uid
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: write_uid
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: state
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: qty_received_method
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: display_type
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: analytic_distribution
+    data_type: jsonb
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: name
+    data_type: text
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: product_qty
+    data_type: numeric
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: price_unit
+    data_type: numeric
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: price_subtotal
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: price_total
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: qty_invoiced
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: qty_received
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: qty_received_manual
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: qty_to_invoice
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: date_planned
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: create_date
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: write_date
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: product_uom_qty
+    data_type: double precision
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: price_tax
+    data_type: double precision
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: product_packaging_qty
+    data_type: double precision
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: sale_order_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: sale_line_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: orderpoint_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: product_description_variants
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: propagate_cancel
+    data_type: boolean
+    is_nullable: 'YES'
+  foreign_keys:
+  - column_name: write_uid
+    foreign_column: id
+    foreign_table: res_users
+  - column_name: sale_order_id
+    foreign_column: id
+    foreign_table: sale_order
+  - column_name: sale_line_id
+    foreign_column: id
+    foreign_table: sale_order_line
+  - column_name: product_uom
+    foreign_column: id
+    foreign_table: uom_uom
+  - column_name: product_id
+    foreign_column: id
+    foreign_table: product_product
+  - column_name: order_id
+    foreign_column: id
+    foreign_table: purchase_order
+  - column_name: company_id
+    foreign_column: id
+    foreign_table: res_company
+  - column_name: partner_id
+    foreign_column: id
+    foreign_table: res_partner
+  - column_name: currency_id
+    foreign_column: id
+    foreign_table: res_currency
+  - column_name: product_packaging_id
+    foreign_column: id
+    foreign_table: product_packaging
+  - column_name: create_uid
+    foreign_column: id
+    foreign_table: res_users
+  - column_name: orderpoint_id
+    foreign_column: id
+    foreign_table: stock_warehouse_orderpoint
+res_company:
+  columns:
+  - column_default: nextval('res_company_id_seq'::regclass)
+    column_name: id
+    data_type: integer
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: name
+    data_type: character varying
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: partner_id
+    data_type: integer
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: currency_id
+    data_type: integer
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: sequence
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: create_date
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: parent_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: paperformat_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: external_report_layout_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: create_uid
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: write_uid
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: email
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: phone
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: mobile
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: base_onboarding_company_state
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: font
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: primary_color
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: secondary_color
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: layout_background
+    data_type: character varying
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: report_footer
+    data_type: jsonb
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: report_header
+    data_type: text
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: company_details
+    data_type: text
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: active
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: write_date
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: logo_web
+    data_type: bytea
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: resource_calendar_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: partner_gid
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: iap_enrich_auto_done
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: snailmail_color
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: snailmail_cover
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: snailmail_duplex
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: payment_provider_onboarding_state
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: payment_onboarding_payment_method
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: message_main_attachment_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: fiscalyear_last_day
+    data_type: integer
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: transfer_account_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: chart_template_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: default_cash_difference_income_account_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: default_cash_difference_expense_account_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: account_journal_suspense_account_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: account_journal_payment_debit_account_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: account_journal_payment_credit_account_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: account_journal_early_pay_discount_gain_account_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: account_journal_early_pay_discount_loss_account_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: account_sale_tax_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: account_purchase_tax_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: currency_exchange_journal_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: income_currency_exchange_account_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: expense_currency_exchange_account_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: property_stock_account_input_categ_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: property_stock_account_output_categ_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: property_stock_valuation_account_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: incoterm_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: account_opening_move_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: account_default_pos_receivable_account_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: expense_accrual_account_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: revenue_accrual_account_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: automatic_entry_default_journal_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: account_fiscal_country_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: tax_cash_basis_journal_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: account_cash_basis_base_account_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: fiscalyear_last_month
+    data_type: character varying
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: bank_account_code_prefix
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: cash_account_code_prefix
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: early_pay_discount_computation
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: transfer_account_code_prefix
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: tax_calculation_rounding_method
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: account_setup_bank_data_state
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: account_setup_fy_data_state
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: account_setup_coa_state
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: account_setup_taxes_state
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: account_onboarding_invoice_layout_state
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: account_onboarding_sale_tax_state
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: account_invoice_onboarding_state
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: account_dashboard_onboarding_state
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: terms_type
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: account_setup_bill_state
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: quick_edit_mode
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: period_lock_date
+    data_type: date
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: fiscalyear_lock_date
+    data_type: date
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: tax_lock_date
+    data_type: date
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: account_opening_date
+    data_type: date
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: invoice_terms
+    data_type: jsonb
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: invoice_terms_html
+    data_type: jsonb
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: expects_chart_of_accounts
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: anglo_saxon_accounting
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: qr_code
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: invoice_is_email
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: invoice_is_print
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: account_use_credit_limit
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: account_onboarding_create_invoice_state_flag
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: tax_exigibility
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: account_storno
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: invoice_is_snailmail
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: quotation_validity_days
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: sale_quotation_onboarding_state
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: sale_onboarding_order_confirmation_state
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: sale_onboarding_sample_quotation_state
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: sale_onboarding_payment_method
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: portal_confirmation_sign
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: portal_confirmation_pay
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: sale_order_template_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: hr_presence_control_email_amount
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: hr_presence_control_ip_list
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: po_lock
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: po_double_validation
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: po_double_validation_amount
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: po_lead
+    data_type: double precision
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: nomenclature_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: internal_transit_location_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: stock_mail_confirmation_template_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: annual_inventory_day
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: annual_inventory_month
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: stock_move_email_validation
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: stock_sms_confirmation_template_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: stock_move_sms_validation
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: has_received_warning_stock_sms
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: days_to_purchase
+    data_type: double precision
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: security_lead
+    data_type: double precision
+    is_nullable: 'NO'
+  foreign_keys:
+  - column_name: parent_id
+    foreign_column: id
+    foreign_table: res_company
+  - column_name: partner_id
+    foreign_column: id
+    foreign_table: res_partner
+  - column_name: currency_id
+    foreign_column: id
+    foreign_table: res_currency
+  - column_name: paperformat_id
+    foreign_column: id
+    foreign_table: report_paperformat
+  - column_name: external_report_layout_id
+    foreign_column: id
+    foreign_table: ir_ui_view
+  - column_name: create_uid
+    foreign_column: id
+    foreign_table: res_users
+  - column_name: write_uid
+    foreign_column: id
+    foreign_table: res_users
+  - column_name: resource_calendar_id
+    foreign_column: id
+    foreign_table: resource_calendar
+  - column_name: message_main_attachment_id
+    foreign_column: id
+    foreign_table: ir_attachment
+  - column_name: transfer_account_id
+    foreign_column: id
+    foreign_table: account_account
+  - column_name: chart_template_id
+    foreign_column: id
+    foreign_table: account_chart_template
+  - column_name: default_cash_difference_income_account_id
+    foreign_column: id
+    foreign_table: account_account
+  - column_name: default_cash_difference_expense_account_id
+    foreign_column: id
+    foreign_table: account_account
+  - column_name: account_journal_suspense_account_id
+    foreign_column: id
+    foreign_table: account_account
+  - column_name: account_journal_payment_debit_account_id
+    foreign_column: id
+    foreign_table: account_account
+  - column_name: account_journal_payment_credit_account_id
+    foreign_column: id
+    foreign_table: account_account
+  - column_name: account_journal_early_pay_discount_gain_account_id
+    foreign_column: id
+    foreign_table: account_account
+  - column_name: account_journal_early_pay_discount_loss_account_id
+    foreign_column: id
+    foreign_table: account_account
+  - column_name: account_sale_tax_id
+    foreign_column: id
+    foreign_table: account_tax
+  - column_name: account_purchase_tax_id
+    foreign_column: id
+    foreign_table: account_tax
+  - column_name: currency_exchange_journal_id
+    foreign_column: id
+    foreign_table: account_journal
+  - column_name: income_currency_exchange_account_id
+    foreign_column: id
+    foreign_table: account_account
+  - column_name: expense_currency_exchange_account_id
+    foreign_column: id
+    foreign_table: account_account
+  - column_name: property_stock_account_input_categ_id
+    foreign_column: id
+    foreign_table: account_account
+  - column_name: property_stock_account_output_categ_id
+    foreign_column: id
+    foreign_table: account_account
+  - column_name: property_stock_valuation_account_id
+    foreign_column: id
+    foreign_table: account_account
+  - column_name: incoterm_id
+    foreign_column: id
+    foreign_table: account_incoterms
+  - column_name: account_opening_move_id
+    foreign_column: id
+    foreign_table: account_move
+  - column_name: account_default_pos_receivable_account_id
+    foreign_column: id
+    foreign_table: account_account
+  - column_name: expense_accrual_account_id
+    foreign_column: id
+    foreign_table: account_account
+  - column_name: revenue_accrual_account_id
+    foreign_column: id
+    foreign_table: account_account
+  - column_name: automatic_entry_default_journal_id
+    foreign_column: id
+    foreign_table: account_journal
+  - column_name: account_fiscal_country_id
+    foreign_column: id
+    foreign_table: res_country
+  - column_name: tax_cash_basis_journal_id
+    foreign_column: id
+    foreign_table: account_journal
+  - column_name: account_cash_basis_base_account_id
+    foreign_column: id
+    foreign_table: account_account
+  - column_name: sale_order_template_id
+    foreign_column: id
+    foreign_table: sale_order_template
+  - column_name: nomenclature_id
+    foreign_column: id
+    foreign_table: barcode_nomenclature
+  - column_name: internal_transit_location_id
+    foreign_column: id
+    foreign_table: stock_location
+  - column_name: stock_mail_confirmation_template_id
+    foreign_column: id
+    foreign_table: mail_template
+  - column_name: stock_sms_confirmation_template_id
+    foreign_column: id
+    foreign_table: sms_template
+res_currency:
+  columns:
+  - column_default: nextval('res_currency_id_seq'::regclass)
+    column_name: id
+    data_type: integer
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: name
+    data_type: character varying
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: symbol
+    data_type: character varying
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: decimal_places
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: create_uid
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: write_uid
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: full_name
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: position
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: currency_unit_label
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: currency_subunit_label
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: rounding
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: active
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: create_date
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: write_date
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  foreign_keys:
+  - column_name: create_uid
+    foreign_column: id
+    foreign_table: res_users
+  - column_name: write_uid
+    foreign_column: id
+    foreign_table: res_users
+res_partner:
+  columns:
+  - column_default: nextval('res_partner_id_seq'::regclass)
+    column_name: id
+    data_type: integer
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: company_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: create_date
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: name
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: title
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: parent_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: user_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: state_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: country_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: industry_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: color
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: commercial_partner_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: create_uid
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: write_uid
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: display_name
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: ref
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: lang
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: tz
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: vat
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: company_registry
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: website
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: function
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: type
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: street
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: street2
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: zip
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: city
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: email
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: phone
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: mobile
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: commercial_company_name
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: company_name
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: date
+    data_type: date
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: comment
+    data_type: text
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: partner_latitude
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: partner_longitude
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: active
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: employee
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: is_company
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: partner_share
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: write_date
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: message_main_attachment_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: message_bounce
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: email_normalized
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: signup_type
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: signup_expiration
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: signup_token
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: team_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: partner_gid
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: additional_info
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: phone_sanitized
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: supplier_rank
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: customer_rank
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: invoice_warn
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: invoice_warn_msg
+    data_type: text
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: debit_limit
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: last_time_entries_checked
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: global_location_number
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: sale_warn
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: sale_warn_msg
+    data_type: text
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: calendar_last_notif_ack
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: plan_to_change_car
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: plan_to_change_bike
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: purchase_warn
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: purchase_warn_msg
+    data_type: text
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: picking_warn
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: picking_warn_msg
+    data_type: text
+    is_nullable: 'YES'
+  foreign_keys:
+  - column_name: title
+    foreign_column: id
+    foreign_table: res_partner_title
+  - column_name: parent_id
+    foreign_column: id
+    foreign_table: res_partner
+  - column_name: user_id
+    foreign_column: id
+    foreign_table: res_users
+  - column_name: state_id
+    foreign_column: id
+    foreign_table: res_country_state
+  - column_name: country_id
+    foreign_column: id
+    foreign_table: res_country
+  - column_name: industry_id
+    foreign_column: id
+    foreign_table: res_partner_industry
+  - column_name: company_id
+    foreign_column: id
+    foreign_table: res_company
+  - column_name: commercial_partner_id
+    foreign_column: id
+    foreign_table: res_partner
+  - column_name: create_uid
+    foreign_column: id
+    foreign_table: res_users
+  - column_name: write_uid
+    foreign_column: id
+    foreign_table: res_users
+  - column_name: message_main_attachment_id
+    foreign_column: id
+    foreign_table: ir_attachment
+  - column_name: team_id
+    foreign_column: id
+    foreign_table: crm_team
+res_users:
+  columns:
+  - column_default: nextval('res_users_id_seq'::regclass)
+    column_name: id
+    data_type: integer
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: company_id
+    data_type: integer
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: partner_id
+    data_type: integer
+    is_nullable: 'NO'
+  - column_default: 'true'
+    column_name: active
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: create_date
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: login
+    data_type: character varying
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: password
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: action_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: create_uid
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: write_uid
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: signature
+    data_type: text
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: share
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: write_date
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: totp_secret
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: notification_type
+    data_type: character varying
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: odoobot_state
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: odoobot_failed
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: sale_team_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: target_sales_won
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: target_sales_done
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: target_sales_invoiced
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: livechat_username
+    data_type: character varying
+    is_nullable: 'YES'
+  foreign_keys:
+  - column_name: partner_id
+    foreign_column: id
+    foreign_table: res_partner
+  - column_name: company_id
+    foreign_column: id
+    foreign_table: res_company
+  - column_name: create_uid
+    foreign_column: id
+    foreign_table: res_users
+  - column_name: write_uid
+    foreign_column: id
+    foreign_table: res_users
+  - column_name: sale_team_id
+    foreign_column: id
+    foreign_table: crm_team
+sale_order:
+  columns:
+  - column_default: nextval('sale_order_id_seq'::regclass)
+    column_name: id
+    data_type: integer
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: campaign_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: source_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: medium_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: message_main_attachment_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: company_id
+    data_type: integer
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: partner_id
+    data_type: integer
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: partner_invoice_id
+    data_type: integer
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: partner_shipping_id
+    data_type: integer
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: fiscal_position_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: payment_term_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: pricelist_id
+    data_type: integer
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: currency_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: user_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: team_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: analytic_account_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: create_uid
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: write_uid
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: access_token
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: name
+    data_type: character varying
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: state
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: client_order_ref
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: origin
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: reference
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: signed_by
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: invoice_status
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: validity_date
+    data_type: date
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: note
+    data_type: text
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: currency_rate
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: amount_untaxed
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: amount_tax
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: amount_total
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: require_signature
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: require_payment
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: create_date
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: commitment_date
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: date_order
+    data_type: timestamp without time zone
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: signed_on
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: write_date
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: sale_order_template_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: opportunity_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: incoterm
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: warehouse_id
+    data_type: integer
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: procurement_group_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: incoterm_location
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: picking_policy
+    data_type: character varying
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: delivery_status
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: effective_date
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: project_id
+    data_type: integer
+    is_nullable: 'YES'
+  foreign_keys:
+  - column_name: campaign_id
+    foreign_column: id
+    foreign_table: utm_campaign
+  - column_name: source_id
+    foreign_column: id
+    foreign_table: utm_source
+  - column_name: medium_id
+    foreign_column: id
+    foreign_table: utm_medium
+  - column_name: message_main_attachment_id
+    foreign_column: id
+    foreign_table: ir_attachment
+  - column_name: company_id
+    foreign_column: id
+    foreign_table: res_company
+  - column_name: partner_id
+    foreign_column: id
+    foreign_table: res_partner
+  - column_name: partner_invoice_id
+    foreign_column: id
+    foreign_table: res_partner
+  - column_name: partner_shipping_id
+    foreign_column: id
+    foreign_table: res_partner
+  - column_name: fiscal_position_id
+    foreign_column: id
+    foreign_table: account_fiscal_position
+  - column_name: payment_term_id
+    foreign_column: id
+    foreign_table: account_payment_term
+  - column_name: pricelist_id
+    foreign_column: id
+    foreign_table: product_pricelist
+  - column_name: currency_id
+    foreign_column: id
+    foreign_table: res_currency
+  - column_name: user_id
+    foreign_column: id
+    foreign_table: res_users
+  - column_name: team_id
+    foreign_column: id
+    foreign_table: crm_team
+  - column_name: analytic_account_id
+    foreign_column: id
+    foreign_table: account_analytic_account
+  - column_name: create_uid
+    foreign_column: id
+    foreign_table: res_users
+  - column_name: write_uid
+    foreign_column: id
+    foreign_table: res_users
+  - column_name: sale_order_template_id
+    foreign_column: id
+    foreign_table: sale_order_template
+  - column_name: opportunity_id
+    foreign_column: id
+    foreign_table: crm_lead
+  - column_name: incoterm
+    foreign_column: id
+    foreign_table: account_incoterms
+  - column_name: warehouse_id
+    foreign_column: id
+    foreign_table: stock_warehouse
+  - column_name: procurement_group_id
+    foreign_column: id
+    foreign_table: procurement_group
+  - column_name: project_id
+    foreign_column: id
+    foreign_table: project_project
+sale_order_line:
+  columns:
+  - column_default: nextval('sale_order_line_id_seq'::regclass)
+    column_name: id
+    data_type: integer
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: order_id
+    data_type: integer
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: sequence
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: company_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: currency_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: order_partner_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: salesman_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: product_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: product_uom
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: product_packaging_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: create_uid
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: write_uid
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: state
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: display_type
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: qty_delivered_method
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: invoice_status
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: analytic_distribution
+    data_type: jsonb
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: name
+    data_type: text
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: product_uom_qty
+    data_type: numeric
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: price_unit
+    data_type: numeric
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: discount
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: price_reduce
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: price_subtotal
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: price_total
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: price_reduce_taxexcl
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: price_reduce_taxinc
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: qty_delivered
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: qty_invoiced
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: qty_to_invoice
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: untaxed_amount_invoiced
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: untaxed_amount_to_invoice
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: is_downpayment
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: is_expense
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: create_date
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: write_date
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: price_tax
+    data_type: double precision
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: product_packaging_qty
+    data_type: double precision
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: customer_lead
+    data_type: double precision
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: route_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: is_service
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: project_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: task_id
+    data_type: integer
+    is_nullable: 'YES'
+  foreign_keys:
+  - column_name: order_id
+    foreign_column: id
+    foreign_table: sale_order
+  - column_name: company_id
+    foreign_column: id
+    foreign_table: res_company
+  - column_name: currency_id
+    foreign_column: id
+    foreign_table: res_currency
+  - column_name: order_partner_id
+    foreign_column: id
+    foreign_table: res_partner
+  - column_name: salesman_id
+    foreign_column: id
+    foreign_table: res_users
+  - column_name: product_id
+    foreign_column: id
+    foreign_table: product_product
+  - column_name: product_uom
+    foreign_column: id
+    foreign_table: uom_uom
+  - column_name: product_packaging_id
+    foreign_column: id
+    foreign_table: product_packaging
+  - column_name: create_uid
+    foreign_column: id
+    foreign_table: res_users
+  - column_name: write_uid
+    foreign_column: id
+    foreign_table: res_users
+  - column_name: route_id
+    foreign_column: id
+    foreign_table: stock_route
+  - column_name: project_id
+    foreign_column: id
+    foreign_table: project_project
+  - column_name: task_id
+    foreign_column: id
+    foreign_table: project_task
+stock_move:
+  columns:
+  - column_default: nextval('stock_move_id_seq'::regclass)
+    column_name: id
+    data_type: integer
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: sequence
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: company_id
+    data_type: integer
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: product_id
+    data_type: integer
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: product_uom
+    data_type: integer
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: location_id
+    data_type: integer
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: location_dest_id
+    data_type: integer
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: partner_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: picking_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: group_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: rule_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: picking_type_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: origin_returned_move_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: restrict_partner_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: warehouse_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: package_level_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: next_serial_count
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: orderpoint_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: product_packaging_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: create_uid
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: write_uid
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: name
+    data_type: character varying
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: priority
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: state
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: origin
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: procure_method
+    data_type: character varying
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: reference
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: next_serial
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: reservation_date
+    data_type: date
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: description_picking
+    data_type: text
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: product_qty
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: product_uom_qty
+    data_type: numeric
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: quantity_done
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: scrapped
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: propagate_cancel
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: is_inventory
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: additional
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: date
+    data_type: timestamp without time zone
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: date_deadline
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: delay_alert_date
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: create_date
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: write_date
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: price_unit
+    data_type: double precision
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: analytic_account_line_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: to_refund
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: purchase_line_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: created_purchase_line_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: sale_line_id
+    data_type: integer
+    is_nullable: 'YES'
+  foreign_keys:
+  - column_name: company_id
+    foreign_column: id
+    foreign_table: res_company
+  - column_name: product_id
+    foreign_column: id
+    foreign_table: product_product
+  - column_name: product_uom
+    foreign_column: id
+    foreign_table: uom_uom
+  - column_name: location_id
+    foreign_column: id
+    foreign_table: stock_location
+  - column_name: location_dest_id
+    foreign_column: id
+    foreign_table: stock_location
+  - column_name: partner_id
+    foreign_column: id
+    foreign_table: res_partner
+  - column_name: picking_id
+    foreign_column: id
+    foreign_table: stock_picking
+  - column_name: group_id
+    foreign_column: id
+    foreign_table: procurement_group
+  - column_name: rule_id
+    foreign_column: id
+    foreign_table: stock_rule
+  - column_name: picking_type_id
+    foreign_column: id
+    foreign_table: stock_picking_type
+  - column_name: origin_returned_move_id
+    foreign_column: id
+    foreign_table: stock_move
+  - column_name: restrict_partner_id
+    foreign_column: id
+    foreign_table: res_partner
+  - column_name: warehouse_id
+    foreign_column: id
+    foreign_table: stock_warehouse
+  - column_name: package_level_id
+    foreign_column: id
+    foreign_table: stock_package_level
+  - column_name: orderpoint_id
+    foreign_column: id
+    foreign_table: stock_warehouse_orderpoint
+  - column_name: product_packaging_id
+    foreign_column: id
+    foreign_table: product_packaging
+  - column_name: create_uid
+    foreign_column: id
+    foreign_table: res_users
+  - column_name: write_uid
+    foreign_column: id
+    foreign_table: res_users
+  - column_name: analytic_account_line_id
+    foreign_column: id
+    foreign_table: account_analytic_line
+  - column_name: purchase_line_id
+    foreign_column: id
+    foreign_table: purchase_order_line
+  - column_name: created_purchase_line_id
+    foreign_column: id
+    foreign_table: purchase_order_line
+  - column_name: sale_line_id
+    foreign_column: id
+    foreign_table: sale_order_line
+stock_picking:
+  columns:
+  - column_default: nextval('stock_picking_id_seq'::regclass)
+    column_name: id
+    data_type: integer
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: message_main_attachment_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: backorder_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: group_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: location_id
+    data_type: integer
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: location_dest_id
+    data_type: integer
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: picking_type_id
+    data_type: integer
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: partner_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: company_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: user_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: owner_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: create_uid
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: write_uid
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: name
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: origin
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: move_type
+    data_type: character varying
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: state
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: priority
+    data_type: character varying
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: note
+    data_type: text
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: has_deadline_issue
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: printed
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: is_locked
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: immediate_transfer
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: scheduled_date
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: date_deadline
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: date
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: date_done
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: create_date
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: write_date
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: sale_id
+    data_type: integer
+    is_nullable: 'YES'
+  foreign_keys:
+  - column_name: message_main_attachment_id
+    foreign_column: id
+    foreign_table: ir_attachment
+  - column_name: backorder_id
+    foreign_column: id
+    foreign_table: stock_picking
+  - column_name: group_id
+    foreign_column: id
+    foreign_table: procurement_group
+  - column_name: location_id
+    foreign_column: id
+    foreign_table: stock_location
+  - column_name: location_dest_id
+    foreign_column: id
+    foreign_table: stock_location
+  - column_name: picking_type_id
+    foreign_column: id
+    foreign_table: stock_picking_type
+  - column_name: partner_id
+    foreign_column: id
+    foreign_table: res_partner
+  - column_name: company_id
+    foreign_column: id
+    foreign_table: res_company
+  - column_name: user_id
+    foreign_column: id
+    foreign_table: res_users
+  - column_name: owner_id
+    foreign_column: id
+    foreign_table: res_partner
+  - column_name: create_uid
+    foreign_column: id
+    foreign_table: res_users
+  - column_name: write_uid
+    foreign_column: id
+    foreign_table: res_users
+  - column_name: sale_id
+    foreign_column: id
+    foreign_table: sale_order
+stock_quant:
+  columns:
+  - column_default: nextval('stock_quant_id_seq'::regclass)
+    column_name: id
+    data_type: integer
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: product_id
+    data_type: integer
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: company_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: location_id
+    data_type: integer
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: storage_category_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: lot_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: package_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: owner_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: user_id
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: create_uid
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: write_uid
+    data_type: integer
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: inventory_date
+    data_type: date
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: quantity
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: reserved_quantity
+    data_type: numeric
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: inventory_quantity
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: inventory_diff_quantity
+    data_type: numeric
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: inventory_quantity_set
+    data_type: boolean
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: in_date
+    data_type: timestamp without time zone
+    is_nullable: 'NO'
+  - column_default: null
+    column_name: create_date
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: write_date
+    data_type: timestamp without time zone
+    is_nullable: 'YES'
+  - column_default: null
+    column_name: accounting_date
+    data_type: date
+    is_nullable: 'YES'
+  foreign_keys:
+  - column_name: product_id
+    foreign_column: id
+    foreign_table: product_product
+  - column_name: company_id
+    foreign_column: id
+    foreign_table: res_company
+  - column_name: location_id
+    foreign_column: id
+    foreign_table: stock_location
+  - column_name: storage_category_id
+    foreign_column: id
+    foreign_table: stock_storage_category
+  - column_name: lot_id
+    foreign_column: id
+    foreign_table: stock_lot
+  - column_name: package_id
+    foreign_column: id
+    foreign_table: stock_quant_package
+  - column_name: owner_id
+    foreign_column: id
+    foreign_table: res_partner
+  - column_name: user_id
+    foreign_column: id
+    foreign_table: res_users
+  - column_name: create_uid
+    foreign_column: id
+    foreign_table: res_users
+  - column_name: write_uid
+    foreign_column: id
+    foreign_table: res_users

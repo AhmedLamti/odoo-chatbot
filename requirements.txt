@@ -1,0 +1,35 @@
+# Core LangChain
+langchain==0.3.25
+langchain-community==0.3.23
+langgraph==0.3.21
+
+# LlamaIndex
+llama-index==0.12.12
+llama-index-vector-stores-qdrant
+llama-index-llms-ollama
+llama-index-embeddings-ollama
+
+# Vectorstore
+qdrant-client==1.13.3
+
+# SQL
+psycopg2-binary==2.9.10
+sqlalchemy==2.0.40
+
+# ETL - Scraping GitHub
+PyGithub==2.6.1
+requests==2.32.3
+beautifulsoup4==4.13.4
+
+# ETL - Parsing RST
+unstructured==0.17.2
+docutils==0.21.2
+
+# API
+fastapi==0.115.12
+uvicorn==0.34.0
+
+# Config
+python-dotenv==1.1.0
+pydantic-settings==2.9.1
+pyyaml==6.0.2
