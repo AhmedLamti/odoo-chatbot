@@ -6,6 +6,7 @@
 ![LangGraph](https://img.shields.io/badge/LangGraph-0.3.21-green)
 ![Odoo](https://img.shields.io/badge/Odoo-16-purple)
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.110-teal)
+![Plotly](https://img.shields.io/badge/Plotly-6.x-orange)
 ![Tests](https://img.shields.io/badge/Tests-32%2F32-brightgreen)
 
 ---
@@ -30,7 +31,8 @@
 
 - 💬 **Poser des questions** sur la documentation Odoo (RAG)
 - 🗄️ **Interroger la base de données** sans écrire de SQL
-- 📊 **Visualiser des données** sous forme de graphiques interactifs
+- 📊 **Visualiser des données** sous forme de graphiques interactifs Plotly
+- 📈 **Analyser automatiquement** les graphiques avec des insights business
 - 🤖 **Chatbot intégré** dans Odoo via bulle flottante et module Discuss
 
 ---
@@ -40,30 +42,38 @@
 ```
 ┌─────────────────────────────────────────────────────────┐
 │                    Odoo 16 Frontend                      │
-│  ┌──────────────┐          ┌──────────────────────────┐  │
-│  │Bulle flottante│         │   Module Discuss (Bot)   │  │
-│  └──────┬───────┘          └───────────┬──────────────┘  │
-└─────────┼──────────────────────────────┼────────────────┘
-          │                              │
-          └──────────────┬───────────────┘
+│  ┌──────────────────┐     ┌──────────────────────────┐  │
+│  │  Bulle flottante  │     │   Module Discuss (Bot)   │  │
+│  │  (OWL Component) │     │   (Async Thread)         │  │
+│  └────────┬─────────┘     └───────────┬──────────────┘  │
+└───────────┼───────────────────────────┼────────────────┘
+            │                           │
+            └─────────────┬─────────────┘
+                          │
+              ┌───────────▼───────────┐
+              │   FastAPI (port 8000) │
+              └───────────┬───────────┘
+                          │
+              ┌───────────▼────────────┐
+              │  LangGraph Orchestrator │
+              │     (Router Node)       │
+              └──┬───────────┬──────────┘
+                 │           │
+            ┌────┘       ┌───┘
+            ▼            ▼
+        RAG Node      SQL Node
                          │
-             ┌───────────▼───────────┐
-             │   FastAPI (port 8000) │
-             └───────────┬───────────┘
+                   ┌─────┴──────┐
+                   │            │
+               (SQL only)  (DASHBOARD)
+                   │            │
+                   │        Chart Node
+                   │            │
+                   │       Analysis Node
+                   │            │
+                   └─────┬──────┘
                          │
-             ┌───────────▼───────────┐
-             │  LangGraph Orchestrator│
-             │    (Router Node)       │
-             └──┬──────┬─────────┬───┘
-                │      │         │
-          ┌─────┘  ┌───┘     ┌───┘
-          ▼        ▼         ▼
-      RAG Node  SQL Node  Dashboard Node
-          │        │         │
-          ▼        ▼         ▼
-       Qdrant  PostgreSQL  Plotly
-      (6031    (Odoo DB)  (Graphiques)
-       chunks)
+                  Response Node
 ```
 
 ---
@@ -73,14 +83,16 @@
 | Catégorie | Technologie | Version |
 |-----------|-------------|---------|
 | LLM Local | Ollama | latest |
-| RAG / Routing | mistral | latest |
-| SQL | qwen2.5-coder | 7b |
+| RAG / Routing / Analysis | mistral | latest |
+| SQL / Chart config | qwen2.5-coder | 7b |
 | Embeddings | nomic-embed-text | latest |
 | Agents | LangGraph | 0.3.21 |
 | Vector Store | Qdrant | 1.17.0 |
 | Base de données | PostgreSQL | 14+ |
 | API | FastAPI | 0.110+ |
 | Graphiques | Plotly | 6.x |
+| Markdown | marked.js | latest |
+| Data | pandas | 2.x |
 | Tests | pytest | 9.x |
 | Odoo | Community | 16.0 |
 
@@ -187,11 +199,13 @@ GITHUB_TOKEN=ghp_...
 2. Ouvrir Odoo 16
 3. Cliquer sur la bulle violette en bas à droite
 4. Poser vos questions en français ou anglais
+5. Cliquer sur un graphique pour l'agrandir en modal
 
 ### Via le module Discuss
 
 1. Aller dans **Discuss → 🤖 Assistant IA**
 2. Envoyer un message directement dans le canal
+3. Le bot répond de manière asynchrone (sans bloquer l'interface)
 
 ### Via l'API REST
 
@@ -203,7 +217,7 @@ curl -X POST http://localhost:8000/chat \
 
 ### Exemples de questions
 
-```
+```bash
 # Agent RAG (Documentation)
 "Comment configurer la comptabilité dans Odoo ?"
 "How to create a sales order ?"
@@ -215,10 +229,12 @@ curl -X POST http://localhost:8000/chat \
 "Quel est le chiffre d'affaires total ?"
 "Combien d'employés avons-nous ?"
 
-# Agent Dashboard (Graphiques)
+# Agent Dashboard (Graphiques + Analyse business)
 "Montre-moi les ventes par mois en graphique"
 "Graphique des top 10 produits vendus"
 "Répartition des clients par pays"
+"Évolution du chiffre d'affaires"
+"Comparaison quantité vendue vs prix des produits"
 ```
 
 ---
@@ -241,7 +257,7 @@ curl -X POST http://localhost:8000/chat \
 
 ```json
 {
-  "question": "Combien de clients avons-nous ?",
+  "question": "Graphique des ventes par mois",
   "session_id": "optionnel"
 }
 ```
@@ -250,12 +266,12 @@ curl -X POST http://localhost:8000/chat \
 
 ```json
 {
-  "answer": "Vous avez 2 clients.",
-  "agent_used": "SQL",
+  "answer": "Voici le graphique...\n\n### 📊 Analyse\n...",
+  "agent_used": "DASHBOARD",
   "session_id": "uuid",
-  "sql_query": "SELECT COUNT(*) FROM res_partner WHERE customer_rank > 0",
+  "sql_query": "SELECT ...",
   "sources": null,
-  "chart_data": null
+  "chart_data": "{JSON Plotly}"
 }
 ```
 
@@ -266,52 +282,86 @@ curl -X POST http://localhost:8000/chat \
 ```
 odoo-chatbot/
 ├── agents/
-│   ├── graph.py                  # LangGraph - Graph principal
-│   ├── state.py                  # State partagé entre agents
+│   ├── graph.py                    # LangGraph - Graph principal
+│   ├── state.py                    # State partagé entre agents
 │   └── nodes/
-│       ├── router_node.py        # Routing RAG/SQL/DASHBOARD
-│       ├── rag_node.py           # Agent documentation
-│       ├── sql_node.py           # Agent base de données
-│       ├── dashboard_node.py     # Agent graphiques
-│       └── response_node.py      # Sauvegarde historique
+│       ├── router_node.py          # Routing RAG/SQL/DASHBOARD
+│       ├── rag_node.py             # Agent documentation
+│       ├── sql_node.py             # Agent base de données
+│       ├── chart_node.py           # Agent graphiques Plotly
+│       ├── analysis_node.py        # Agent analyse business
+│       └── response_node.py        # Sauvegarde historique
 ├── etl/
-│   ├── loader.py                 # Scraper GitHub docs
-│   ├── chunker.py                # Découpage RST intelligent
-│   ├── embedder.py               # Génération embeddings
-│   ├── schema_extractor.py       # Extraction schéma DB
-│   └── pipeline.py               # Orchestration ETL
+│   ├── loader.py                   # Scraper GitHub docs
+│   ├── chunker.py                  # Découpage RST intelligent
+│   ├── embedder.py                 # Génération embeddings
+│   ├── schema_extractor.py         # Extraction schéma DB
+│   └── pipeline.py                 # Orchestration ETL
 ├── tools/
-│   ├── retriever.py              # Recherche sémantique
-│   ├── sql_executor.py           # Exécution SQL sécurisée
-│   ├── schema_selector.py        # Sélection dynamique tables
-│   └── chart_generator.py        # Génération graphiques Plotly
+│   ├── retriever.py                # Recherche sémantique
+│   ├── sql_executor.py             # Exécution SQL sécurisée
+│   ├── schema_selector.py          # Sélection dynamique tables
+│   └── chart_generator.py          # Génération graphiques Plotly
 ├── db/
-│   ├── vector_store.py           # Opérations Qdrant
-│   ├── sql_connector.py          # Connexion PostgreSQL
-│   ├── schema_cache.py           # Cache schéma YAML
-│   └── conversation_store.py     # Historique sessions JSON
+│   ├── vector_store.py             # Opérations Qdrant
+│   ├── sql_connector.py            # Connexion PostgreSQL
+│   ├── schema_cache.py             # Cache schéma YAML
+│   └── conversation_store.py       # Historique sessions JSON
 ├── api/
-│   └── main.py                   # FastAPI endpoints
+│   └── main.py                     # FastAPI endpoints
 ├── odoo_module/
-│   └── chatbot_assistant/        # Module Odoo 16
+│   └── chatbot_assistant/          # Module Odoo 16
 │       ├── models/
-│       │   └── chatbot_discuss.py # Intégration Discuss (async)
+│       │   └── chatbot_discuss.py  # Intégration Discuss async
 │       └── static/src/
 │           ├── js/
-│           │   ├── chatbot_widget.js  # OWL Component
-│           │   ├── marked.min.js      # Markdown renderer
-│           │   └── plotly.min.js      # Graphiques
-│           ├── css/chatbot.css        # Styles Odoo 16
-│           └── xml/chatbot_template.xml # Templates OWL
+│           │   ├── chatbot_widget.js    # OWL Component
+│           │   ├── marked.min.js        # Markdown renderer
+│           │   └── plotly.min.js        # Graphiques interactifs
+│           ├── css/chatbot.css          # Styles Odoo 16 (#71639e)
+│           └── xml/chatbot_template.xml # Templates OWL + Modal
 ├── config/
-│   └── settings.py               # Pydantic settings
+│   └── settings.py                 # Pydantic settings
 ├── tests/
-│   ├── test_rag_agent.py         # 9/9 ✅
-│   ├── test_sql_agent.py         # 13/13 ✅
-│   └── test_orchestrator.py      # 10/10 ✅
+│   ├── test_rag_agent.py           # 9/9 ✅
+│   ├── test_sql_agent.py           # 13/13 ✅
+│   └── test_orchestrator.py        # 10/10 ✅
 └── scripts/
     ├── run_etl.py
     └── run_schema_extractor.py
+```
+
+---
+
+## Fonctionnalités Odoo Module
+
+### Bulle flottante
+- Positionnée en bas à droite sur toutes les pages Odoo
+- Rendu Markdown des réponses (marked.js)
+- Graphiques interactifs Plotly intégrés
+- Modal d'agrandissement au clic sur le graphique
+- Spinner animé avec logo Odoo pendant le chargement
+- Badge agent utilisé (RAG / SQL / DASHBOARD)
+- Suggestions de questions au démarrage
+- Historique de conversation par session
+
+### Module Discuss
+- Canal dédié **🤖 Assistant IA**
+- Réponses asynchrones (thread Python séparé)
+- Pas de blocage de l'interface Odoo
+
+---
+
+## LangGraph — Flow des agents
+
+```
+Question
+   │
+   ▼
+Router Node
+   ├── RAG ──────────────────────────── Response Node
+   ├── SQL ──────────────────────────── Response Node
+   └── DASHBOARD ── SQL Node ── Chart Node ── Analysis Node ── Response Node
 ```
 
 ---
@@ -337,9 +387,9 @@ Total                       → 32/32 ✅
 
 ```
 ✅ Phase 1 — RAG + SQL + API + Tests (32/32)
-✅ Phase 2 — LangGraph migration
-✅ Phase 2 — Intégration Odoo (bulle flottante + Discuss)
-🔄 Phase 3 — Dashboard & Graphiques (en cours)
+✅ Phase 2 — Migration LangGraph
+✅ Phase 2 — Intégration Odoo (bulle flottante + Discuss async)
+✅ Phase 3 — Dashboard & Graphiques (Plotly + Analyse business)
 🔜 Phase 4 — Prédiction ML (Prophet + scikit-learn)
 🔜 Phase 5 — Automatisation Odoo (XML-RPC)
 ```
