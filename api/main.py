@@ -4,7 +4,6 @@ from agents.state import AgentState
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from agents.orchestrator import Orchestrator
 from db.conversation_store import ConversationStore
 
 app = FastAPI(
@@ -21,7 +20,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-orchestrator = Orchestrator()
 store = ConversationStore()
 
 

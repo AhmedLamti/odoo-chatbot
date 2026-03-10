@@ -5,60 +5,71 @@ from agents.nodes.router_node import router_node
 from agents.nodes.rag_node import rag_node
 from agents.nodes.sql_node import sql_node
 from agents.nodes.response_node import response_node
-from agents.nodes.dashboard_node import dashboard_node
+from agents.nodes.chart_node import chart_node
+from agents.nodes.analysis_node import analysis_node
 
-from db.conversation_store import ConversationStore
 
 logger = logging.getLogger(__name__)
 
 
 def decide_next_node(state: AgentState) -> str:
-    """
-    Fonction de routing — retourne le nom du prochain node
-    """
     agent = state.get("agent_used", "RAG")
     logger.info(f"Routing → {agent}")
+    if agent == "DASHBOARD":
+        return "SQL"
     return agent
 
 
+def after_sql(state: AgentState) -> str:
+    if state.get("agent_used") == "DASHBOARD":
+        return "chart"
+    return "response"
+
+
 def build_graph() -> StateGraph:
-    """
-    Construit et compile le graph LangGraph
-    """
     graph = StateGraph(AgentState)
 
-    # ── Ajouter les nodes ──
+    # ── Nodes ──
     graph.add_node("router", router_node)
     graph.add_node("RAG", rag_node)
     graph.add_node("SQL", sql_node)
-    graph.add_node("DASHBOARD", dashboard_node)
-
+    graph.add_node("chart", chart_node)
     graph.add_node("response", response_node)
+    graph.add_node("chart_analysis", analysis_node)
 
-    # ── Point d'entrée ──
+    # ── Entry point ──
     graph.set_entry_point("router")
 
-    # ── Edges conditionnels depuis le router ──
+    # ── Router → RAG ou SQL ──
     graph.add_conditional_edges(
         "router",
         decide_next_node,
         {
             "RAG": "RAG",
             "SQL": "SQL",
-            "DASHBOARD": "DASHBOARD",
         }
     )
 
-    # ── Edges fixes vers response ──
+    # ── RAG → response ──
     graph.add_edge("RAG", "response")
-    graph.add_edge("SQL", "response")
-    graph.add_edge("DASHBOARD", "response")
 
-    # ── Point de sortie ──
+    # ── SQL → chart (DASHBOARD) ou response (SQL) ──
+    graph.add_conditional_edges(
+        "SQL",
+        after_sql,
+        {
+            "chart": "chart",
+            "response": "response",
+        }
+    )
+
+    # ── chart → analysis → response ──
+    graph.add_edge("chart", "chart_analysis")
+    graph.add_edge("chart_analysis", "response")
+    # ── response → END ──
     graph.add_edge("response", END)
 
     return graph.compile()
 
 
-# Instance globale du graph
 odoo_graph = build_graph()

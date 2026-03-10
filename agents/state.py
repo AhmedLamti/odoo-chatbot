@@ -23,6 +23,7 @@ class AgentState(TypedDict):
     # Dashboard Agent (Phase 3)
     chart_html: Optional[str]
     chart_type: Optional[str]
+    analysis: Optional[str]
 
     # ML Agent (Phase 4)
     prediction: Optional[Dict[str, Any]]

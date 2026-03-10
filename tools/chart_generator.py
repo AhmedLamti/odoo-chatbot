@@ -184,6 +184,44 @@ class ChartGenerator:
 
         return self._to_html(fig)
 
+    def _clean_data(self, data: list) -> list:
+        """Nettoie les valeurs JSONB Odoo → texte simple"""
+        from decimal import Decimal
+        cleaned = []
+        for row in data:
+            clean_row = {}
+            for key, value in row.items():
+                # Dict Python (JSONB Odoo)
+                if isinstance(value, dict):
+                    clean_row[key] = (
+                            value.get('fr_FR') or
+                            value.get('en_US') or
+                            next(iter(value.values()), str(value))
+                    )
+                # String JSON
+                elif isinstance(value, str) and value.startswith('{'):
+                    try:
+                        import json
+                        parsed = json.loads(value)
+                        if isinstance(parsed, dict):
+                            clean_row[key] = (
+                                    parsed.get('fr_FR') or
+                                    parsed.get('en_US') or
+                                    next(iter(parsed.values()), value)
+                            )
+                        else:
+                            clean_row[key] = value
+                    except Exception:
+                        clean_row[key] = value
+                # Decimal → float
+                elif isinstance(value, Decimal):
+                    clean_row[key] = float(value)
+                else:
+                    clean_row[key] = value
+            cleaned.append(clean_row)
+        return cleaned
+
+
     def generate_json(self, chart_type: str, data: list, title: str = "",
                       x_label: str = "", y_label: str = "") -> str:
         """Retourne le JSON Plotly au lieu de HTML"""
@@ -192,6 +230,7 @@ class ChartGenerator:
             return json.dumps({"error": "no_data", "title": title})
 
         try:
+            data = self._clean_data(data)
             df = pd.DataFrame(data)
             if chart_type == "bar":
                 fig = self._bar_figure(df, title, x_label, y_label)
@@ -290,3 +329,4 @@ class ChartGenerator:
             </div>
         </div>
         """
+

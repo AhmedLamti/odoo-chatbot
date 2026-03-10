@@ -59,6 +59,17 @@ A: SELECT name, amount_total FROM account_move WHERE move_type = 'out_invoice' A
 Q: Combien de commandes de vente avons-nous ?
 A: SELECT COUNT(*) FROM sale_order WHERE state IN ('sale', 'done')
 
+Q: Top produits vendus
+A: SELECT pt.name as produit, SUM(sol.product_uom_qty) as quantite 
+   FROM sale_order_line sol 
+   JOIN product_product pp ON sol.product_id = pp.id
+   JOIN product_template pt ON pp.product_tmpl_id = pt.id
+   JOIN sale_order so ON sol.order_id = so.id 
+   WHERE so.state IN ('sale','done') 
+   GROUP BY pt.name 
+   ORDER BY quantite DESC LIMIT 10
+
+
 Rules:
 - Generate ONLY SELECT queries, never INSERT/UPDATE/DELETE/DROP
 - NEVER use account_invoice, it does not exist in Odoo 16
