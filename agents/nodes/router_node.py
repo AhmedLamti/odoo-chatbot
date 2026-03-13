@@ -1,77 +1,74 @@
 import logging
-import requests
 from agents.state import AgentState
-from config.settings import settings
+from tools.cerebras_client import call_cerebras
 
 logger = logging.getLogger(__name__)
 
-ROUTER_PROMPT = """You are a router that classifies questions about Odoo.
+# Prompt minimaliste — le modèle doit juste choisir parmi 3 mots
+ROUTER_SYSTEM = """Classify the Odoo question. Reply with ONLY the agent name.
 
-DASHBOARD agent handles:
-- Questions asking for CHARTS, GRAPHS, VISUALIZATIONS
-- Questions with: graphique, chart, graph, visualise, montre, affiche, évolution
-- Questions about trends over time
-- Questions about distributions and proportions
-- Questions about top/ranking with visual context
+SQL: lists, counts, totals, amounts, unpaid, stock, employees data
+DASHBOARD: graphique, chart, courbe, visualise, évolution graphique
+RAG: comment faire, how to, comment configurer, documentation
 
-SQL agent handles:
-- Questions about counts and numbers (combien, how many, total)
-- Questions asking for lists of data
-- Questions about specific records
-
-RAG agent handles:
-- Questions starting with "Comment" (how to do something)
-- Questions about HOW to use or configure Odoo
-- Questions about documentation and features
-
-EXAMPLES:
-"Montre-moi les ventes par mois" → DASHBOARD
-"Graphique des ventes" → DASHBOARD
-"Évolution du stock" → DASHBOARD
-"Top 10 clients en graphique" → DASHBOARD
-"Répartition des produits" → DASHBOARD
-"Combien de clients ?" → SQL
-"Liste des factures" → SQL
-"Comment créer une facture ?" → RAG
-"How to install inventory ?" → RAG
-
-Reply with ONLY one word: RAG, SQL, or DASHBOARD
-"""
+Reply ONLY: SQL or DASHBOARD or RAG"""
 
 
 def router_node(state: AgentState) -> AgentState:
-    """
-    Node de routing — classifie la question et met à jour le state
-    """
     question = state["question"]
-    logger.info(f"Router Node - Question: '{question}'")
+    logger.info(f"Router - Question: '{question}'")
 
+    # Essayer d'abord le fallback par mots-clés (instantané)
+    keyword_result = _keyword_fallback(question)
+
+    # Si mots-clés suffisants → pas besoin d'appel API
+    if keyword_result != "SQL":  # SQL est le défaut, donc appeler API seulement si RAG ou DASHBOARD détecté
+        logger.info(f"Router (keywords) → {keyword_result}")
+        return {**state, "agent_used": keyword_result}
+
+    # Pour SQL vs RAG ambigus → appel Cerebras
     try:
-        response = requests.post(
-            f"{settings.ollama_base_url}/api/chat",
-            json={
-                "model": settings.ollama_llm_model,
-                "messages": [
-                    {"role": "system", "content": ROUTER_PROMPT},
-                    {"role": "user", "content": question},
-                ],
-                "stream": False,
-            },
-            timeout=30,
-        )
-        response.raise_for_status()
-        agent = response.json()["message"]["content"].strip().upper()
+        result = call_cerebras(
+            prompt=f"Question: {question}\nAgent:",
+            system=ROUTER_SYSTEM,
+            max_tokens=10,
+            temperature=0,
+        ).strip().upper()
 
-        if "DASHBOARD" in agent:
+        if "DASHBOARD" in result:
             agent_used = "DASHBOARD"
-        elif "SQL" in agent:
-            agent_used = "SQL"
-        else:
+        elif "RAG" in result:
             agent_used = "RAG"
+        else:
+            agent_used = "SQL"
 
     except Exception as e:
-        logger.error(f"Erreur router: {e}")
-        agent_used = "RAG"
+        logger.error(f"Erreur router API: {e}")
+        agent_used = keyword_result
 
     logger.info(f"Router → {agent_used}")
     return {**state, "agent_used": agent_used}
+
+
+def _keyword_fallback(question: str) -> str:
+    q = question.lower()
+
+    # DASHBOARD — mots très spécifiques
+    dashboard_words = [
+        "graphique", "chart", "courbe", "diagramme",
+        "visualise", "montre en graphique", "affiche en graphique"
+    ]
+    if any(w in q for w in dashboard_words):
+        return "DASHBOARD"
+
+    # RAG — mots très spécifiques
+    rag_words = [
+        "comment faire", "comment configurer", "comment créer",
+        "comment installer", "how to", "how do i",
+        "what is", "qu'est-ce que", "expliquer", "documentation"
+    ]
+    if any(w in q for w in rag_words):
+        return "RAG"
+
+    # Tout le reste → SQL (listes, chiffres, données)
+    return "SQL"

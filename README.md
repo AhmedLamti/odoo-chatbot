@@ -29,10 +29,10 @@
 
 **Odoo AI Platform** permet aux utilisateurs d'interagir avec leur système Odoo 16 en **langage naturel** :
 
-- 💬 **Poser des questions** sur la documentation Odoo (RAG)
-- 🗄️ **Interroger la base de données** sans écrire de SQL
-- 📊 **Visualiser des données** sous forme de graphiques interactifs Plotly
-- 📈 **Analyser automatiquement** les graphiques avec des insights business
+- 💬 **Poser des questions** sur la documentation Odoo (RAG via Google Gemini)
+- 🗄️ **Interroger la base de données** sans écrire de SQL (Cerebras)
+- 📊 **Visualiser des données** sous forme de graphiques interactifs Plotly (Groq)
+- 📈 **Analyser automatiquement** les graphiques avec des insights business (Groq)
 - 🤖 **Chatbot intégré** dans Odoo via bulle flottante et module Discuss
 
 ---
@@ -62,14 +62,17 @@
             ┌────┘       ┌───┘
             ▼            ▼
         RAG Node      SQL Node
+      (Gemini API)  (Cerebras API)
                          │
                    ┌─────┴──────┐
                    │            │
                (SQL only)  (DASHBOARD)
                    │            │
                    │        Chart Node
+                   │        (Groq API)
                    │            │
                    │       Analysis Node
+                   │        (Groq API)
                    │            │
                    └─────┬──────┘
                          │
@@ -80,19 +83,29 @@
 
 ## Stack technique
 
+### APIs LLM — Architecture Multi-API
+
+| Node | API | Modèle | Rôle |
+|------|-----|--------|------|
+| **Router** | Cerebras | llama3.1-8b | Routing ultra-rapide (keywords first) |
+| **RAG** | Google Gemini | gemini-2.0-flash | Compréhension documentation |
+| **SQL Gen** | Cerebras | llama3.1-8b | Génération requêtes SQL |
+| **SQL Interpret** | Cerebras | llama3.1-8b | Interprétation résultats |
+| **Chart** | Groq | llama-3.3-70b | Classification graphiques |
+| **Analysis** | Groq | llama-3.3-70b | Insights business |
+| **Embeddings** | Ollama | nomic-embed-text | Local, gratuit, stable |
+| **Schema LLM** | Cerebras | llama3.1-8b | Sélection tables dynamique |
+
+### Infrastructure
+
 | Catégorie | Technologie | Version |
 |-----------|-------------|---------|
-| LLM Local | Ollama | latest |
-| RAG / Routing / Analysis | mistral | latest |
-| SQL / Chart config | qwen2.5-coder | 7b |
-| Embeddings | nomic-embed-text | latest |
 | Agents | LangGraph | 0.3.21 |
 | Vector Store | Qdrant | 1.17.0 |
 | Base de données | PostgreSQL | 14+ |
 | API | FastAPI | 0.110+ |
 | Graphiques | Plotly | 6.x |
 | Markdown | marked.js | latest |
-| Data | pandas | 2.x |
 | Tests | pytest | 9.x |
 | Odoo | Community | 16.0 |
 
@@ -105,8 +118,9 @@
 - Python 3.12+
 - Conda
 - Docker
-- Ollama
+- Ollama (pour les embeddings uniquement)
 - Odoo 16 Community
+- Clés API : Cerebras, Google Gemini, Groq
 
 ### 1. Cloner le projet
 
@@ -132,11 +146,9 @@ docker run -d --name qdrant \
   qdrant/qdrant
 ```
 
-### 4. Télécharger les modèles Ollama
+### 4. Télécharger le modèle d'embeddings
 
 ```bash
-ollama pull mistral
-ollama pull qwen2.5-coder:7b
 ollama pull nomic-embed-text
 ```
 
@@ -144,7 +156,7 @@ ollama pull nomic-embed-text
 
 ```bash
 cp .env.example .env
-# Éditer .env avec vos paramètres
+# Éditer .env avec vos clés API et paramètres
 ```
 
 ### 6. Lancer le pipeline ETL
@@ -157,7 +169,8 @@ python scripts/run_etl.py
 ### 7. Démarrer l'API
 
 ```bash
-uvicorn api.main:app --host 0.0.0.0 --port 8000 --reload
+conda activate odoo-chatbot
+python -m uvicorn api.main:app --host 0.0.0.0 --port 8000 --reload
 ```
 
 ---
@@ -167,25 +180,35 @@ uvicorn api.main:app --host 0.0.0.0 --port 8000 --reload
 Créer un fichier `.env` à la racine :
 
 ```env
-# Ollama
+# ── Ollama (embeddings uniquement) ──────────────
 OLLAMA_BASE_URL=http://localhost:11434
-OLLAMA_LLM_MODEL=mistral:latest
-OLLAMA_SQL_MODEL=qwen2.5-coder:7b
 OLLAMA_EMBED_MODEL=nomic-embed-text
 
-# PostgreSQL (Odoo)
+# ── Cerebras (Router + SQL) ──────────────────────
+CEREBRAS_API_KEY=csk-...
+CEREBRAS_MODEL=llama3.1-8b
+
+# ── Google Gemini (RAG) ──────────────────────────
+GEMINI_API_KEY=AIza...
+GEMINI_MODEL=gemini-2.0-flash
+
+# ── Groq (Chart + Analysis) ──────────────────────
+GROQ_API_KEY=gsk_...
+GROQ_MODEL=llama-3.3-70b-versatile
+
+# ── PostgreSQL (Odoo) ────────────────────────────
 POSTGRES_HOST=localhost
 POSTGRES_PORT=5432
 POSTGRES_DB=Community16
 POSTGRES_USER=odoo
 POSTGRES_PASSWORD=odoo
 
-# Qdrant
+# ── Qdrant ───────────────────────────────────────
 QDRANT_HOST=localhost
 QDRANT_PORT=6333
 QDRANT_COLLECTION=odoo_docs
 
-# GitHub (pour ETL)
+# ── GitHub (pour ETL docs) ───────────────────────
 GITHUB_TOKEN=ghp_...
 ```
 
@@ -205,7 +228,7 @@ GITHUB_TOKEN=ghp_...
 
 1. Aller dans **Discuss → 🤖 Assistant IA**
 2. Envoyer un message directement dans le canal
-3. Le bot répond de manière asynchrone (sans bloquer l'interface)
+3. Le bot répond de manière asynchrone
 
 ### Via l'API REST
 
@@ -218,23 +241,26 @@ curl -X POST http://localhost:8000/chat \
 ### Exemples de questions
 
 ```bash
-# Agent RAG (Documentation)
+# Agent RAG — Documentation (Gemini)
 "Comment configurer la comptabilité dans Odoo ?"
 "How to create a sales order ?"
 "Comment installer le module inventaire ?"
 
-# Agent SQL (Base de données)
+# Agent SQL — Base de données (Cerebras)
 "Combien de clients avons-nous ?"
 "Liste des factures impayées"
 "Quel est le chiffre d'affaires total ?"
-"Combien d'employés avons-nous ?"
+"Meilleures commandes clients"
+"Vendeurs par chiffre d'affaires"
+"Stock disponible par produit"
+"Employés par département"
 
-# Agent Dashboard (Graphiques + Analyse business)
-"Montre-moi les ventes par mois en graphique"
-"Graphique des top 10 produits vendus"
+# Agent Dashboard — Graphiques + Analyse (Groq)
+"Graphique des ventes par mois"
+"Courbe d'évolution du chiffre d'affaires"
 "Répartition des clients par pays"
-"Évolution du chiffre d'affaires"
-"Comparaison quantité vendue vs prix des produits"
+"Top 10 produits vendus en graphique"
+"Graphique des employés par département"
 ```
 
 ---
@@ -282,26 +308,33 @@ curl -X POST http://localhost:8000/chat \
 ```
 odoo-chatbot/
 ├── agents/
-│   ├── graph.py                    # LangGraph - Graph principal
+│   ├── graph.py                    # LangGraph — orchestration
 │   ├── state.py                    # State partagé entre agents
 │   └── nodes/
-│       ├── router_node.py          # Routing RAG/SQL/DASHBOARD
-│       ├── rag_node.py             # Agent documentation
-│       ├── sql_node.py             # Agent base de données
-│       ├── chart_node.py           # Agent graphiques Plotly
-│       ├── analysis_node.py        # Agent analyse business
+│       ├── router_node.py          # Routing keywords-first + Cerebras
+│       ├── rag_node.py             # Agent documentation → Gemini
+│       ├── sql_node.py             # Agent SQL → Cerebras
+│       ├── chart_node.py           # Agent graphiques → Groq
+│       ├── analysis_node.py        # Agent analyse business → Groq
 │       └── response_node.py        # Sauvegarde historique
+├── tools/
+│   ├── cerebras_client.py          # Client Cerebras centralisé
+│   ├── gemini_client.py            # Client Google Gemini
+│   ├── groq_client.py              # Client Groq
+│   ├── retriever.py                # Recherche sémantique Qdrant
+│   ├── sql_executor.py             # Exécution SQL sécurisée
+│   ├── schema_selector.py          # Sélection dynamique tables + sémantique
+│   └── chart_generator.py          # Génération graphiques Plotly
+├── config/
+│   ├── settings.py                 # Pydantic settings (multi-API)
+│   ├── schema_descriptions.py      # Descriptions sémantiques colonnes
+│   └── few_shot_examples.py        # Exemples SQL + Dashboard
 ├── etl/
 │   ├── loader.py                   # Scraper GitHub docs
 │   ├── chunker.py                  # Découpage RST intelligent
-│   ├── embedder.py                 # Génération embeddings
-│   ├── schema_extractor.py         # Extraction schéma DB
+│   ├── embedder.py                 # Génération embeddings Ollama
+│   ├── schema_extractor.py         # Extraction schéma PostgreSQL
 │   └── pipeline.py                 # Orchestration ETL
-├── tools/
-│   ├── retriever.py                # Recherche sémantique
-│   ├── sql_executor.py             # Exécution SQL sécurisée
-│   ├── schema_selector.py          # Sélection dynamique tables
-│   └── chart_generator.py          # Génération graphiques Plotly
 ├── db/
 │   ├── vector_store.py             # Opérations Qdrant
 │   ├── sql_connector.py            # Connexion PostgreSQL
@@ -318,17 +351,36 @@ odoo-chatbot/
 │           │   ├── chatbot_widget.js    # OWL Component
 │           │   ├── marked.min.js        # Markdown renderer
 │           │   └── plotly.min.js        # Graphiques interactifs
-│           ├── css/chatbot.css          # Styles Odoo 16 (#71639e)
+│           ├── css/chatbot.css          # Styles Odoo 16
 │           └── xml/chatbot_template.xml # Templates OWL + Modal
-├── config/
-│   └── settings.py                 # Pydantic settings
 ├── tests/
 │   ├── test_rag_agent.py           # 9/9 ✅
 │   ├── test_sql_agent.py           # 13/13 ✅
 │   └── test_orchestrator.py        # 10/10 ✅
-└── scripts/
-    ├── run_etl.py
-    └── run_schema_extractor.py
+├── scripts/
+│   ├── run_etl.py
+│   └── run_schema_extractor.py
+├── data/
+│   ├── schema.yaml                 # Schéma PostgreSQL extrait
+│   └── conversations/              # Historique sessions JSON
+├── .env.example
+├── requirements.txt
+└── README.md
+```
+
+---
+
+## LangGraph — Flow des agents
+
+```
+Question
+   │
+   ▼
+Router Node (keywords-first → Cerebras si ambigu)
+   ├── RAG ──── Gemini ────────────────────────── Response Node
+   ├── SQL ──── Cerebras ──────────────────────── Response Node
+   └── DASHBOARD ── Cerebras ── Groq ── Groq ──── Response Node
+                   (SQL gen)  (chart) (analysis)
 ```
 
 ---
@@ -340,7 +392,7 @@ odoo-chatbot/
 - Rendu Markdown des réponses (marked.js)
 - Graphiques interactifs Plotly intégrés
 - Modal d'agrandissement au clic sur le graphique
-- Spinner animé avec logo Odoo pendant le chargement
+- Spinner animé pendant le chargement
 - Badge agent utilisé (RAG / SQL / DASHBOARD)
 - Suggestions de questions au démarrage
 - Historique de conversation par session
@@ -349,20 +401,6 @@ odoo-chatbot/
 - Canal dédié **🤖 Assistant IA**
 - Réponses asynchrones (thread Python séparé)
 - Pas de blocage de l'interface Odoo
-
----
-
-## LangGraph — Flow des agents
-
-```
-Question
-   │
-   ▼
-Router Node
-   ├── RAG ──────────────────────────── Response Node
-   ├── SQL ──────────────────────────── Response Node
-   └── DASHBOARD ── SQL Node ── Chart Node ── Analysis Node ── Response Node
-```
 
 ---
 
@@ -387,9 +425,12 @@ Total                       → 32/32 ✅
 
 ```
 ✅ Phase 1 — RAG + SQL + API + Tests (32/32)
-✅ Phase 2 — Migration LangGraph
+✅ Phase 2 — Migration LangGraph 0.3.21
 ✅ Phase 2 — Intégration Odoo (bulle flottante + Discuss async)
 ✅ Phase 3 — Dashboard & Graphiques (Plotly + Analyse business)
+✅ Phase 3 — Architecture Multi-API (Cerebras + Gemini + Groq)
+✅ Phase 3 — Schema sémantique (descriptions colonnes métier)
+✅ Phase 3 — Router keywords-first (latence réduite)
 🔜 Phase 4 — Prédiction ML (Prophet + scikit-learn)
 🔜 Phase 5 — Automatisation Odoo (XML-RPC)
 ```

@@ -1,57 +1,36 @@
-from agents.state import AgentState
-from tools.chart_generator import ChartGenerator
 import logging
-import requests
-from config.settings import settings
+import json
+import re
+from agents.state import AgentState
+from tools.groq_client import call_groq
+from tools.chart_generator import ChartGenerator
+from config.few_shot_examples import DASHBOARD_FEW_SHOT_EXAMPLES
 
 logger = logging.getLogger(__name__)
 
-CHART_CONFIG_PROMPT = """You are a data visualization expert.
-Given a question and SQL results, determine the best chart configuration.
+CHART_SYSTEM = f"""You are a data visualization expert for Odoo 16.
+Given a question and available columns, return chart configuration.
 
-Respond ONLY with valid JSON:
-{
-  "chart_type": "bar|line|pie|scatter",
-  "title": "Chart title",
-  "x_label": "X axis label",
-  "y_label": "Y axis label"
-}
+{DASHBOARD_FEW_SHOT_EXAMPLES}
 
 RULES:
-- bar   → comparisons, rankings, categories
-- line  → time series, trends, evolution
-- pie   → proportions, distributions
-- scatter → correlations
+- "line" for time series, trends, evolution over months
+- "bar" for comparisons, rankings, top N
+- "pie" for distributions, proportions
+- "scatter" for correlations between 2 numeric values
+- x_column and y_column MUST be exact column names from the list provided
+- title in same language as question
 
-EXAMPLES:
-Q: Top produits vendus
-{"title": "Top 10 produits vendus", "x_label": "Produit", "y_label": "Quantité"}
-
-Q: Répartition clients par pays
-{"chart_type": "pie", "title": "Répartition clients par pays", "x_label": "", "y_label": ""}
-
-Q: Ventes par mois
-{"chart_type": "line", "title": "Évolution des ventes par mois", "x_label": "Mois", "y_label": "CA (€)"}
-
-Q: Top produits vendus
-{  "chart_type": "bar",
-  "title": "Top 10 produits vendus",
-  "x_label": "Produit",
-  "y_label": "Quantité"
-}
+Return ONLY valid JSON:
+{{"chart_type": "bar|line|pie|scatter", "x_column": "col", "y_column": "col", "title": "..."}}
 """
 
 
 def chart_node(state: AgentState) -> AgentState:
-    """
-    Node Chart — reçoit les données SQL et génère le graphique
-    """
     question = state["question"]
     sql_result = state.get("sql_result")
-
     logger.info(f"Chart Node - Question: '{question}'")
 
-    # Pas de données SQL → pas de graphique
     if not sql_result or not sql_result.get("success"):
         return {**state, "chart_html": None}
 
@@ -59,45 +38,29 @@ def chart_node(state: AgentState) -> AgentState:
     if not data:
         return {**state, "chart_html": None}
 
-    # Demander au LLM juste la config du graphique
+    columns = list(data[0].keys())
+    logger.info(f"Colonnes: {columns}")
+
     try:
-        response = requests.post(
-            f"{settings.ollama_base_url}/api/chat",
-            json={
-                "model": settings.ollama_llm_model,
-                "messages": [
-                    {"role": "system", "content": CHART_CONFIG_PROMPT},
-                    {
-                        "role": "user",
-                        "content": f"Question: {question}\nColumns: {list(data[0].keys())}",
-                    },
-                ],
-                "stream": False,
-            },
-            timeout=60,
+        raw = call_groq(
+            prompt=f"Question: {question}\nAvailable columns: {columns}",
+            system=CHART_SYSTEM,
+            max_tokens=150,
+            temperature=0,
         )
-        response.raise_for_status()
-        raw = response.json()["message"]["content"].strip()
         config = _extract_json(raw)
-
+        logger.info(f"Chart config: {config}")
     except Exception as e:
-        logger.error(f"Erreur config graphique: {e}")
-        # Fallback config
-        config = {
-            "chart_type": "bar",
-            "title": question,
-            "x_label": "",
-            "y_label": "",
-        }
+        logger.error(f"Erreur chart config: {e}")
+        config = _fallback_config(question, columns)
 
-    # Générer le graphique
     chart_gen = ChartGenerator()
     chart_data = chart_gen.generate_json(
         chart_type=config.get("chart_type", "bar"),
         data=data,
         title=config.get("title", question),
-        x_label=config.get("x_label", ""),
-        y_label=config.get("y_label", ""),
+        x_label=config.get("x_column", columns[0] if columns else ""),
+        y_label=config.get("y_column", columns[1] if len(columns) > 1 else ""),
     )
 
     return {
@@ -107,9 +70,23 @@ def chart_node(state: AgentState) -> AgentState:
     }
 
 
-def _extract_json(raw: str) -> dict:
-    import json, re
+def _fallback_config(question: str, columns: list) -> dict:
+    q = question.lower()
+    if any(w in q for w in ["courbe", "évolution", "mois", "tendance", "line"]):
+        chart_type = "line"
+    elif any(w in q for w in ["répartition", "proportion", "pie"]):
+        chart_type = "pie"
+    else:
+        chart_type = "bar"
+    return {
+        "chart_type": chart_type,
+        "x_column": columns[0] if columns else "x",
+        "y_column": columns[1] if len(columns) > 1 else columns[0],
+        "title": question,
+    }
 
+
+def _extract_json(raw: str) -> dict:
     raw = re.sub(r"```json\s*", "", raw)
     raw = re.sub(r"```\s*", "", raw).strip()
     match = re.search(r"\{.*\}", raw, re.DOTALL)

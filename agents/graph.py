@@ -17,7 +17,10 @@ def decide_next_node(state: AgentState) -> str:
     logger.info(f"Routing → {agent}")
     if agent == "DASHBOARD":
         return "SQL"
-    return agent
+    elif agent == "SQL":
+        return "SQL"
+    else:
+        return "RAG"
 
 
 def after_sql(state: AgentState) -> str:
