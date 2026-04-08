@@ -3,9 +3,6 @@ Few-shot examples générés depuis schema.yaml réel
 À coller dans sql_node.py et chart_node.py
 """
 
-# ============================================================
-# SQL_FEW_SHOT_EXAMPLES — à mettre dans sql_node.py
-# ============================================================
 
 SQL_FEW_SHOT_EXAMPLES = """
 EXAMPLES (use EXACT column names from schema):
@@ -296,9 +293,6 @@ Q: Opportunités par étape / pipeline CRM
 → title: Pipeline CRM par étape
 """
 
-# ============================================================
-# RÈGLES CRITIQUES — à ajouter dans SQL_SYSTEM_PROMPT
-# ============================================================
 
 SQL_CRITICAL_RULES = """
 CRITICAL RULES:

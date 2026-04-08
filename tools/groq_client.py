@@ -1,13 +1,17 @@
 """
-Client Groq — Chart + Analysis
+Client Groq — Chart + Analysis + RAG
+avec retry automatique (3 tentatives, backoff exponentiel)
 """
+
 import logging
 from groq import Groq
 from config.settings import settings
+from utils.retry import with_retry
 
 logger = logging.getLogger(__name__)
 
 
+@with_retry(max_attempts=3, delay=1.0, backoff=2.0)
 def call_groq(
     prompt: str,
     system: str,

@@ -1,13 +1,17 @@
 """
 Client Cerebras — Router + SQL
+avec retry automatique (3 tentatives, backoff exponentiel)
 """
+
 import logging
 from cerebras.cloud.sdk import Cerebras
 from config.settings import settings
+from utils.retry import with_retry
 
 logger = logging.getLogger(__name__)
 
 
+@with_retry(max_attempts=3, delay=1.0, backoff=2.0)
 def call_cerebras(
     prompt: str,
     system: str,

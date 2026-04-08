@@ -40,6 +40,17 @@ class Settings(BaseSettings):
     # ── GitHub ───────────────────────────────────────────────
     github_token: str
 
+    # ── Odoo XML-RPC (Phase 5 — Automatisation) ─────────────
+    odoo_url: str = "http://localhost:8071"
+    odoo_db: str = ""
+    odoo_username: str = "admin"
+    odoo_password: str = "admin"
+
+    # ── LangSmith (optionnel — monitoring LangGraph) ─────────
+    langchain_api_key: str = ""
+    langchain_tracing_v2: str = "false"
+    langchain_project: str = "odoo-chatbot"
+
     # ── App ──────────────────────────────────────────────────
     app_env: str = "development"
     log_level: str = "INFO"

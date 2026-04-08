@@ -15,18 +15,51 @@ class OdooDocLoader:
     REPO_NAME = "odoo/documentation"
     BRANCH = "16.0"
     DOC_PATH = "content"
-    CACHE_DIR = Path("data/raw")  # sauvegarde locale
+    CACHE_DIR = Path("data/raw")
+
+    # Dossiers à exclure — contrats légaux, release notes, conf
+    EXCLUDED_DIRS = {
+        "legal",
+        "releases",
+        "contributing",
+        "administration/odoo_accounts",
+    }
+
+    # Fichiers à exclure — contrats, CGU, accords partenaires
+    EXCLUDED_FILENAME_PATTERNS = [
+        "agreement",
+        "enterprise_agreement",
+        "partnership_agreement",
+        "terms_of_service",
+        "privacy_policy",
+        "CHANGELOG",
+    ]
 
     def __init__(self):
         self.github = Github(settings.github_token)
         self.repo = self.github.get_repo(self.REPO_NAME)
         self.CACHE_DIR.mkdir(parents=True, exist_ok=True)
 
+    def _is_excluded(self, path: str, filename: str) -> bool:
+        """Retourne True si le fichier doit être exclu de l'index"""
+        # Exclure les dossiers légaux/non-fonctionnels
+        for excluded_dir in self.EXCLUDED_DIRS:
+            if f"/{excluded_dir}/" in path or path.startswith(f"{self.DOC_PATH}/{excluded_dir}/"):
+                return True
+
+        # Exclure les fichiers par pattern de nom
+        name_lower = filename.lower().replace(".rst", "")
+        for pattern in self.EXCLUDED_FILENAME_PATTERNS:
+            if pattern.lower() in name_lower:
+                return True
+
+        return False
+
     def get_all_rst_files(self) -> list[dict]:
         logger.info(f"Récupération de la liste des fichiers .rst...")
         rst_files = []
         self._walk_directory(self.DOC_PATH, rst_files)
-        logger.info(f"{len(rst_files)} fichiers .rst trouvés")
+        logger.info(f"{len(rst_files)} fichiers .rst trouvés (après filtrage)")
         return rst_files
 
     def _walk_directory(self, path: str, rst_files: list):
@@ -36,6 +69,10 @@ class OdooDocLoader:
                 if item.type == "dir":
                     self._walk_directory(item.path, rst_files)
                 elif item.type == "file" and item.name.endswith(".rst"):
+                    # Appliquer le filtre d'exclusion
+                    if self._is_excluded(item.path, item.name):
+                        logger.debug(f"Exclu (légal/non-fonctionnel): {item.path}")
+                        continue
                     rst_files.append({
                         "path": item.path,
                         "name": item.name,
@@ -50,7 +87,6 @@ class OdooDocLoader:
             logger.error(f"Erreur sur {path}: {e}")
 
     def _get_cache_path(self, file_path: str) -> Path:
-        """Retourne le chemin local du fichier caché"""
         safe_path = file_path.replace("/", "_")
         return self.CACHE_DIR / safe_path
 
@@ -66,12 +102,9 @@ class OdooDocLoader:
         return cache_path.read_text(encoding="utf-8")
 
     def get_file_content(self, file_info: dict) -> str:
-        """Récupère le contenu — depuis le cache ou GitHub"""
-        # Si déjà en cache → lecture locale
         if self._is_cached(file_info["path"]):
             return self._load_from_cache(file_info["path"])
 
-        # Sinon → téléchargement GitHub + mise en cache
         try:
             file = self.repo.get_contents(file_info["path"], ref=self.BRANCH)
             content = file.decoded_content.decode("utf-8")
@@ -82,7 +115,6 @@ class OdooDocLoader:
             return ""
 
     def load_all(self) -> list[dict]:
-        """Charge tous les fichiers (cache ou GitHub)"""
         rst_files = self.get_all_rst_files()
         documents = []
 
@@ -104,15 +136,13 @@ class OdooDocLoader:
                     }
                 })
 
-            # Pause seulement si on télécharge depuis GitHub
             if not cached and i % 30 == 0 and i > 0:
                 time.sleep(2)
 
-        logger.info(f"{len(documents)} documents chargés")
+        logger.info(f"{len(documents)} documents chargés (légaux exclus)")
         return documents
 
     def get_cache_stats(self):
-        """Stats sur le cache local"""
         cached_files = list(self.CACHE_DIR.glob("*.rst"))
         print(f"Fichiers en cache : {len(cached_files)}")
         total_size = sum(f.stat().st_size for f in cached_files)

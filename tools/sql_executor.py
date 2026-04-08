@@ -1,52 +1,54 @@
 import logging
 import re
 from db.sql_connector import SQLConnector
+from utils.retry import with_retry
 
 logger = logging.getLogger(__name__)
 
-# Opérations interdites
 FORBIDDEN_KEYWORDS = [
-    "DROP", "DELETE", "TRUNCATE", "INSERT",
-    "UPDATE", "ALTER", "CREATE", "GRANT", "REVOKE"
+    "DROP",
+    "DELETE",
+    "TRUNCATE",
+    "INSERT",
+    "UPDATE",
+    "ALTER",
+    "CREATE",
+    "GRANT",
+    "REVOKE",
 ]
 
 
 class SQLExecutor:
     """
-    Exécute les requêtes SQL générées par le SQL Agent
-    avec validation de sécurité
+    Exécute les requêtes SQL avec validation de sécurité et retry PostgreSQL
     """
 
     def __init__(self):
         self.connector = SQLConnector()
 
     def validate_query(self, query: str) -> tuple[bool, str]:
-        """
-        Valide que la requête est safe (SELECT uniquement)
-        """
         query_upper = query.upper().strip()
 
-        # Doit commencer par SELECT
-        if not query_upper.startswith("SELECT"):
+        # Doit commencer par SELECT (avec ou sans parenthèse pour UNION ALL)
+        cleaned = query_upper.lstrip("(")
+        if not cleaned.startswith("SELECT"):
             return False, "Seules les requêtes SELECT sont autorisées"
 
-        # Vérifier les mots clés interdits
         for keyword in FORBIDDEN_KEYWORDS:
-            pattern = r'\b' + keyword + r'\b'
+            pattern = r"\b" + keyword + r"\b"
             if re.search(pattern, query_upper):
                 return False, f"Mot clé interdit détecté: {keyword}"
 
         return True, "OK"
 
+    @with_retry(max_attempts=3, delay=0.5, backoff=2.0)
+    def _execute_query(self, query: str) -> list:
+        """Exécution avec retry sur les erreurs PostgreSQL transitoires"""
+        return self.connector.execute_query(query)
+
     def execute(self, query: str) -> dict:
-        """
-        Valide et exécute une requête SQL
-        Retourne les résultats avec métadonnées
-        """
-        # Nettoyage
         query = query.strip().rstrip(";") + ";"
 
-        # Validation
         is_valid, message = self.validate_query(query)
         if not is_valid:
             logger.warning(f"Requête rejetée: {message}")
@@ -58,10 +60,9 @@ class SQLExecutor:
                 "row_count": 0,
             }
 
-        # Exécution
         try:
             logger.info(f"Exécution SQL: {query}")
-            results = self.connector.execute_query(query)
+            results = self._execute_query(query)
             logger.info(f"{len(results)} lignes retournées")
             return {
                 "success": True,
@@ -71,7 +72,7 @@ class SQLExecutor:
                 "error": None,
             }
         except Exception as e:
-            logger.error(f"Erreur SQL: {e}")
+            logger.error(f"Erreur exécution query: {e}")
             return {
                 "success": False,
                 "error": str(e),
@@ -81,9 +82,6 @@ class SQLExecutor:
             }
 
     def format_results(self, execution_result: dict) -> str:
-        """
-        Formate les résultats SQL pour le LLM
-        """
         if not execution_result["success"]:
             return f"Erreur SQL: {execution_result['error']}"
 
@@ -91,12 +89,10 @@ class SQLExecutor:
         if not results:
             return "La requête n'a retourné aucun résultat."
 
-        # Header
         columns = list(results[0].keys())
         lines = [" | ".join(columns)]
         lines.append("-" * len(lines[0]))
 
-        # Rows (max 50 pour éviter les réponses trop longues)
         for row in results[:50]:
             lines.append(" | ".join(str(v) for v in row.values()))
 
