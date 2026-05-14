@@ -1,0 +1,3988 @@
+model,name,state,transient,info
+_unknown,Unknown,base,False,"
+    Abstract model used as a substitute for relational fields with an unknown
+    comodel.
+    "
+account.account,Account,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+account.account.tag,Account Tag,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+account.account.template,Templates for Accounts,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+account.accrued.orders.wizard,Accrued Orders Wizard,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+account.analytic.account,Analytic Account,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+account.analytic.applicability,Analytic Plan's Applicabilities,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+account.analytic.distribution.model,Analytic Distribution Model,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+account.analytic.line,Analytic Line,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+account.analytic.plan,Analytic Plans,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+account.automatic.entry.wizard,Create Automatic Entries,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+account.bank.statement,Bank Statement,base,False,Populate factory part for account.bank.statements.
+account.bank.statement.line,Bank Statement Line,base,False,Populate factory part for account.bank.statements.line.
+account.cash.rounding,Account Cash Rounding,base,False,"
+    In some countries, we need to be able to make appear on an invoice a rounding line, appearing there only because the
+    smallest coinage has been removed from the circulation. For example, in Switzerland invoices have to be rounded to
+    0.05 CHF because coins of 0.01 CHF and 0.02 CHF aren't used anymore.
+    see https://en.wikipedia.org/wiki/Cash_rounding for more details.
+    "
+account.chart.template,Account Chart Template,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+account.edi.common,"Common functions for EDI documents: generate the data, the constraints, etc",base,False,"
+    Updates the base class to support setting xids directly in create by
+    providing an ""id"" key (otherwise stripped by create) during an import
+    (which should strip 'id' from the input data anyway)
+    "
+account.edi.document,Electronic Document for an account.move,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+account.edi.format,EDI format,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+account.edi.xml.cii,Factur-x/XRechnung CII 2.2.0,base,False,"
+    Updates the base class to support setting xids directly in create by
+    providing an ""id"" key (otherwise stripped by create) during an import
+    (which should strip 'id' from the input data anyway)
+    "
+account.edi.xml.ubl_20,UBL 2.0,base,False,"
+    Updates the base class to support setting xids directly in create by
+    providing an ""id"" key (otherwise stripped by create) during an import
+    (which should strip 'id' from the input data anyway)
+    "
+account.edi.xml.ubl_21,UBL 2.1,base,False,"
+    Updates the base class to support setting xids directly in create by
+    providing an ""id"" key (otherwise stripped by create) during an import
+    (which should strip 'id' from the input data anyway)
+    "
+account.edi.xml.ubl_a_nz,A-NZ BIS Billing 3.0,base,False,"
+    Updates the base class to support setting xids directly in create by
+    providing an ""id"" key (otherwise stripped by create) during an import
+    (which should strip 'id' from the input data anyway)
+    "
+account.edi.xml.ubl_bis3,UBL BIS Billing 3.0.12,base,False,"
+    Updates the base class to support setting xids directly in create by
+    providing an ""id"" key (otherwise stripped by create) during an import
+    (which should strip 'id' from the input data anyway)
+    "
+account.edi.xml.ubl_de,BIS3 DE (XRechnung),base,False,"
+    Updates the base class to support setting xids directly in create by
+    providing an ""id"" key (otherwise stripped by create) during an import
+    (which should strip 'id' from the input data anyway)
+    "
+account.edi.xml.ubl_efff,E-FFF (BE),base,False,"
+    Updates the base class to support setting xids directly in create by
+    providing an ""id"" key (otherwise stripped by create) during an import
+    (which should strip 'id' from the input data anyway)
+    "
+account.edi.xml.ubl_nl,SI-UBL 2.0 (NLCIUS),base,False,"
+    Updates the base class to support setting xids directly in create by
+    providing an ""id"" key (otherwise stripped by create) during an import
+    (which should strip 'id' from the input data anyway)
+    "
+account.edi.xml.ubl_sg,SG BIS Billing 3.0,base,False,"
+    Updates the base class to support setting xids directly in create by
+    providing an ""id"" key (otherwise stripped by create) during an import
+    (which should strip 'id' from the input data anyway)
+    "
+account.financial.year.op,Opening Balance of Financial Year,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+account.fiscal.position,Fiscal Position,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+account.fiscal.position.account,Accounts Mapping of Fiscal Position,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+account.fiscal.position.account.template,Accounts Mapping Template of Fiscal Position,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+account.fiscal.position.tax,Tax Mapping of Fiscal Position,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+account.fiscal.position.tax.template,Tax Mapping Template of Fiscal Position,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+account.fiscal.position.template,Template for Fiscal Position,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+account.full.reconcile,Full Reconcile,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+account.group,Account Group,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+account.group.template,Template for Account Groups,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+account.incoterms,Incoterms,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+account.invoice.report,Invoices Statistics,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+account.invoice.send,Account Invoice Send,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+account.journal,Journal,base,False,Populate factory part for account.journal.
+account.journal.group,Account Journal Group,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+account.move,Journal Entry,base,False,"Populate factory part for account.move.
+
+    Because of the complicated nature of the interraction of account.move and account.move.line,
+    both models are actualy generated in the same factory.
+    "
+account.move.line,Journal Item,base,False, Override AccountInvoice_line to add the link to the purchase order line it is related to
+account.move.reversal,Account Move Reversal,base,True,"
+    Account move reversal wizard, it cancel an account move by reversing it.
+    "
+account.partial.reconcile,Partial Reconcile,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+account.payment,Payments,base,False,Populate factory part for account.payment.
+account.payment.method,Payment Methods,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+account.payment.method.line,Payment Methods,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+account.payment.register,Register Payment,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+account.payment.term,Payment Terms,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+account.payment.term.line,Payment Terms Line,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+account.reconcile.model,Preset to create journal entries during a invoices and payments matching,base,False,Populate factory part for account.reconcile.model.
+account.reconcile.model.line,Rules for the reconciliation model,base,False,Populate factory part for account.reconcile.model.line.
+account.reconcile.model.line.template,Reconcile Model Line Template,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+account.reconcile.model.partner.mapping,Partner mapping for reconciliation models,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+account.reconcile.model.template,Reconcile Model Template,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+account.report,Accounting Report,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+account.report.column,Accounting Report Column,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+account.report.expression,Accounting Report Expression,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+account.report.external.value,Accounting Report External Value,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+account.report.line,Accounting Report Line,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+account.resequence.wizard,Remake the sequence of Journal Entries.,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+account.root,Account codes first 2 digits,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+account.setup.bank.manual.config,Bank setup manual config,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+account.tax,Tax,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+account.tax.group,Tax Group,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+account.tax.repartition.line,Tax Repartition Line,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+account.tax.repartition.line.template,Tax Repartition Line Template,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+account.tax.template,Templates for Taxes,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+account.tour.upload.bill,Account tour upload bill,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+account.tour.upload.bill.email.confirm,Account tour upload bill email confirm,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+account.unreconcile,Account Unreconcile,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+ai.agent.message,Message de l'agent IA,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+ai.agent.thread,Session de Chat IA,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+analytic.mixin,Analytic Mixin,base,False,"
+    Updates the base class to support setting xids directly in create by
+    providing an ""id"" key (otherwise stripped by create) during an import
+    (which should strip 'id' from the input data anyway)
+    "
+auth_totp.device,Authentication Device,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+auth_totp.wizard,2-Factor Setup Wizard,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+avatar.mixin,Avatar Mixin,base,False,"
+    Updates the base class to support setting xids directly in create by
+    providing an ""id"" key (otherwise stripped by create) during an import
+    (which should strip 'id' from the input data anyway)
+    "
+barcode.nomenclature,Barcode Nomenclature,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+barcode.rule,Barcode Rule,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+barcodes.barcode_events_mixin,Barcode Event Mixin,base,False," Mixin class for objects reacting when a barcode is scanned in their form views
+        which contains `<field name=""_barcode_scanned"" widget=""barcode_handler""/>`.
+        Models using this mixin must implement the method on_barcode_scanned. It works
+        like an onchange and receives the scanned barcode in parameter.
+    "
+base,Base,base,False,"
+    Updates the base class to support setting xids directly in create by
+    providing an ""id"" key (otherwise stripped by create) during an import
+    (which should strip 'id' from the input data anyway)
+    "
+base.document.layout,Company Document Layout,base,True,"
+    Customise the company document layout and display a live preview
+    "
+base.enable.profiling.wizard,Enable profiling for some time,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+base.language.export,Language Export,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+base.language.import,Language Import,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+base.language.install,Install Language,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+base.module.install.request,Module Activation Request,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+base.module.install.review,Module Activation Review,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+base.module.uninstall,Module Uninstall,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+base.module.update,Update Module,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+base.module.upgrade,Upgrade Module,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+base.partner.merge.automatic.wizard,Merge Partner Wizard,base,True,"
+        The idea behind this wizard is to create a list of potential partners to
+        merge. We use two objects, the first one is the wizard for the end-user.
+        And the second will contain the partner list to merge.
+    "
+base.partner.merge.line,Merge Partner Line,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+base_import.import,Base Import,base,True,"
+    This model is used to prepare the loading of data coming from a user file.
+
+    Here is the process that is followed:
+
+    #. The user selects a file to import.
+    #. File parsing and mapping suggestion (see ""parse_preview"" method)
+
+       #. Extract the current model's importable fields tree (see :meth:`get_fields_tree`).
+       #. Read the file (see :meth:`_read_file`) and extract header names and file
+          length (used for batch import).
+       #. Extract headers types from the data preview (10 first line of the file)
+          (see :meth:`_extract_headers_types`).
+       #. Try to find for each header a field to map with (see :meth:`_get_mapping_suggestions`)
+
+          - First check the previously saved mappings between the header name
+            and one of the model's fields.
+          - If no mapping found, try an exact match comparison using fields
+            technical names, labels and user language translated labels.
+          - If nothing found, try a fuzzy match using word distance between
+            header name and fields tachnical names, labels and user language
+            translated labels. Keep only the closest match.
+
+       #. Prepare examples for each columns using the first non null value from each column.
+       #. Send the info back to the UI where the user can modify the suggested mapping.
+    #. Execute the import: There are two import mode with uses the same process. (see :meth:`execute_import`)
+
+       #. Test import: Try to import but rollback the transaction. This allows
+          the check errors during the import process and allow the user to
+          choose import options for the different encountered errors.
+       #. Real import: Try to import the file using the configured mapping and
+          the eventual ""error mapping options"". If import encounters blocking
+          errors, the transaction is rollbacked and the user is allowed to
+          choose import options for the different errors.
+
+          - Get file data and fields to import into (see :meth:`_convert_import_data`).
+          - Parse date, float and binary data (see :meth:`_parse_import_data`).
+          - Handle multiple mapping -> concatenate char/text/many2many columns
+            mapped on the same field (see :meth:`_handle_multi_mapping`).
+          - Handle fallback values for boolean and selection fields, in case
+            input data does not match any allowed values (see :meth:`_handle_fallback_values`).
+          - Load data (see ir.model ""load"" method).
+          - Rollback transaction if test mode or if encountered error.
+          - Save mapping if any import is successful to ease later mapping suggestions.
+          - Return import result to the UI (success or errors if any).
+    "
+base_import.mapping,Base Import Mapping,base,False," mapping of previous column:field selections
+
+    This is useful when repeatedly importing from a third-party
+    system: column names generated by the external system may
+    not match Odoo's field names or labels. This model is used
+    to save the mapping between column names and fields so that
+    next time a user imports from the same third-party systems
+    we can automatically match the columns to the correct field
+    without them having to re-enter the mapping every single
+    time.
+    "
+base_import.tests.models.char,"Tests : Base Import Model, Character",base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+base_import.tests.models.char.noreadonly,"Tests : Base Import Model, Character No readonly",base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+base_import.tests.models.char.readonly,"Tests : Base Import Model, Character readonly",base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+base_import.tests.models.char.required,"Tests : Base Import Model, Character required",base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+base_import.tests.models.char.states,"Tests : Base Import Model, Character states",base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+base_import.tests.models.char.stillreadonly,"Tests : Base Import Model, Character still readonly",base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+base_import.tests.models.complex,Tests: Base Import Model Complex,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+base_import.tests.models.float,Tests: Base Import Model Float,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+base_import.tests.models.m2o,"Tests : Base Import Model, Many to One",base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+base_import.tests.models.m2o.related,"Tests : Base Import Model, Many to One related",base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+base_import.tests.models.m2o.required,"Tests : Base Import Model, Many to One required",base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+base_import.tests.models.m2o.required.related,"Tests : Base Import Model, Many to One required related",base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+base_import.tests.models.o2m,"Tests : Base Import Model, One to Many",base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+base_import.tests.models.o2m.child,"Tests : Base Import Model, One to Many child",base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+base_import.tests.models.preview,Tests : Base Import Model Preview,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+bus.bus,Communication Bus,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+bus.presence,User Presence,base,False," User Presence
+        Its status is 'online', 'away' or 'offline'. This model should be a one2one, but is not
+        attached to res_users to avoid database concurrence errors. Since the 'update' method is executed
+        at each poll, if the user have multiple opened tabs, concurrence errors can happend, but are 'muted-logged'.
+    "
+calendar.alarm,Event Alarm,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+calendar.alarm_manager,Event Alarm Manager,base,False,"
+    Updates the base class to support setting xids directly in create by
+    providing an ""id"" key (otherwise stripped by create) during an import
+    (which should strip 'id' from the input data anyway)
+    "
+calendar.attendee,Calendar Attendee Information,base,False, Calendar Attendee Information 
+calendar.event,Calendar Event,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+calendar.event.type,Event Meeting Type,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+calendar.filters,Calendar Filters,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+calendar.provider.config,Calendar Provider Configuration Wizard,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+calendar.recurrence,Event Recurrence Rule,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+change.password.own,"User, change own password wizard",base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+change.password.user,"User, Change Password Wizard",base,True, A model to configure users in the change password wizard. 
+change.password.wizard,Change Password Wizard,base,True, A wizard to manage the change of users' passwords. 
+chatbot.message,Chatbot Message,base,False," Chatbot Mail Message
+        We create a new model to store the related step to a mail.message and the user's answer.
+        We do this in a new model to avoid bloating the 'mail.message' model.
+    "
+chatbot.script,Chatbot Script,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+chatbot.script.answer,Chatbot Script Answer,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+chatbot.script.step,Chatbot Script Step,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+confirm.stock.sms,Confirm Stock SMS,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+crm.activity.report,CRM Activity Analysis,base,False, CRM Lead Analysis 
+crm.iap.lead.helpers,Helper methods for crm_iap_mine modules,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+crm.iap.lead.industry,CRM IAP Lead Industry,base,False, Industry Tags of Acquisition Rules 
+crm.iap.lead.mining.request,CRM Lead Mining Request,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+crm.iap.lead.role,People Role,base,False, CRM Reveal People Roles for People 
+crm.iap.lead.seniority,People Seniority,base,False, Seniority for People Rules 
+crm.lead,Lead/Opportunity,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+crm.lead.lost,Get Lost Reason,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+crm.lead.pls.update,Update the probabilities,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+crm.lead.scoring.frequency,Lead Scoring Frequency,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+crm.lead.scoring.frequency.field,Fields that can be used for predictive lead scoring computation,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+crm.lead2opportunity.partner,Convert Lead to Opportunity (not in mass),base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+crm.lead2opportunity.partner.mass,Convert Lead to Opportunity (in mass),base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+crm.lost.reason,Opp. Lost Reason,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+crm.merge.opportunity,Merge Opportunities,base,True,"
+        Merge opportunities together.
+        If we're talking about opportunities, it's just because it makes more sense
+        to merge opps than leads, because the leads are more ephemeral objects.
+        But since opportunities are leads, it's also possible to merge leads
+        together (resulting in a new lead), or leads and opps together (resulting
+        in a new opp).
+    "
+crm.quotation.partner,Create new or use existing Customer on new Quotation,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+crm.recurring.plan,CRM Recurring revenue plans,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+crm.stage,CRM Stages,base,False," Model for case stages. This models the main stages of a document
+        management flow. Main CRM objects (leads, opportunities, project
+        issues, ...) will now use only stages, instead of state and stages.
+        Stages are for example used to display the kanban view of records.
+    "
+crm.tag,CRM Tag,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+crm.team,Sales Team,base,False," A mixin for models that inherits mail.alias. This mixin initializes the
+        alias_id column in database, and manages the expected one-to-one
+        relation between your model and mail aliases.
+    "
+crm.team.member,Sales Team Member,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+decimal.precision,Decimal Precision,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+digest.digest,Digest,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+digest.tip,Digest Tips,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+fetchmail.server,Incoming Mail Server,base,False,Incoming POP/IMAP mail server account
+fleet.service.type,Fleet Service Type,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+fleet.vehicle,Vehicle,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+fleet.vehicle.assignation.log,Drivers history on a vehicle,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+fleet.vehicle.cost.report,Fleet Analysis Report,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+fleet.vehicle.log.contract,Vehicle Contract,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+fleet.vehicle.log.services,Services for vehicles,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+fleet.vehicle.model,Model of a vehicle,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+fleet.vehicle.model.brand,Brand of the vehicle,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+fleet.vehicle.model.category,Category of the model,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+fleet.vehicle.odometer,Odometer log for a vehicle,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+fleet.vehicle.state,Vehicle Status,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+fleet.vehicle.tag,Vehicle Tag,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+format.address.mixin,Address Format,base,False,"
+    Updates the base class to support setting xids directly in create by
+    providing an ""id"" key (otherwise stripped by create) during an import
+    (which should strip 'id' from the input data anyway)
+    "
+google.gmail.mixin,Google Gmail Mixin,base,False,"
+    Updates the base class to support setting xids directly in create by
+    providing an ""id"" key (otherwise stripped by create) during an import
+    (which should strip 'id' from the input data anyway)
+    "
+hr.contract,Contract,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+hr.contract.history,Contract history,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+hr.contract.type,Contract Type,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+hr.department,Department,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+hr.departure.reason,Departure Reason,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+hr.departure.wizard,Departure Wizard,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+hr.employee,Employee,base,False,"
+    NB: Any field only available on the model hr.employee (i.e. not on the
+    hr.employee.public model) should have `groups=""hr.group_hr_user""` on its
+    definition to avoid being prefetched when the user hasn't access to the
+    hr.employee model. Indeed, the prefetch loads the data for all the fields
+    that are available according to the group defined on them.
+    "
+hr.employee.base,Basic Employee,base,False,"
+    Updates the base class to support setting xids directly in create by
+    providing an ""id"" key (otherwise stripped by create) during an import
+    (which should strip 'id' from the input data anyway)
+    "
+hr.employee.category,Employee Category,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+hr.employee.public,Public Employee,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+hr.job,Job Position,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+hr.payroll.structure.type,Salary Structure Type,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+hr.plan,plan,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+hr.plan.activity.type,Plan activity type,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+hr.plan.wizard,Plan Wizard,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+hr.work.location,Work Location,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+iap.account,IAP Account,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+iap.autocomplete.api,IAP Partner Autocomplete API,base,False,"
+    Updates the base class to support setting xids directly in create by
+    providing an ""id"" key (otherwise stripped by create) during an import
+    (which should strip 'id' from the input data anyway)
+    "
+iap.enrich.api,IAP Lead Enrichment API,base,False,"
+    Updates the base class to support setting xids directly in create by
+    providing an ""id"" key (otherwise stripped by create) during an import
+    (which should strip 'id' from the input data anyway)
+    "
+im_livechat.channel,Livechat Channel,base,False," Livechat Channel
+        Define a communication channel, which can be accessed with 'script_external' (script tag to put on
+        external website), 'script_internal' (code to be integrated with odoo website) or via 'web_page' link.
+        It provides rating tools, and access rules for anonymous people.
+    "
+im_livechat.channel.rule,Livechat Channel Rules,base,False," Channel Rules
+        Rules defining access to the channel (countries, and url matching). It also provide the 'auto pop'
+        option to open automatically the conversation.
+    "
+im_livechat.report.channel,Livechat Support Channel Report,base,False, Livechat Support Report on the Channels 
+im_livechat.report.operator,Livechat Support Operator Report,base,False, Livechat Support Report on the Operator 
+image.mixin,Image Mixin,base,False,"
+    Updates the base class to support setting xids directly in create by
+    providing an ""id"" key (otherwise stripped by create) during an import
+    (which should strip 'id' from the input data anyway)
+    "
+ir.actions.act_url,Action URL,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+ir.actions.act_window,Action Window,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+ir.actions.act_window.view,Action Window View,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+ir.actions.act_window_close,Action Window Close,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+ir.actions.actions,Actions,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+ir.actions.client,Client Action,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+ir.actions.report,Report Action,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+ir.actions.server,Server Action,base,False, Add SMS option in server actions. 
+ir.actions.todo,Configuration Wizards,base,False,"
+    Configuration Wizards
+    "
+ir.asset,Asset,base,False,"This model contributes to two things:
+
+        1. It provides a function returning a list of all file paths declared
+        in a given list of addons (see _get_addon_paths);
+
+        2. It allows to create 'ir.asset' records to add additional directives
+        to certain bundles.
+    "
+ir.attachment,Attachment,base,False,"Attachments are used to link binary files or url to any openerp document.
+
+    External attachment storage
+    ---------------------------
+
+    The computed field ``datas`` is implemented using ``_file_read``,
+    ``_file_write`` and ``_file_delete``, which can be overridden to implement
+    other storage engines. Such methods should check for other location pseudo
+    uri (example: hdfs://hadoopserver).
+
+    The default implementation is the file:dirname location that stores files
+    on the local filesystem using name based on their sha1 hash
+    "
+ir.autovacuum,Automatic Vacuum,base,False, Helper model to the ``@api.autovacuum`` method decorator. 
+ir.binary,File streaming helper model for controllers,base,False,"
+    Updates the base class to support setting xids directly in create by
+    providing an ""id"" key (otherwise stripped by create) during an import
+    (which should strip 'id' from the input data anyway)
+    "
+ir.config_parameter,System Parameter,base,False,Per-database storage of configuration key-value pairs.
+ir.cron,Scheduled Actions,base,False," Model describing cron jobs (also called actions or tasks).
+    "
+ir.cron.trigger,Triggered actions,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+ir.default,Default Values,base,False, User-defined default values for fields. 
+ir.demo,Demo,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+ir.demo_failure,Demo failure,base,True," Stores modules for which we could not install demo data
+    "
+ir.demo_failure.wizard,Demo Failure wizard,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+ir.exports,Exports,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+ir.exports.line,Exports Line,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+ir.fields.converter,Fields Converter,base,False,"
+    Updates the base class to support setting xids directly in create by
+    providing an ""id"" key (otherwise stripped by create) during an import
+    (which should strip 'id' from the input data anyway)
+    "
+ir.filters,Filters,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+ir.http,HTTP Routing,base,False,"
+    Updates the base class to support setting xids directly in create by
+    providing an ""id"" key (otherwise stripped by create) during an import
+    (which should strip 'id' from the input data anyway)
+    "
+ir.logging,Logging,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+ir.mail_server,Mail Server,base,False,"Represents an SMTP server, able to send outgoing emails, with SSL and TLS capabilities."
+ir.model,Models,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+ir.model.access,Model Access,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+ir.model.constraint,Model Constraint,base,False,"
+    This model tracks PostgreSQL foreign keys and constraints used by Odoo
+    models.
+    "
+ir.model.data,Model Data,base,False,"Holds external identifier keys for records in the database.
+       This has two main uses:
+
+           * allows easy data integration with third-party systems,
+             making import/export/sync of data possible, as records
+             can be uniquely identified across multiple systems
+           * allows tracking the origin of data installed by Odoo
+             modules themselves, thus making it possible to later
+             update them seamlessly.
+    "
+ir.model.fields,Fields,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+ir.model.fields.selection,Fields Selection,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+ir.model.relation,Relation Model,base,False,"
+    This model tracks PostgreSQL tables used to implement Odoo many2many
+    relations.
+    "
+ir.module.category,Application,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+ir.module.module,Module,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+ir.module.module.dependency,Module dependency,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+ir.module.module.exclusion,Module exclusion,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+ir.profile,Profiling results,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+ir.property,Company Property,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+ir.qweb,Qweb,base,False," IrQWeb object for rendering editor stuff
+    "
+ir.qweb.field,Qweb Field,base,False," Used to convert a t-field specification into an output HTML field.
+
+    :meth:`~.to_html` is the entry point of this conversion from QWeb, it:
+
+    * converts the record value to html using :meth:`~.record_to_html`
+    * generates the metadata attributes (``data-oe-``) to set on the root
+      result node
+    * generates the root result node itself through :meth:`~.render_element`
+    "
+ir.qweb.field.barcode,Qweb Field Barcode,base,False," ``barcode`` widget rendering, inserts a data:uri-using image tag in the
+    document. May be overridden by e.g. the website module to generate links
+    instead.
+    "
+ir.qweb.field.contact,Qweb Field Contact,base,False," Used to convert a t-field specification into an output HTML field.
+
+    :meth:`~.to_html` is the entry point of this conversion from QWeb, it:
+
+    * converts the record value to html using :meth:`~.record_to_html`
+    * generates the metadata attributes (``data-oe-``) to set on the root
+      result node
+    * generates the root result node itself through :meth:`~.render_element`
+    "
+ir.qweb.field.date,Qweb Field Date,base,False," Used to convert a t-field specification into an output HTML field.
+
+    :meth:`~.to_html` is the entry point of this conversion from QWeb, it:
+
+    * converts the record value to html using :meth:`~.record_to_html`
+    * generates the metadata attributes (``data-oe-``) to set on the root
+      result node
+    * generates the root result node itself through :meth:`~.render_element`
+    "
+ir.qweb.field.datetime,Qweb Field Datetime,base,False," Used to convert a t-field specification into an output HTML field.
+
+    :meth:`~.to_html` is the entry point of this conversion from QWeb, it:
+
+    * converts the record value to html using :meth:`~.record_to_html`
+    * generates the metadata attributes (``data-oe-``) to set on the root
+      result node
+    * generates the root result node itself through :meth:`~.render_element`
+    "
+ir.qweb.field.duration,Qweb Field Duration,base,False," ``duration`` converter, to display integral or fractional values as
+    human-readable time spans (e.g. 1.5 as ""1 hour 30 minutes"").
+
+    Can be used on any numerical field.
+
+    Has an option ``unit`` which can be one of ``second``, ``minute``,
+    ``hour``, ``day``, ``week`` or ``year``, used to interpret the numerical
+    field value before converting it. By default use ``second``.
+
+    Has an option ``round``. By default use ``second``.
+
+    Has an option ``digital`` to display 01:00 instead of 1 hour
+
+    Sub-second values will be ignored.
+    "
+ir.qweb.field.float,Qweb Field Float,base,False," Used to convert a t-field specification into an output HTML field.
+
+    :meth:`~.to_html` is the entry point of this conversion from QWeb, it:
+
+    * converts the record value to html using :meth:`~.record_to_html`
+    * generates the metadata attributes (``data-oe-``) to set on the root
+      result node
+    * generates the root result node itself through :meth:`~.render_element`
+    "
+ir.qweb.field.float_time,Qweb Field Float Time,base,False," ``float_time`` converter, to display integral or fractional values as
+    human-readable time spans (e.g. 1.5 as ""01:30"").
+
+    Can be used on any numerical field.
+    "
+ir.qweb.field.html,Qweb Field HTML,base,False," Used to convert a t-field specification into an output HTML field.
+
+    :meth:`~.to_html` is the entry point of this conversion from QWeb, it:
+
+    * converts the record value to html using :meth:`~.record_to_html`
+    * generates the metadata attributes (``data-oe-``) to set on the root
+      result node
+    * generates the root result node itself through :meth:`~.render_element`
+    "
+ir.qweb.field.image,Qweb Field Image,base,False,"
+    Widget options:
+
+    ``class``
+        set as attribute on the generated <img> tag
+    "
+ir.qweb.field.image_url,Qweb Field Image,base,False," ``image_url`` widget rendering, inserts an image tag in the
+    document.
+    "
+ir.qweb.field.integer,Qweb Field Integer,base,False," Used to convert a t-field specification into an output HTML field.
+
+    :meth:`~.to_html` is the entry point of this conversion from QWeb, it:
+
+    * converts the record value to html using :meth:`~.record_to_html`
+    * generates the metadata attributes (``data-oe-``) to set on the root
+      result node
+    * generates the root result node itself through :meth:`~.render_element`
+    "
+ir.qweb.field.many2many,Qweb field many2many,base,False," Used to convert a t-field specification into an output HTML field.
+
+    :meth:`~.to_html` is the entry point of this conversion from QWeb, it:
+
+    * converts the record value to html using :meth:`~.record_to_html`
+    * generates the metadata attributes (``data-oe-``) to set on the root
+      result node
+    * generates the root result node itself through :meth:`~.render_element`
+    "
+ir.qweb.field.many2one,Qweb Field Many to One,base,False," Used to convert a t-field specification into an output HTML field.
+
+    :meth:`~.to_html` is the entry point of this conversion from QWeb, it:
+
+    * converts the record value to html using :meth:`~.record_to_html`
+    * generates the metadata attributes (``data-oe-``) to set on the root
+      result node
+    * generates the root result node itself through :meth:`~.render_element`
+    "
+ir.qweb.field.monetary,Qweb Field Monetary,base,False," ``monetary`` converter, has a mandatory option
+    ``display_currency`` only if field is not of type Monetary.
+    Otherwise, if we are in presence of a monetary field, the field definition must
+    have a currency_field attribute set.
+
+    The currency is used for formatting *and rounding* of the float value. It
+    is assumed that the linked res_currency has a non-empty rounding value and
+    res.currency's ``round`` method is used to perform rounding.
+
+    .. note:: the monetary converter internally adds the qweb context to its
+              options mapping, so that the context is available to callees.
+              It's set under the ``_values`` key.
+    "
+ir.qweb.field.qweb,Qweb Field qweb,base,False," Used to convert a t-field specification into an output HTML field.
+
+    :meth:`~.to_html` is the entry point of this conversion from QWeb, it:
+
+    * converts the record value to html using :meth:`~.record_to_html`
+    * generates the metadata attributes (``data-oe-``) to set on the root
+      result node
+    * generates the root result node itself through :meth:`~.render_element`
+    "
+ir.qweb.field.relative,Qweb Field Relative,base,False," Used to convert a t-field specification into an output HTML field.
+
+    :meth:`~.to_html` is the entry point of this conversion from QWeb, it:
+
+    * converts the record value to html using :meth:`~.record_to_html`
+    * generates the metadata attributes (``data-oe-``) to set on the root
+      result node
+    * generates the root result node itself through :meth:`~.render_element`
+    "
+ir.qweb.field.selection,Qweb Field Selection,base,False," Used to convert a t-field specification into an output HTML field.
+
+    :meth:`~.to_html` is the entry point of this conversion from QWeb, it:
+
+    * converts the record value to html using :meth:`~.record_to_html`
+    * generates the metadata attributes (``data-oe-``) to set on the root
+      result node
+    * generates the root result node itself through :meth:`~.render_element`
+    "
+ir.qweb.field.text,Qweb Field Text,base,False," Used to convert a t-field specification into an output HTML field.
+
+    :meth:`~.to_html` is the entry point of this conversion from QWeb, it:
+
+    * converts the record value to html using :meth:`~.record_to_html`
+    * generates the metadata attributes (``data-oe-``) to set on the root
+      result node
+    * generates the root result node itself through :meth:`~.render_element`
+    "
+ir.qweb.field.time,QWeb Field Time,base,False," ``time`` converter, to display integer or fractional value as
+    human-readable time (e.g. 1.5 as ""1:30 AM""). The unit of this value
+    is in hours.
+
+    Can be used on any numerical field between: 0 <= value < 24
+    "
+ir.rule,Record Rule,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+ir.sequence,Sequence,base,False," Sequence model.
+
+    The sequence model allows to define and use so-called sequence objects.
+    Such objects are used to generate unique identifiers in a transaction-safe
+    way.
+
+    "
+ir.sequence.date_range,Sequence Date Range,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+ir.server.object.lines,Server Action value mapping,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+ir.ui.menu,Menu,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+ir.ui.view,View,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+ir.ui.view.custom,Custom View,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+ir.websocket,websocket message handling,base,False,"
+    Updates the base class to support setting xids directly in create by
+    providing an ""id"" key (otherwise stripped by create) during an import
+    (which should strip 'id' from the input data anyway)
+    "
+kpi.provider,KPI Provider,base,False,"
+    Updates the base class to support setting xids directly in create by
+    providing an ""id"" key (otherwise stripped by create) during an import
+    (which should strip 'id' from the input data anyway)
+    "
+lot.label.layout,Choose the sheet layout to print lot labels,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+mail.activity,Activity,base,False," An actual activity to perform. Activities are linked to
+    documents using res_id and res_model_id fields. Activities have a deadline
+    that can be used in kanban view to display a status. Once done activities
+    are unlinked and a message is posted. This message has a new activity_type_id
+    field that indicates the activity linked to the message. "
+mail.activity.mixin,Activity Mixin,base,False," Mail Activity Mixin is a mixin class to use if you want to add activities
+    management on a model. It works like the mail.thread mixin. It defines
+    an activity_ids one2many field toward activities using res_id and res_model_id.
+    Various related / computed fields are also added to have a global status of
+    activities on documents.
+
+    Activities come with a new JS widget for the form view. It is integrated in the
+    Chatter widget although it is a separate widget. It displays activities linked
+    to the current record and allow to schedule, edit and mark done activities.
+    Just include field activity_ids in the div.oe-chatter to use it.
+
+    There is also a kanban widget defined. It defines a small widget to integrate
+    in kanban vignettes. It allow to manage activities directly from the kanban
+    view. Use widget=""kanban_activity"" on activitiy_ids field in kanban view to
+    use it.
+
+    Some context keys allow to control the mixin behavior. Use those in some
+    specific cases like import
+
+     * ``mail_activity_automation_skip``: skip activities automation; it means
+       no automated activities will be generated, updated or unlinked, allowing
+       to save computation and avoid generating unwanted activities;
+    "
+mail.activity.type,Activity Type,base,False," Activity Types are used to categorize activities. Each type is a different
+    kind of activity e.g. call, mail, meeting. An activity can be generic i.e.
+    available for all models using activities; or specific to a model in which
+    case res_model field should be used. "
+mail.alias,Email Aliases,base,False,"A Mail Alias is a mapping of an email address with a given Odoo Document
+       model. It is used by Odoo's mail gateway when processing incoming emails
+       sent to the system. If the recipient address (To) of the message matches
+       a Mail Alias, the message will be either processed following the rules
+       of that alias. If the message is a reply it will be attached to the
+       existing discussion on the corresponding record, otherwise a new
+       record of the corresponding model will be created.
+
+       This is meant to be used in combination with a catch-all email configuration
+       on the company's mail server, so that as soon as a new mail.alias is
+       created, it becomes immediately usable and Odoo will accept email for it.
+     "
+mail.alias.mixin,Email Aliases Mixin,base,False," A mixin for models that inherits mail.alias. This mixin initializes the
+        alias_id column in database, and manages the expected one-to-one
+        relation between your model and mail aliases.
+    "
+mail.blacklist,Mail Blacklist,base,False, Model of blacklisted email addresses to stop sending emails.
+mail.blacklist.remove,Remove email from blacklist wizard,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+mail.bot,Mail Bot,base,False,"
+    Updates the base class to support setting xids directly in create by
+    providing an ""id"" key (otherwise stripped by create) during an import
+    (which should strip 'id' from the input data anyway)
+    "
+mail.channel,Discussion Channel,base,False," Chat Session
+        Reprensenting a conversation between users.
+        It extends the base method for anonymous usage.
+    "
+mail.channel.member,Listeners of a Channel,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+mail.channel.rtc.session,Mail RTC session,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+mail.compose.message,Email composition wizard,base,True," Generic message composition wizard. You may inherit from this wizard
+        at model and view levels to provide specific features.
+
+        The behavior of the wizard depends on the composition_mode field:
+        - 'comment': post on a record. The wizard is pre-populated via ``get_record_data``
+        - 'mass_mail': wizard in mass mailing mode where the mail details can
+            contain template placeholders that will be merged with actual data
+            before being sent to each recipient.
+    "
+mail.composer.mixin,Mail Composer Mixin,base,False," Mixin used to edit and render some fields used when sending emails or
+    notifications based on a mail template.
+
+    Main current purpose is to hide details related to subject and body computation
+    and rendering based on a mail.template. It also give the base tools to control
+    who is allowed to edit body, notably when dealing with templating language
+    like inline_template or qweb.
+
+    It is meant to evolve in a near future with upcoming support of qweb and fine
+    grain control of rendering access.
+    "
+mail.followers,Document Followers,base,False," mail_followers holds the data related to the follow mechanism inside
+    Odoo. Partners can choose to follow documents (records) of any kind
+    that inherits from mail.thread. Following documents allow to receive
+    notifications for new messages. A subscription is characterized by:
+
+    :param: res_model: model of the followed objects
+    :param: res_id: ID of resource (may be 0 for every objects)
+    "
+mail.gateway.allowed,Mail Gateway Allowed,base,False,"List of trusted email address which won't have the quota restriction.
+
+    The incoming emails have a restriction of the number of records they can
+    create with alias, defined by the 2 systems parameters;
+    - mail.gateway.loop.minutes
+    - mail.gateway.loop.threshold
+
+    But we might have some legit use cases for which we want to receive a ton of emails
+    from an automated-source. This model stores those trusted source and this restriction
+    won't apply to them.
+    "
+mail.guest,Guest,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+mail.ice.server,ICE server,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+mail.link.preview,Store link preview data,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+mail.mail,Outgoing Mails,base,False," Model holding RFC2822 email messages to send. This model also provides
+        facilities to queue and send new email messages.  "
+mail.message,Message,base,False," Override MailMessage class in order to add a new type: SMS messages.
+    Those messages comes with their own notification method, using SMS
+    gateway. "
+mail.message.reaction,Message Reaction,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+mail.message.schedule,Scheduled Messages,base,False," Mail message notification schedule queue.
+
+    This model is used to store the mail messages scheduled. So we can
+    delay the sending of the notifications. A scheduled date field already
+    exists on the <mail.mail> but it does not allow us to delay the sending
+    of the <bus.bus> notifications.
+    "
+mail.message.subtype,Message subtypes,base,False," Class holding subtype definition for messages. Subtypes allow to tune
+        the follower subscription, allowing only some subtypes to be pushed
+        on the Wall. "
+mail.notification,Message Notifications,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+mail.render.mixin,Mail Render Mixin,base,False,"
+    Updates the base class to support setting xids directly in create by
+    providing an ""id"" key (otherwise stripped by create) during an import
+    (which should strip 'id' from the input data anyway)
+    "
+mail.resend.message,Email resend wizard,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+mail.resend.partner,Partner with additional information for mail resend,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+mail.shortcode,Canned Response / Shortcode,base,False," Shortcode
+        Canned Responses, allowing the user to defined shortcuts in its message. Should be applied before storing message in database.
+        Emoji allowing replacing text with image for visual effect. Should be applied when the message is displayed (only for final rendering).
+        These shortcodes are global and are available for every user.
+    "
+mail.template,Email Templates,base,False,Templates for sending email
+mail.template.preview,Email Template Preview,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+mail.template.reset,Mail Template Reset,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+mail.thread,Email Thread,base,False," mail_thread model is meant to be inherited by any model that needs to
+        act as a discussion topic on which messages can be attached. Public
+        methods are prefixed with ``message_`` in order to avoid name
+        collisions with methods of the models that will inherit from this class.
+
+        ``mail.thread`` defines fields used to handle and display the
+        communication history. ``mail.thread`` also manages followers of
+        inheriting classes. All features and expected behavior are managed
+        by mail.thread. Widgets has been designed for the 7.0 and following
+        versions of Odoo.
+
+        Inheriting classes are not required to implement any method, as the
+        default implementation will work for any model. However it is common
+        to override at least the ``message_new`` and ``message_update``
+        methods (calling ``super``) to add model-specific behavior at
+        creation and update of a thread when processing incoming emails.
+
+        Options:
+            - _mail_flat_thread: if set to True, all messages without parent_id
+                are automatically attached to the first message posted on the
+                resource. If set to False, the display of Chatter is done using
+                threads, and no parent_id is automatically set.
+
+    MailThread features can be somewhat controlled through context keys :
+
+     - ``mail_create_nosubscribe``: at create or message_post, do not subscribe
+       uid to the record thread
+     - ``mail_create_nolog``: at create, do not log the automatic '<Document>
+       created' message
+     - ``mail_notrack``: at create and write, do not perform the value tracking
+       creating messages
+     - ``tracking_disable``: at create and write, perform no MailThread features
+       (auto subscription, tracking, post, ...)
+     - ``mail_notify_force_send``: if less than 50 email notifications to send,
+       send them directly instead of using the queue; True by default
+    "
+mail.thread.blacklist,Mail Blacklist mixin,base,False," Mixin that is inherited by all model with opt out. This mixin stores a normalized
+    email based on primary_email field.
+
+    A normalized email is considered as :
+        - having a left part + @ + a right part (the domain can be without '.something')
+        - being lower case
+        - having no name before the address. Typically, having no 'Name <>'
+    Ex:
+        - Formatted Email : 'Name <NaMe@DoMaIn.CoM>'
+        - Normalized Email : 'name@domain.com'
+
+    The primary email field can be specified on the parent model, if it differs from the default one ('email')
+    The email_normalized field can than be used on that model to search quickly on emails (by simple comparison
+    and not using time consuming regex anymore).
+
+    Using this email_normalized field, blacklist status is computed.
+
+    Mail Thread capabilities are required for this mixin. "
+mail.thread.cc,Email CC management,base,False," mail_thread model is meant to be inherited by any model that needs to
+        act as a discussion topic on which messages can be attached. Public
+        methods are prefixed with ``message_`` in order to avoid name
+        collisions with methods of the models that will inherit from this class.
+
+        ``mail.thread`` defines fields used to handle and display the
+        communication history. ``mail.thread`` also manages followers of
+        inheriting classes. All features and expected behavior are managed
+        by mail.thread. Widgets has been designed for the 7.0 and following
+        versions of Odoo.
+
+        Inheriting classes are not required to implement any method, as the
+        default implementation will work for any model. However it is common
+        to override at least the ``message_new`` and ``message_update``
+        methods (calling ``super``) to add model-specific behavior at
+        creation and update of a thread when processing incoming emails.
+
+        Options:
+            - _mail_flat_thread: if set to True, all messages without parent_id
+                are automatically attached to the first message posted on the
+                resource. If set to False, the display of Chatter is done using
+                threads, and no parent_id is automatically set.
+
+    MailThread features can be somewhat controlled through context keys :
+
+     - ``mail_create_nosubscribe``: at create or message_post, do not subscribe
+       uid to the record thread
+     - ``mail_create_nolog``: at create, do not log the automatic '<Document>
+       created' message
+     - ``mail_notrack``: at create and write, do not perform the value tracking
+       creating messages
+     - ``tracking_disable``: at create and write, perform no MailThread features
+       (auto subscription, tracking, post, ...)
+     - ``mail_notify_force_send``: if less than 50 email notifications to send,
+       send them directly instead of using the queue; True by default
+    "
+mail.thread.phone,Phone Blacklist Mixin,base,False," Purpose of this mixin is to offer two services
+
+      * compute a sanitized phone number based on ´´_sms_get_number_fields´´.
+        It takes first sanitized value, trying each field returned by the
+        method (see ``MailThread._sms_get_number_fields()´´ for more details
+        about the usage of this method);
+      * compute blacklist state of records. It is based on phone.blacklist
+        model and give an easy-to-use field and API to manipulate blacklisted
+        records;
+
+    Main API methods
+
+      * ``_phone_set_blacklisted``: set recordset as blacklisted;
+      * ``_phone_reset_blacklisted``: reactivate recordset (even if not blacklisted
+        this method can be called safely);
+    "
+mail.tracking.value,Mail Tracking Value,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+mail.wizard.invite,Invite wizard,base,True, Wizard to invite partners (or channels) and make them followers. 
+payment.icon,Payment Icon,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+payment.link.wizard,Generate Sales Payment Link,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+payment.provider,Payment Provider,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+payment.provider.onboarding.wizard,Payment provider onboarding wizard,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+payment.refund.wizard,Payment Refund Wizard,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+payment.token,Payment Token,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+payment.transaction,Payment Transaction,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+phone.blacklist,Phone Blacklist,base,False, Blacklist of phone numbers. Used to avoid sending unwanted messages to people. 
+phone.blacklist.remove,Remove phone from blacklist,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+picking.label.type,Choose whether to print product or lot/sn labels,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+portal.mixin,Portal Mixin,base,False,"
+    Updates the base class to support setting xids directly in create by
+    providing an ""id"" key (otherwise stripped by create) during an import
+    (which should strip 'id' from the input data anyway)
+    "
+portal.share,Portal Sharing,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+portal.wizard,Grant Portal Access,base,True,"
+        A wizard to manage the creation/removal of portal users.
+    "
+portal.wizard.user,Portal User Config,base,True,"
+        A model to configure users in the portal wizard.
+    "
+privacy.log,Privacy Log,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+privacy.lookup.wizard,Privacy Lookup Wizard,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+privacy.lookup.wizard.line,Privacy Lookup Wizard Line,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+procurement.group,Procurement Group,base,False,"
+    The procurement group class is used to group products together
+    when computing procurements. (tasks, physical products, ...)
+
+    The goal is that when you have one sales order of several products
+    and the products are pulled from the same or several location(s), to keep
+    having the moves grouped into pickings that represent the sales order.
+
+    Used in: sales order (to group delivery order lines like the so), pull/push
+    rules (to pack like the delivery order), on orderpoints (e.g. for wave picking
+    all the similar products together).
+
+    Grouping is made only if the source and the destination is the same.
+    Suppose you have 4 lines on a picking from Output where 2 lines will need
+    to come from Input (crossdock) and 2 lines coming from Stock -> Output As
+    the four will have the same group ids from the SO, the move from input will
+    have a stock.picking with 2 grouped lines and the move from stock will have
+    2 grouped lines also.
+
+    The name is usually the name of the original document (sales order) or a
+    sequence computed if created manually.
+    "
+product.attribute,Product Attribute,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+product.attribute.custom.value,Product Attribute Custom Value,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+product.attribute.value,Attribute Value,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+product.category,Product Category,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+product.label.layout,Choose the sheet layout to print the labels,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+product.packaging,Product Packaging,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+product.pricelist,Pricelist,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+product.pricelist.item,Pricelist Rule,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+product.product,Product Variant,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+product.removal,Removal Strategy,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+product.replenish,Product Replenish,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+product.supplierinfo,Supplier Pricelist,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+product.tag,Product Tag,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+product.template,Product,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+product.template.attribute.exclusion,Product Template Attribute Exclusion,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+product.template.attribute.line,Product Template Attribute Line,base,False,"Attributes available on product.template with their selected values in a m2m.
+    Used as a configuration model to generate the appropriate product.template.attribute.value"
+product.template.attribute.value,Product Template Attribute Value,base,False,"Materialized relationship between attribute values
+    and product template generated by the product.template.attribute.line"
+project.collaborator,Collaborators in project shared,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+project.milestone,Project Milestone,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+project.project,Project,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+project.project.stage,Project Stage,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+project.share.wizard,Project Sharing,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+project.tags,Project Tags,base,False, Tags of project's tasks 
+project.task,Task,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+project.task.burndown.chart.report,Burndown Chart,base,False,"
+    Updates the base class to support setting xids directly in create by
+    providing an ""id"" key (otherwise stripped by create) during an import
+    (which should strip 'id' from the input data anyway)
+    "
+project.task.recurrence,Task Recurrence,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+project.task.stage.personal,Personal Task Stage,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+project.task.type,Task Stage,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+project.task.type.delete.wizard,Project Stage Delete Wizard,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+project.update,Project Update,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+publisher_warranty.contract,Publisher Warranty Contract,base,False,"
+    Updates the base class to support setting xids directly in create by
+    providing an ""id"" key (otherwise stripped by create) during an import
+    (which should strip 'id' from the input data anyway)
+    "
+purchase.bill.union,Purchases & Bills Union,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+purchase.order,Purchase Order,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+purchase.order.line,Purchase Order Line,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+purchase.report,Purchase Report,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+rating.mixin,Rating Mixin,base,False,"
+    Updates the base class to support setting xids directly in create by
+    providing an ""id"" key (otherwise stripped by create) during an import
+    (which should strip 'id' from the input data anyway)
+    "
+rating.parent.mixin,Rating Parent Mixin,base,False,"
+    Updates the base class to support setting xids directly in create by
+    providing an ""id"" key (otherwise stripped by create) during an import
+    (which should strip 'id' from the input data anyway)
+    "
+rating.rating,Rating,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+report.account.report_hash_integrity,Get hash integrity result as PDF.,base,False,"
+    Updates the base class to support setting xids directly in create by
+    providing an ""id"" key (otherwise stripped by create) during an import
+    (which should strip 'id' from the input data anyway)
+    "
+report.account.report_invoice,Account report without payment lines,base,False,"
+    Updates the base class to support setting xids directly in create by
+    providing an ""id"" key (otherwise stripped by create) during an import
+    (which should strip 'id' from the input data anyway)
+    "
+report.account.report_invoice_with_payments,Account report with payment lines,base,False,"
+    Updates the base class to support setting xids directly in create by
+    providing an ""id"" key (otherwise stripped by create) during an import
+    (which should strip 'id' from the input data anyway)
+    "
+report.base.report_irmodulereference,Module Reference Report (base),base,False,"
+    Updates the base class to support setting xids directly in create by
+    providing an ""id"" key (otherwise stripped by create) during an import
+    (which should strip 'id' from the input data anyway)
+    "
+report.layout,Report Layout,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+report.paperformat,Paper Format Config,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+report.product.report_pricelist,Pricelist Report,base,False,"
+    Updates the base class to support setting xids directly in create by
+    providing an ""id"" key (otherwise stripped by create) during an import
+    (which should strip 'id' from the input data anyway)
+    "
+report.product.report_producttemplatelabel,Product Label Report,base,False,"
+    Updates the base class to support setting xids directly in create by
+    providing an ""id"" key (otherwise stripped by create) during an import
+    (which should strip 'id' from the input data anyway)
+    "
+report.product.report_producttemplatelabel_dymo,Product Label Report,base,False,"
+    Updates the base class to support setting xids directly in create by
+    providing an ""id"" key (otherwise stripped by create) during an import
+    (which should strip 'id' from the input data anyway)
+    "
+report.project.task.user,Tasks Analysis,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+report.stock.label_lot_template_view,Lot Label Report,base,False,"
+    Updates the base class to support setting xids directly in create by
+    providing an ""id"" key (otherwise stripped by create) during an import
+    (which should strip 'id' from the input data anyway)
+    "
+report.stock.label_product_product_view,Product Label Report,base,False,"
+    Updates the base class to support setting xids directly in create by
+    providing an ""id"" key (otherwise stripped by create) during an import
+    (which should strip 'id' from the input data anyway)
+    "
+report.stock.quantity,Stock Quantity Report,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+report.stock.report_product_product_replenishment,Stock Replenishment Report,base,False,"
+    Updates the base class to support setting xids directly in create by
+    providing an ""id"" key (otherwise stripped by create) during an import
+    (which should strip 'id' from the input data anyway)
+    "
+report.stock.report_product_template_replenishment,Stock Replenishment Report,base,False,"
+    Updates the base class to support setting xids directly in create by
+    providing an ""id"" key (otherwise stripped by create) during an import
+    (which should strip 'id' from the input data anyway)
+    "
+report.stock.report_reception,Stock Reception Report,base,False,"
+    Updates the base class to support setting xids directly in create by
+    providing an ""id"" key (otherwise stripped by create) during an import
+    (which should strip 'id' from the input data anyway)
+    "
+report.stock.report_stock_rule,Stock rule report,base,False,"
+    Updates the base class to support setting xids directly in create by
+    providing an ""id"" key (otherwise stripped by create) during an import
+    (which should strip 'id' from the input data anyway)
+    "
+res.bank,Bank,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+res.company,Companies,base,False,Populate factory part for the accountings applications of res.company.
+res.config,Config,base,True," Base classes for new-style configuration items
+
+    Configuration items should inherit from this class, implement
+    the execute method (and optionally the cancel one) and have
+    their view inherit from the related res_config_view_base view.
+    "
+res.config.installer,Config Installer,base,True," New-style configuration base specialized for addons selection
+    and installation.
+
+    Basic usage
+    -----------
+
+    Subclasses can simply define a number of boolean fields. The field names
+    should be the names of the addons to install (when selected). Upon action
+    execution, selected boolean fields (and those only) will be interpreted as
+    addons to install, and batch-installed.
+
+    Additional addons
+    -----------------
+
+    It is also possible to require the installation of an additional
+    addon set when a specific preset of addons has been marked for
+    installation (in the basic usage only, additionals can't depend on
+    one another).
+
+    These additionals are defined through the ``_install_if``
+    property. This property is a mapping of a collection of addons (by
+    name) to a collection of addons (by name) [#]_, and if all the *key*
+    addons are selected for installation, then the *value* ones will
+    be selected as well. For example::
+
+        _install_if = {
+            ('sale','crm'): ['sale_crm'],
+        }
+
+    This will install the ``sale_crm`` addon if and only if both the
+    ``sale`` and ``crm`` addons are selected for installation.
+
+    You can define as many additionals as you wish, and additionals
+    can overlap in key and value. For instance::
+
+        _install_if = {
+            ('sale','crm'): ['sale_crm'],
+            ('sale','project'): ['sale_service'],
+        }
+
+    will install both ``sale_crm`` and ``sale_service`` if all of
+    ``sale``, ``crm`` and ``project`` are selected for installation.
+
+    Hook methods
+    ------------
+
+    Subclasses might also need to express dependencies more complex
+    than that provided by additionals. In this case, it's possible to
+    define methods of the form ``_if_%(name)s`` where ``name`` is the
+    name of a boolean field. If the field is selected, then the
+    corresponding module will be marked for installation *and* the
+    hook method will be executed.
+
+    Hook methods take the usual set of parameters (cr, uid, ids,
+    context) and can return a collection of additional addons to
+    install (if they return anything, otherwise they should not return
+    anything, though returning any ""falsy"" value such as None or an
+    empty collection will have the same effect).
+
+    Complete control
+    ----------------
+
+    The last hook is to simply overload the ``modules_to_install``
+    method, which implements all the mechanisms above. This method
+    takes the usual set of parameters (cr, uid, ids, context) and
+    returns a ``set`` of addons to install (addons selected by the
+    above methods minus addons from the *basic* set which are already
+    installed) [#]_ so an overloader can simply manipulate the ``set``
+    returned by ``ResConfigInstaller.modules_to_install`` to add or
+    remove addons.
+
+    Skipping the installer
+    ----------------------
+
+    Unless it is removed from the view, installers have a *skip*
+    button which invokes ``action_skip`` (and the ``cancel`` hook from
+    ``res.config``). Hooks and additionals *are not run* when skipping
+    installation, even for already installed addons.
+
+    Again, setup your hooks accordingly.
+
+    .. [#] note that since a mapping key needs to be hashable, it's
+           possible to use a tuple or a frozenset, but not a list or a
+           regular set
+
+    .. [#] because the already-installed modules are only pruned at
+           the very end of ``modules_to_install``, additionals and
+           hooks depending on them *are guaranteed to execute*. Setup
+           your hooks accordingly.
+    "
+res.config.settings,Config Settings,base,True," Inherit the base settings to add a counter of failed email + configure
+    the alias domain. "
+res.country,Country,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+res.country.group,Country Group,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+res.country.state,Country state,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+res.currency,Currency,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+res.currency.rate,Currency Rate,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+res.groups,Access Groups,base,False," Update of res.groups class
+        - if adding users from a group, check mail.channels linked to this user
+          group and subscribe them. This is done by overriding the write method.
+    "
+res.lang,Languages,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+res.partner,Contact,base,False, Inherits partner and adds Tasks information in the partner form 
+res.partner.autocomplete.sync,Partner Autocomplete Sync,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+res.partner.bank,Bank Accounts,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+res.partner.category,Partner Tags,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+res.partner.industry,Industry,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+res.partner.title,Partner Title,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+res.users,User,base,False," Update of res.users class
+        - add a preference about username for livechat purpose
+    "
+res.users.apikeys,Users API Keys,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+res.users.apikeys.description,API Key Description,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+res.users.apikeys.show,Show API Key,base,False,"
+    Updates the base class to support setting xids directly in create by
+    providing an ""id"" key (otherwise stripped by create) during an import
+    (which should strip 'id' from the input data anyway)
+    "
+res.users.deletion,Users Deletion Request,base,False,"User deletion requests.
+
+    Those requests are logged in a different model to keep a trace of this action and the
+    deletion is done in a CRON. Indeed, removing a user can be a heavy operation on
+    large database (because of create_uid, write_uid on each model, which are not always
+    indexed). This model just remove the users added in the deletion queue, remaining code
+    must deal with other consideration (archiving, blacklist email...).
+    "
+res.users.identitycheck,Password Check Wizard,base,True," Wizard used to re-check the user's credentials (password)
+
+    Might be useful before the more security-sensitive operations, users might be
+    leaving their computer unlocked & unattended. Re-checking credentials mitigates
+    some of the risk of a third party using such an unattended device to manipulate
+    the account.
+    "
+res.users.log,Users Log,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+res.users.settings,User Settings,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+res.users.settings.volumes,User Settings Volumes,base,False, Represents the volume of the sound that the user of user_setting_id will receive from partner_id. 
+reset.view.arch.wizard,Reset View Architecture Wizard,base,True, A wizard to compare and reset views architecture. 
+resource.calendar,Resource Working Time,base,False," Calendar model for a resource. It has
+
+     - attendance_ids: list of resource.calendar.attendance that are a working
+                       interval in a given weekday.
+     - leave_ids: list of leaves linked to this calendar. A leave can be general
+                  or linked to a specific resource, depending on its resource_id.
+
+    All methods in this class use intervals. An interval is a tuple holding
+    (begin_datetime, end_datetime). A list of intervals is therefore a list of
+    tuples, holding several intervals of work or leaves. "
+resource.calendar.attendance,Work Detail,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+resource.calendar.leaves,Resource Time Off Detail,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+resource.mixin,Resource Mixin,base,False,"
+    Updates the base class to support setting xids directly in create by
+    providing an ""id"" key (otherwise stripped by create) during an import
+    (which should strip 'id' from the input data anyway)
+    "
+resource.resource,Resources,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+sale.advance.payment.inv,Sales Advance Payment Invoice,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+sale.order,Sales Order,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+sale.order.cancel,Sales Order Cancel,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+sale.order.line,Sales Order Line,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+sale.order.option,Sale Options,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+sale.order.template,Quotation Template,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+sale.order.template.line,Quotation Template Line,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+sale.order.template.option,Quotation Template Option,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+sale.payment.provider.onboarding.wizard,Sale Payment provider onboarding wizard,base,True, Override for the sale quotation onboarding panel. 
+sale.report,Sales Analysis Report,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+sequence.mixin,Automatic sequence,base,False,"Mechanism used to have an editable sequence number.
+
+    Be careful of how you use this regarding the prefixes. More info in the
+    docstring of _get_last_sequence.
+    "
+sms.api,SMS API,base,False,"
+    Updates the base class to support setting xids directly in create by
+    providing an ""id"" key (otherwise stripped by create) during an import
+    (which should strip 'id' from the input data anyway)
+    "
+sms.composer,Send SMS Wizard,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+sms.resend,SMS Resend,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+sms.resend.recipient,Resend Notification,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+sms.sms,Outgoing SMS,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+sms.template,SMS Templates,base,False,Templates for sending SMS
+sms.template.preview,SMS Template Preview,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+sms.template.reset,SMS Template Reset,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+snailmail.confirm,Snailmail Confirm,base,False,"
+    Updates the base class to support setting xids directly in create by
+    providing an ""id"" key (otherwise stripped by create) during an import
+    (which should strip 'id' from the input data anyway)
+    "
+snailmail.confirm.invoice,Snailmail Confirm Invoice,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+snailmail.letter,Snailmail Letter,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+snailmail.letter.format.error,Format Error Sending a Snailmail Letter,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+snailmail.letter.missing.required.fields,Update address of partner,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+spreadsheet.dashboard,Spreadsheet Dashboard,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+spreadsheet.dashboard.group,Group of dashboards,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+stock.assign.serial,Stock Assign Serial Numbers,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+stock.backorder.confirmation,Backorder Confirmation,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+stock.backorder.confirmation.line,Backorder Confirmation Line,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+stock.change.product.qty,Change Product Quantity,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+stock.immediate.transfer,Immediate Transfer,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+stock.immediate.transfer.line,Immediate Transfer Line,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+stock.inventory.adjustment.name,Inventory Adjustment Reference / Reason,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+stock.inventory.conflict,Conflict in Inventory,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+stock.inventory.warning,Inventory Adjustment Warning,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+stock.location,Inventory Locations,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+stock.lot,Lot/Serial,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+stock.move,Stock Move,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+stock.move.line,Product Moves (Stock Move Line),base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+stock.orderpoint.snooze,Snooze Orderpoint,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+stock.package.destination,Stock Package Destination,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+stock.package.type,Stock package type,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+stock.package_level,Stock Package Level,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+stock.picking,Transfer,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+stock.picking.type,Picking Type,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+stock.putaway.rule,Putaway Rule,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+stock.quant,Quants,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+stock.quant.package,Packages,base,False, Packages containing quants and/or other packages 
+stock.quantity.history,Stock Quantity History,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+stock.replenishment.info,Stock supplier replenishment information,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+stock.replenishment.option,Stock warehouse replenishment option,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+stock.request.count,Stock Request an Inventory Count,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+stock.return.picking,Return Picking,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+stock.return.picking.line,Return Picking Line,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+stock.route,Inventory Routes,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+stock.rule,Stock Rule,base,False," A rule describe what a procurement should do; produce, buy, move, ... "
+stock.rules.report,Stock Rules report,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+stock.scheduler.compute,Run Scheduler Manually,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+stock.scrap,Scrap,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+stock.storage.category,Storage Category,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+stock.storage.category.capacity,Storage Category Capacity,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+stock.traceability.report,Traceability Report,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+stock.track.confirmation,Stock Track Confirmation,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+stock.track.line,Stock Track Line,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+stock.valuation.layer,Stock Valuation Layer,base,False,Stock Valuation Layer
+stock.valuation.layer.revaluation,Wizard model to reavaluate a stock inventory for a product,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+stock.warehouse,Warehouse,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+stock.warehouse.orderpoint,Minimum Inventory Rule,base,False, Defines Minimum stock rules. 
+stock.warn.insufficient.qty,Warn Insufficient Quantity,base,False,"
+    Updates the base class to support setting xids directly in create by
+    providing an ""id"" key (otherwise stripped by create) during an import
+    (which should strip 'id' from the input data anyway)
+    "
+stock.warn.insufficient.qty.scrap,Warn Insufficient Scrap Quantity,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+template.reset.mixin,Template Reset Mixin,base,False,"
+    Updates the base class to support setting xids directly in create by
+    providing an ""id"" key (otherwise stripped by create) during an import
+    (which should strip 'id' from the input data anyway)
+    "
+uom.category,Product UoM Categories,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+uom.uom,Product Unit of Measure,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+utm.campaign,UTM Campaign,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+utm.medium,UTM Medium,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+utm.mixin,UTM Mixin,base,False, Mixin class for objects which can be tracked by marketing. 
+utm.source,UTM Source,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+utm.source.mixin,UTM Source Mixin,base,False,"Mixin responsible of generating the name of the source based on the content
+    (field defined by _rec_name) of the record (mailing, social post,...).
+    "
+utm.stage,Campaign Stage,base,False,Stage for utm campaigns.
+utm.tag,UTM Tag,base,False,"Model of categories of utm campaigns, i.e. marketing, newsletter, ..."
+validate.account.move,Validate Account Move,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "
+vendor.delay.report,Vendor Delay Report,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+web_editor.assets,Assets Utils,base,False,"
+    Updates the base class to support setting xids directly in create by
+    providing an ""id"" key (otherwise stripped by create) during an import
+    (which should strip 'id' from the input data anyway)
+    "
+web_editor.converter.test,Web Editor Converter Test,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+web_editor.converter.test.sub,Web Editor Converter Subtest,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+web_tour.tour,Tours,base,False," Main super-class for regular database-persisted Odoo models.
+
+    Odoo models are created by inheriting from this class::
+
+        class user(Model):
+            ...
+
+    The system will later instantiate the class once per database (on
+    which the class' module is installed).
+    "
+wizard.ir.model.menu.create,Create Menu Wizard,base,True," Model super-class for transient records, meant to be temporarily
+    persistent, and regularly vacuum-cleaned.
+
+    A TransientModel has a simplified access rights management, all users can
+    create new records, and may only access the records they created. The
+    superuser has unrestricted access to all TransientModel records.
+    "

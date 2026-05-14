@@ -1,5 +1,5 @@
 import pytest
-from agents.orchestrator import Orchestrator
+from agents import Orchestrator
 
 orchestrator = Orchestrator()
 

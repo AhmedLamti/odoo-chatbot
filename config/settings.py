@@ -45,6 +45,9 @@ class Settings(BaseSettings):
     odoo_db: str = ""
     odoo_username: str = "admin"
     odoo_password: str = "admin"
+    odoo_api_key: str = ""
+
+    google_api_key: str = ""
 
     # ── LangSmith (optionnel — monitoring LangGraph) ─────────
     langchain_api_key: str = ""

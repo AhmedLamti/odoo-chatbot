@@ -1,0 +1,3446 @@
+[
+  {
+    "id": 2,
+    "name": "Unknown",
+    "model": "_unknown",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 435,
+    "name": "Account",
+    "model": "account.account",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 434,
+    "name": "Account Tag",
+    "model": "account.account.tag",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 458,
+    "name": "Templates for Accounts",
+    "model": "account.account.template",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 486,
+    "name": "Accrued Orders Wizard",
+    "model": "account.accrued.orders.wizard",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 363,
+    "name": "Analytic Account",
+    "model": "account.analytic.account",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 362,
+    "name": "Analytic Plan's Applicabilities",
+    "model": "account.analytic.applicability",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 366,
+    "name": "Analytic Distribution Model",
+    "model": "account.analytic.distribution.model",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 364,
+    "name": "Analytic Line",
+    "model": "account.analytic.line",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 361,
+    "name": "Analytic Plans",
+    "model": "account.analytic.plan",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 475,
+    "name": "Create Automatic Entries",
+    "model": "account.automatic.entry.wizard",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 455,
+    "name": "Bank Statement",
+    "model": "account.bank.statement",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 456,
+    "name": "Bank Statement Line",
+    "model": "account.bank.statement.line",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 468,
+    "name": "Account Cash Rounding",
+    "model": "account.cash.rounding",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 459,
+    "name": "Account Chart Template",
+    "model": "account.chart.template",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 495,
+    "name": "Common functions for EDI documents: generate the data, the constraints, etc",
+    "model": "account.edi.common",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 492,
+    "name": "Electronic Document for an account.move",
+    "model": "account.edi.document",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 491,
+    "name": "EDI format",
+    "model": "account.edi.format",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 496,
+    "name": "Factur-x/XRechnung CII 2.2.0",
+    "model": "account.edi.xml.cii",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 497,
+    "name": "UBL 2.0",
+    "model": "account.edi.xml.ubl_20",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 498,
+    "name": "UBL 2.1",
+    "model": "account.edi.xml.ubl_21",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 503,
+    "name": "A-NZ BIS Billing 3.0",
+    "model": "account.edi.xml.ubl_a_nz",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 499,
+    "name": "UBL BIS Billing 3.0.12",
+    "model": "account.edi.xml.ubl_bis3",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 500,
+    "name": "BIS3 DE (XRechnung)",
+    "model": "account.edi.xml.ubl_de",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 502,
+    "name": "E-FFF (BE)",
+    "model": "account.edi.xml.ubl_efff",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 501,
+    "name": "SI-UBL 2.0 (NLCIUS)",
+    "model": "account.edi.xml.ubl_nl",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 504,
+    "name": "SG BIS Billing 3.0",
+    "model": "account.edi.xml.ubl_sg",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 480,
+    "name": "Opening Balance of Financial Year",
+    "model": "account.financial.year.op",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 430,
+    "name": "Fiscal Position",
+    "model": "account.fiscal.position",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 432,
+    "name": "Accounts Mapping of Fiscal Position",
+    "model": "account.fiscal.position.account",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 464,
+    "name": "Accounts Mapping Template of Fiscal Position",
+    "model": "account.fiscal.position.account.template",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 431,
+    "name": "Tax Mapping of Fiscal Position",
+    "model": "account.fiscal.position.tax",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 463,
+    "name": "Tax Mapping Template of Fiscal Position",
+    "model": "account.fiscal.position.tax.template",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 462,
+    "name": "Template for Fiscal Position",
+    "model": "account.fiscal.position.template",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 451,
+    "name": "Full Reconcile",
+    "model": "account.full.reconcile",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 436,
+    "name": "Account Group",
+    "model": "account.group",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 457,
+    "name": "Template for Account Groups",
+    "model": "account.group.template",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 469,
+    "name": "Incoterms",
+    "model": "account.incoterms",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 487,
+    "name": "Invoices Statistics",
+    "model": "account.invoice.report",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 482,
+    "name": "Account Invoice Send",
+    "model": "account.invoice.send",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 439,
+    "name": "Journal",
+    "model": "account.journal",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 438,
+    "name": "Account Journal Group",
+    "model": "account.journal.group",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 448,
+    "name": "Journal Entry",
+    "model": "account.move",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 449,
+    "name": "Journal Item",
+    "model": "account.move.line",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 478,
+    "name": "Account Move Reversal",
+    "model": "account.move.reversal",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 450,
+    "name": "Partial Reconcile",
+    "model": "account.partial.reconcile",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 452,
+    "name": "Payments",
+    "model": "account.payment",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 453,
+    "name": "Payment Methods",
+    "model": "account.payment.method",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 454,
+    "name": "Payment Methods",
+    "model": "account.payment.method.line",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 483,
+    "name": "Register Payment",
+    "model": "account.payment.register",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 446,
+    "name": "Payment Terms",
+    "model": "account.payment.term",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 447,
+    "name": "Payment Terms Line",
+    "model": "account.payment.term.line",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 445,
+    "name": "Preset to create journal entries during a invoices and payments matching",
+    "model": "account.reconcile.model",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 444,
+    "name": "Rules for the reconciliation model",
+    "model": "account.reconcile.model.line",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 466,
+    "name": "Reconcile Model Line Template",
+    "model": "account.reconcile.model.line.template",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 443,
+    "name": "Partner mapping for reconciliation models",
+    "model": "account.reconcile.model.partner.mapping",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 465,
+    "name": "Reconcile Model Template",
+    "model": "account.reconcile.model.template",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 470,
+    "name": "Accounting Report",
+    "model": "account.report",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 473,
+    "name": "Accounting Report Column",
+    "model": "account.report.column",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 472,
+    "name": "Accounting Report Expression",
+    "model": "account.report.expression",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 474,
+    "name": "Accounting Report External Value",
+    "model": "account.report.external.value",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 471,
+    "name": "Accounting Report Line",
+    "model": "account.report.line",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 479,
+    "name": "Remake the sequence of Journal Entries.",
+    "model": "account.resequence.wizard",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 437,
+    "name": "Account codes first 2 digits",
+    "model": "account.root",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 481,
+    "name": "Bank setup manual config",
+    "model": "account.setup.bank.manual.config",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 441,
+    "name": "Tax",
+    "model": "account.tax",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 440,
+    "name": "Tax Group",
+    "model": "account.tax.group",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 442,
+    "name": "Tax Repartition Line",
+    "model": "account.tax.repartition.line",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 461,
+    "name": "Tax Repartition Line Template",
+    "model": "account.tax.repartition.line.template",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 460,
+    "name": "Templates for Taxes",
+    "model": "account.tax.template",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 484,
+    "name": "Account tour upload bill",
+    "model": "account.tour.upload.bill",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 485,
+    "name": "Account tour upload bill email confirm",
+    "model": "account.tour.upload.bill.email.confirm",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 476,
+    "name": "Account Unreconcile",
+    "model": "account.unreconcile",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 365,
+    "name": "Analytic Mixin",
+    "model": "analytic.mixin",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 118,
+    "name": "Authentication Device",
+    "model": "auth_totp.device",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 119,
+    "name": "2-Factor Setup Wizard",
+    "model": "auth_totp.wizard",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 77,
+    "name": "Avatar Mixin",
+    "model": "avatar.mixin",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 589,
+    "name": "Barcode Nomenclature",
+    "model": "barcode.nomenclature",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 590,
+    "name": "Barcode Rule",
+    "model": "barcode.rule",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 588,
+    "name": "Barcode Event Mixin",
+    "model": "barcodes.barcode_events_mixin",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 1,
+    "name": "Base",
+    "model": "base",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 117,
+    "name": "Company Document Layout",
+    "model": "base.document.layout",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 75,
+    "name": "Enable profiling for some time",
+    "model": "base.enable.profiling.wizard",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 113,
+    "name": "Language Export",
+    "model": "base.language.export",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 110,
+    "name": "Language Import",
+    "model": "base.language.import",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 109,
+    "name": "Install Language",
+    "model": "base.language.install",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 367,
+    "name": "Module Activation Request",
+    "model": "base.module.install.request",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 368,
+    "name": "Module Activation Review",
+    "model": "base.module.install.review",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 112,
+    "name": "Module Uninstall",
+    "model": "base.module.uninstall",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 108,
+    "name": "Update Module",
+    "model": "base.module.update",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 111,
+    "name": "Upgrade Module",
+    "model": "base.module.upgrade",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 115,
+    "name": "Merge Partner Wizard",
+    "model": "base.partner.merge.automatic.wizard",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 114,
+    "name": "Merge Partner Line",
+    "model": "base.partner.merge.line",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 121,
+    "name": "Base Import",
+    "model": "base_import.import",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 120,
+    "name": "Base Import Mapping",
+    "model": "base_import.mapping",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 122,
+    "name": "Tests : Base Import Model, Character",
+    "model": "base_import.tests.models.char",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 126,
+    "name": "Tests : Base Import Model, Character No readonly",
+    "model": "base_import.tests.models.char.noreadonly",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 124,
+    "name": "Tests : Base Import Model, Character readonly",
+    "model": "base_import.tests.models.char.readonly",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 123,
+    "name": "Tests : Base Import Model, Character required",
+    "model": "base_import.tests.models.char.required",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 125,
+    "name": "Tests : Base Import Model, Character states",
+    "model": "base_import.tests.models.char.states",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 127,
+    "name": "Tests : Base Import Model, Character still readonly",
+    "model": "base_import.tests.models.char.stillreadonly",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 136,
+    "name": "Tests: Base Import Model Complex",
+    "model": "base_import.tests.models.complex",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 135,
+    "name": "Tests: Base Import Model Float",
+    "model": "base_import.tests.models.float",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 128,
+    "name": "Tests : Base Import Model, Many to One",
+    "model": "base_import.tests.models.m2o",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 129,
+    "name": "Tests : Base Import Model, Many to One related",
+    "model": "base_import.tests.models.m2o.related",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 130,
+    "name": "Tests : Base Import Model, Many to One required",
+    "model": "base_import.tests.models.m2o.required",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 131,
+    "name": "Tests : Base Import Model, Many to One required related",
+    "model": "base_import.tests.models.m2o.required.related",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 132,
+    "name": "Tests : Base Import Model, One to Many",
+    "model": "base_import.tests.models.o2m",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 133,
+    "name": "Tests : Base Import Model, One to Many child",
+    "model": "base_import.tests.models.o2m.child",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 134,
+    "name": "Tests : Base Import Model Preview",
+    "model": "base_import.tests.models.preview",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 137,
+    "name": "Communication Bus",
+    "model": "bus.bus",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 138,
+    "name": "User Presence",
+    "model": "bus.presence",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 519,
+    "name": "Event Alarm",
+    "model": "calendar.alarm",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 520,
+    "name": "Event Alarm Manager",
+    "model": "calendar.alarm_manager",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 516,
+    "name": "Calendar Attendee Information",
+    "model": "calendar.attendee",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 518,
+    "name": "Calendar Event",
+    "model": "calendar.event",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 522,
+    "name": "Event Meeting Type",
+    "model": "calendar.event.type",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 521,
+    "name": "Calendar Filters",
+    "model": "calendar.filters",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 523,
+    "name": "Calendar Provider Configuration Wizard",
+    "model": "calendar.provider.config",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 517,
+    "name": "Event Recurrence Rule",
+    "model": "calendar.recurrence",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 101,
+    "name": "User, change own password wizard",
+    "model": "change.password.own",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 100,
+    "name": "User, Change Password Wizard",
+    "model": "change.password.user",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 99,
+    "name": "Change Password Wizard",
+    "model": "change.password.wizard",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 560,
+    "name": "Chatbot Message",
+    "model": "chatbot.message",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 561,
+    "name": "Chatbot Script",
+    "model": "chatbot.script",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 562,
+    "name": "Chatbot Script Answer",
+    "model": "chatbot.script.answer",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 563,
+    "name": "Chatbot Script Step",
+    "model": "chatbot.script.step",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 647,
+    "name": "Confirm Stock SMS",
+    "model": "confirm.stock.sms",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 531,
+    "name": "CRM Activity Analysis",
+    "model": "crm.activity.report",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 537,
+    "name": "Helper methods for crm_iap_mine modules",
+    "model": "crm.iap.lead.helpers",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 538,
+    "name": "CRM IAP Lead Industry",
+    "model": "crm.iap.lead.industry",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 541,
+    "name": "CRM Lead Mining Request",
+    "model": "crm.iap.lead.mining.request",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 539,
+    "name": "People Role",
+    "model": "crm.iap.lead.role",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 540,
+    "name": "People Seniority",
+    "model": "crm.iap.lead.seniority",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 525,
+    "name": "Lead/Opportunity",
+    "model": "crm.lead",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 532,
+    "name": "Get Lost Reason",
+    "model": "crm.lead.lost",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 536,
+    "name": "Update the probabilities",
+    "model": "crm.lead.pls.update",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 528,
+    "name": "Lead Scoring Frequency",
+    "model": "crm.lead.scoring.frequency",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 529,
+    "name": "Fields that can be used for predictive lead scoring computation",
+    "model": "crm.lead.scoring.frequency.field",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 533,
+    "name": "Convert Lead to Opportunity (not in mass)",
+    "model": "crm.lead2opportunity.partner",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 534,
+    "name": "Convert Lead to Opportunity (in mass)",
+    "model": "crm.lead2opportunity.partner.mass",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 526,
+    "name": "Opp. Lost Reason",
+    "model": "crm.lost.reason",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 535,
+    "name": "Merge Opportunities",
+    "model": "crm.merge.opportunity",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 542,
+    "name": "Create new or use existing Customer on new Quotation",
+    "model": "crm.quotation.partner",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 530,
+    "name": "CRM Recurring revenue plans",
+    "model": "crm.recurring.plan",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 524,
+    "name": "CRM Stages",
+    "model": "crm.stage",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 397,
+    "name": "CRM Tag",
+    "model": "crm.tag",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 396,
+    "name": "Sales Team",
+    "model": "crm.team",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 395,
+    "name": "Sales Team Member",
+    "model": "crm.team.member",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 106,
+    "name": "Decimal Precision",
+    "model": "decimal.precision",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 421,
+    "name": "Digest",
+    "model": "digest.digest",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 422,
+    "name": "Digest Tips",
+    "model": "digest.tip",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 172,
+    "name": "Incoming Mail Server",
+    "model": "fetchmail.server",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 571,
+    "name": "Fleet Service Type",
+    "model": "fleet.service.type",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 573,
+    "name": "Vehicle",
+    "model": "fleet.vehicle",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 574,
+    "name": "Drivers history on a vehicle",
+    "model": "fleet.vehicle.assignation.log",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 582,
+    "name": "Fleet Analysis Report",
+    "model": "fleet.vehicle.cost.report",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 575,
+    "name": "Vehicle Contract",
+    "model": "fleet.vehicle.log.contract",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 576,
+    "name": "Services for vehicles",
+    "model": "fleet.vehicle.log.services",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 572,
+    "name": "Model of a vehicle",
+    "model": "fleet.vehicle.model",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 577,
+    "name": "Brand of the vehicle",
+    "model": "fleet.vehicle.model.brand",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 578,
+    "name": "Category of the model",
+    "model": "fleet.vehicle.model.category",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 579,
+    "name": "Odometer log for a vehicle",
+    "model": "fleet.vehicle.odometer",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 580,
+    "name": "Vehicle Status",
+    "model": "fleet.vehicle.state",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 581,
+    "name": "Vehicle Tag",
+    "model": "fleet.vehicle.tag",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 82,
+    "name": "Address Format",
+    "model": "format.address.mixin",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 369,
+    "name": "Google Gmail Mixin",
+    "model": "google.gmail.mixin",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 664,
+    "name": "Contract",
+    "model": "hr.contract",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 666,
+    "name": "Contract history",
+    "model": "hr.contract.history",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 543,
+    "name": "Contract Type",
+    "model": "hr.contract.type",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 548,
+    "name": "Department",
+    "model": "hr.department",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 549,
+    "name": "Departure Reason",
+    "model": "hr.departure.reason",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 555,
+    "name": "Departure Wizard",
+    "model": "hr.departure.wizard",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 545,
+    "name": "Employee",
+    "model": "hr.employee",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 544,
+    "name": "Basic Employee",
+    "model": "hr.employee.base",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 546,
+    "name": "Employee Category",
+    "model": "hr.employee.category",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 547,
+    "name": "Public Employee",
+    "model": "hr.employee.public",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 550,
+    "name": "Job Position",
+    "model": "hr.job",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 665,
+    "name": "Salary Structure Type",
+    "model": "hr.payroll.structure.type",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 551,
+    "name": "plan",
+    "model": "hr.plan",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 552,
+    "name": "Plan activity type",
+    "model": "hr.plan.activity.type",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 554,
+    "name": "Plan Wizard",
+    "model": "hr.plan.wizard",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 553,
+    "name": "Work Location",
+    "model": "hr.work.location",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 160,
+    "name": "IAP Account",
+    "model": "iap.account",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 400,
+    "name": "IAP Partner Autocomplete API",
+    "model": "iap.autocomplete.api",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 161,
+    "name": "IAP Lead Enrichment API",
+    "model": "iap.enrich.api",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 566,
+    "name": "Livechat Channel",
+    "model": "im_livechat.channel",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 567,
+    "name": "Livechat Channel Rules",
+    "model": "im_livechat.channel.rule",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 569,
+    "name": "Livechat Support Channel Report",
+    "model": "im_livechat.report.channel",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 570,
+    "name": "Livechat Support Operator Report",
+    "model": "im_livechat.report.operator",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 76,
+    "name": "Image Mixin",
+    "model": "image.mixin",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 22,
+    "name": "Action URL",
+    "model": "ir.actions.act_url",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 19,
+    "name": "Action Window",
+    "model": "ir.actions.act_window",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 20,
+    "name": "Action Window View",
+    "model": "ir.actions.act_window.view",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 21,
+    "name": "Action Window Close",
+    "model": "ir.actions.act_window_close",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 18,
+    "name": "Actions",
+    "model": "ir.actions.actions",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 26,
+    "name": "Client Action",
+    "model": "ir.actions.client",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 27,
+    "name": "Report Action",
+    "model": "ir.actions.report",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 23,
+    "name": "Server Action",
+    "model": "ir.actions.server",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 25,
+    "name": "Configuration Wizards",
+    "model": "ir.actions.todo",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 17,
+    "name": "Asset",
+    "model": "ir.asset",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 28,
+    "name": "Attachment",
+    "model": "ir.attachment",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 38,
+    "name": "Automatic Vacuum",
+    "model": "ir.autovacuum",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 29,
+    "name": "File streaming helper model for controllers",
+    "model": "ir.binary",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 37,
+    "name": "System Parameter",
+    "model": "ir.config_parameter",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 30,
+    "name": "Scheduled Actions",
+    "model": "ir.cron",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 31,
+    "name": "Triggered actions",
+    "model": "ir.cron.trigger",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 33,
+    "name": "Default Values",
+    "model": "ir.default",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 69,
+    "name": "Demo",
+    "model": "ir.demo",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 70,
+    "name": "Demo failure",
+    "model": "ir.demo_failure",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 71,
+    "name": "Demo Failure wizard",
+    "model": "ir.demo_failure.wizard",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 34,
+    "name": "Exports",
+    "model": "ir.exports",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 35,
+    "name": "Exports Line",
+    "model": "ir.exports.line",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 40,
+    "name": "Fields Converter",
+    "model": "ir.fields.converter",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 32,
+    "name": "Filters",
+    "model": "ir.filters",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 62,
+    "name": "HTTP Routing",
+    "model": "ir.http",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 63,
+    "name": "Logging",
+    "model": "ir.logging",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 39,
+    "name": "Mail Server",
+    "model": "ir.mail_server",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 3,
+    "name": "Models",
+    "model": "ir.model",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 8,
+    "name": "Model Access",
+    "model": "ir.model.access",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 6,
+    "name": "Model Constraint",
+    "model": "ir.model.constraint",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 9,
+    "name": "Model Data",
+    "model": "ir.model.data",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 4,
+    "name": "Fields",
+    "model": "ir.model.fields",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 5,
+    "name": "Fields Selection",
+    "model": "ir.model.fields.selection",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 7,
+    "name": "Relation Model",
+    "model": "ir.model.relation",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 65,
+    "name": "Application",
+    "model": "ir.module.category",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 66,
+    "name": "Module",
+    "model": "ir.module.module",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 67,
+    "name": "Module dependency",
+    "model": "ir.module.module.dependency",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 68,
+    "name": "Module exclusion",
+    "model": "ir.module.module.exclusion",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 74,
+    "name": "Profiling results",
+    "model": "ir.profile",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 64,
+    "name": "Company Property",
+    "model": "ir.property",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 41,
+    "name": "Qweb",
+    "model": "ir.qweb",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 42,
+    "name": "Qweb Field",
+    "model": "ir.qweb.field",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 59,
+    "name": "Qweb Field Barcode",
+    "model": "ir.qweb.field.barcode",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 60,
+    "name": "Qweb Field Contact",
+    "model": "ir.qweb.field.contact",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 45,
+    "name": "Qweb Field Date",
+    "model": "ir.qweb.field.date",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 46,
+    "name": "Qweb Field Datetime",
+    "model": "ir.qweb.field.datetime",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 57,
+    "name": "Qweb Field Duration",
+    "model": "ir.qweb.field.duration",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 44,
+    "name": "Qweb Field Float",
+    "model": "ir.qweb.field.float",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 55,
+    "name": "Qweb Field Float Time",
+    "model": "ir.qweb.field.float_time",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 51,
+    "name": "Qweb Field HTML",
+    "model": "ir.qweb.field.html",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 52,
+    "name": "Qweb Field Image",
+    "model": "ir.qweb.field.image",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 53,
+    "name": "Qweb Field Image",
+    "model": "ir.qweb.field.image_url",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 43,
+    "name": "Qweb Field Integer",
+    "model": "ir.qweb.field.integer",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 50,
+    "name": "Qweb field many2many",
+    "model": "ir.qweb.field.many2many",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 49,
+    "name": "Qweb Field Many to One",
+    "model": "ir.qweb.field.many2one",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 54,
+    "name": "Qweb Field Monetary",
+    "model": "ir.qweb.field.monetary",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 61,
+    "name": "Qweb Field qweb",
+    "model": "ir.qweb.field.qweb",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 58,
+    "name": "Qweb Field Relative",
+    "model": "ir.qweb.field.relative",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 48,
+    "name": "Qweb Field Selection",
+    "model": "ir.qweb.field.selection",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 47,
+    "name": "Qweb Field Text",
+    "model": "ir.qweb.field.text",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 56,
+    "name": "QWeb Field Time",
+    "model": "ir.qweb.field.time",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 36,
+    "name": "Record Rule",
+    "model": "ir.rule",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 11,
+    "name": "Sequence",
+    "model": "ir.sequence",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 12,
+    "name": "Sequence Date Range",
+    "model": "ir.sequence.date_range",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 24,
+    "name": "Server Action value mapping",
+    "model": "ir.server.object.lines",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 13,
+    "name": "Menu",
+    "model": "ir.ui.menu",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 15,
+    "name": "View",
+    "model": "ir.ui.view",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 14,
+    "name": "Custom View",
+    "model": "ir.ui.view.custom",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 139,
+    "name": "websocket message handling",
+    "model": "ir.websocket",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 147,
+    "name": "KPI Provider",
+    "model": "kpi.provider",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 627,
+    "name": "Choose the sheet layout to print lot labels",
+    "model": "lot.label.layout",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 175,
+    "name": "Activity",
+    "model": "mail.activity",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 164,
+    "name": "Activity Mixin",
+    "model": "mail.activity.mixin",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 174,
+    "name": "Activity Type",
+    "model": "mail.activity.type",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 162,
+    "name": "Email Aliases",
+    "model": "mail.alias",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 165,
+    "name": "Email Aliases Mixin",
+    "model": "mail.alias.mixin",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 176,
+    "name": "Mail Blacklist",
+    "model": "mail.blacklist",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 215,
+    "name": "Remove email from blacklist wizard",
+    "model": "mail.blacklist.remove",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 370,
+    "name": "Mail Bot",
+    "model": "mail.bot",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 189,
+    "name": "Discussion Channel",
+    "model": "mail.channel",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 187,
+    "name": "Listeners of a Channel",
+    "model": "mail.channel.member",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 188,
+    "name": "Mail RTC session",
+    "model": "mail.channel.rtc.session",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 216,
+    "name": "Email composition wizard",
+    "model": "mail.compose.message",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 167,
+    "name": "Mail Composer Mixin",
+    "model": "mail.composer.mixin",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 177,
+    "name": "Document Followers",
+    "model": "mail.followers",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 178,
+    "name": "Mail Gateway Allowed",
+    "model": "mail.gateway.allowed",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 190,
+    "name": "Guest",
+    "model": "mail.guest",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 191,
+    "name": "ICE server",
+    "model": "mail.ice.server",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 179,
+    "name": "Store link preview data",
+    "model": "mail.link.preview",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 184,
+    "name": "Outgoing Mails",
+    "model": "mail.mail",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 183,
+    "name": "Message",
+    "model": "mail.message",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 180,
+    "name": "Message Reaction",
+    "model": "mail.message.reaction",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 181,
+    "name": "Scheduled Messages",
+    "model": "mail.message.schedule",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 182,
+    "name": "Message subtypes",
+    "model": "mail.message.subtype",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 173,
+    "name": "Message Notifications",
+    "model": "mail.notification",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 166,
+    "name": "Mail Render Mixin",
+    "model": "mail.render.mixin",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 217,
+    "name": "Email resend wizard",
+    "model": "mail.resend.message",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 218,
+    "name": "Partner with additional information for mail resend",
+    "model": "mail.resend.partner",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 192,
+    "name": "Canned Response / Shortcode",
+    "model": "mail.shortcode",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 186,
+    "name": "Email Templates",
+    "model": "mail.template",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 219,
+    "name": "Email Template Preview",
+    "model": "mail.template.preview",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 220,
+    "name": "Mail Template Reset",
+    "model": "mail.template.reset",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 168,
+    "name": "Email Thread",
+    "model": "mail.thread",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 169,
+    "name": "Mail Blacklist mixin",
+    "model": "mail.thread.blacklist",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 170,
+    "name": "Email CC management",
+    "model": "mail.thread.cc",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 372,
+    "name": "Phone Blacklist Mixin",
+    "model": "mail.thread.phone",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 185,
+    "name": "Mail Tracking Value",
+    "model": "mail.tracking.value",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 221,
+    "name": "Invite wizard",
+    "model": "mail.wizard.invite",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 424,
+    "name": "Payment Icon",
+    "model": "payment.icon",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 427,
+    "name": "Generate Sales Payment Link",
+    "model": "payment.link.wizard",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 423,
+    "name": "Payment Provider",
+    "model": "payment.provider",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 428,
+    "name": "Payment provider onboarding wizard",
+    "model": "payment.provider.onboarding.wizard",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 493,
+    "name": "Payment Refund Wizard",
+    "model": "payment.refund.wizard",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 425,
+    "name": "Payment Token",
+    "model": "payment.token",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 426,
+    "name": "Payment Transaction",
+    "model": "payment.transaction",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 371,
+    "name": "Phone Blacklist",
+    "model": "phone.blacklist",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 373,
+    "name": "Remove phone from blacklist",
+    "model": "phone.blacklist.remove",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 626,
+    "name": "Choose whether to print product or lot/sn labels",
+    "model": "picking.label.type",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 402,
+    "name": "Portal Mixin",
+    "model": "portal.mixin",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 403,
+    "name": "Portal Sharing",
+    "model": "portal.share",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 404,
+    "name": "Grant Portal Access",
+    "model": "portal.wizard",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 405,
+    "name": "Portal User Config",
+    "model": "portal.wizard.user",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 374,
+    "name": "Privacy Log",
+    "model": "privacy.log",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 375,
+    "name": "Privacy Lookup Wizard",
+    "model": "privacy.lookup.wizard",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 376,
+    "name": "Privacy Lookup Wizard Line",
+    "model": "privacy.lookup.wizard.line",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 598,
+    "name": "Procurement Group",
+    "model": "procurement.group",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 379,
+    "name": "Product Attribute",
+    "model": "product.attribute",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 384,
+    "name": "Product Attribute Custom Value",
+    "model": "product.attribute.custom.value",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 380,
+    "name": "Attribute Value",
+    "model": "product.attribute.value",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 385,
+    "name": "Product Category",
+    "model": "product.category",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 394,
+    "name": "Choose the sheet layout to print the labels",
+    "model": "product.label.layout",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 386,
+    "name": "Product Packaging",
+    "model": "product.packaging",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 387,
+    "name": "Pricelist",
+    "model": "product.pricelist",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 388,
+    "name": "Pricelist Rule",
+    "model": "product.pricelist.item",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 378,
+    "name": "Product Variant",
+    "model": "product.product",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 591,
+    "name": "Removal Strategy",
+    "model": "product.removal",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 637,
+    "name": "Product Replenish",
+    "model": "product.replenish",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 389,
+    "name": "Supplier Pricelist",
+    "model": "product.supplierinfo",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 390,
+    "name": "Product Tag",
+    "model": "product.tag",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 377,
+    "name": "Product",
+    "model": "product.template",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 383,
+    "name": "Product Template Attribute Exclusion",
+    "model": "product.template.attribute.exclusion",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 381,
+    "name": "Product Template Attribute Line",
+    "model": "product.template.attribute.line",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 382,
+    "name": "Product Template Attribute Value",
+    "model": "product.template.attribute.value",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 658,
+    "name": "Collaborators in project shared",
+    "model": "project.collaborator",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 649,
+    "name": "Project Milestone",
+    "model": "project.milestone",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 655,
+    "name": "Project",
+    "model": "project.project",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 650,
+    "name": "Project Stage",
+    "model": "project.project.stage",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 663,
+    "name": "Project Sharing",
+    "model": "project.share.wizard",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 657,
+    "name": "Project Tags",
+    "model": "project.tags",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 656,
+    "name": "Task",
+    "model": "project.task",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 661,
+    "name": "Burndown Chart",
+    "model": "project.task.burndown.chart.report",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 651,
+    "name": "Task Recurrence",
+    "model": "project.task.recurrence",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 652,
+    "name": "Personal Task Stage",
+    "model": "project.task.stage.personal",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 654,
+    "name": "Task Stage",
+    "model": "project.task.type",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 662,
+    "name": "Project Stage Delete Wizard",
+    "model": "project.task.type.delete.wizard",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 653,
+    "name": "Project Update",
+    "model": "project.update",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 212,
+    "name": "Publisher Warranty Contract",
+    "model": "publisher_warranty.contract",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 587,
+    "name": "Purchases & Bills Union",
+    "model": "purchase.bill.union",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 584,
+    "name": "Purchase Order",
+    "model": "purchase.order",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 585,
+    "name": "Purchase Order Line",
+    "model": "purchase.order.line",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 586,
+    "name": "Purchase Report",
+    "model": "purchase.report",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 558,
+    "name": "Rating Mixin",
+    "model": "rating.mixin",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 559,
+    "name": "Rating Parent Mixin",
+    "model": "rating.parent.mixin",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 557,
+    "name": "Rating",
+    "model": "rating.rating",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 490,
+    "name": "Get hash integrity result as PDF.",
+    "model": "report.account.report_hash_integrity",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 488,
+    "name": "Account report without payment lines",
+    "model": "report.account.report_invoice",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 489,
+    "name": "Account report with payment lines",
+    "model": "report.account.report_invoice_with_payments",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 107,
+    "name": "Module Reference Report (base)",
+    "model": "report.base.report_irmodulereference",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 72,
+    "name": "Report Layout",
+    "model": "report.layout",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 73,
+    "name": "Paper Format Config",
+    "model": "report.paperformat",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 393,
+    "name": "Pricelist Report",
+    "model": "report.product.report_pricelist",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 391,
+    "name": "Product Label Report",
+    "model": "report.product.report_producttemplatelabel",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 392,
+    "name": "Product Label Report",
+    "model": "report.product.report_producttemplatelabel_dymo",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 660,
+    "name": "Tasks Analysis",
+    "model": "report.project.task.user",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 618,
+    "name": "Lot Label Report",
+    "model": "report.stock.label_lot_template_view",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 617,
+    "name": "Product Label Report",
+    "model": "report.stock.label_product_product_view",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 613,
+    "name": "Stock Quantity Report",
+    "model": "report.stock.quantity",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 611,
+    "name": "Stock Replenishment Report",
+    "model": "report.stock.report_product_product_replenishment",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 612,
+    "name": "Stock Replenishment Report",
+    "model": "report.stock.report_product_template_replenishment",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 614,
+    "name": "Stock Reception Report",
+    "model": "report.stock.report_reception",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 615,
+    "name": "Stock rule report",
+    "model": "report.stock.report_stock_rule",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 87,
+    "name": "Bank",
+    "model": "res.bank",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 94,
+    "name": "Companies",
+    "model": "res.company",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 89,
+    "name": "Config",
+    "model": "res.config",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 90,
+    "name": "Config Installer",
+    "model": "res.config.installer",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 91,
+    "name": "Config Settings",
+    "model": "res.config.settings",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 78,
+    "name": "Country",
+    "model": "res.country",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 79,
+    "name": "Country Group",
+    "model": "res.country.group",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 80,
+    "name": "Country state",
+    "model": "res.country.state",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 92,
+    "name": "Currency",
+    "model": "res.currency",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 93,
+    "name": "Currency Rate",
+    "model": "res.currency.rate",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 95,
+    "name": "Access Groups",
+    "model": "res.groups",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 81,
+    "name": "Languages",
+    "model": "res.lang",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 85,
+    "name": "Contact",
+    "model": "res.partner",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 401,
+    "name": "Partner Autocomplete Sync",
+    "model": "res.partner.autocomplete.sync",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 88,
+    "name": "Bank Accounts",
+    "model": "res.partner.bank",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 83,
+    "name": "Partner Tags",
+    "model": "res.partner.category",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 86,
+    "name": "Industry",
+    "model": "res.partner.industry",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 84,
+    "name": "Partner Title",
+    "model": "res.partner.title",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 97,
+    "name": "User",
+    "model": "res.users",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 102,
+    "name": "Users API Keys",
+    "model": "res.users.apikeys",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 103,
+    "name": "API Key Description",
+    "model": "res.users.apikeys.description",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 104,
+    "name": "Show API Key",
+    "model": "res.users.apikeys.show",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 105,
+    "name": "Users Deletion Request",
+    "model": "res.users.deletion",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 98,
+    "name": "Password Check Wizard",
+    "model": "res.users.identitycheck",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 96,
+    "name": "Users Log",
+    "model": "res.users.log",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 193,
+    "name": "User Settings",
+    "model": "res.users.settings",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 194,
+    "name": "User Settings Volumes",
+    "model": "res.users.settings.volumes",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 16,
+    "name": "Reset View Architecture Wizard",
+    "model": "reset.view.arch.wizard",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 149,
+    "name": "Resource Working Time",
+    "model": "resource.calendar",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 150,
+    "name": "Work Detail",
+    "model": "resource.calendar.attendance",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 152,
+    "name": "Resource Time Off Detail",
+    "model": "resource.calendar.leaves",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 148,
+    "name": "Resource Mixin",
+    "model": "resource.mixin",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 151,
+    "name": "Resources",
+    "model": "resource.resource",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 510,
+    "name": "Sales Advance Payment Invoice",
+    "model": "sale.advance.payment.inv",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 505,
+    "name": "Sales Order",
+    "model": "sale.order",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 511,
+    "name": "Sales Order Cancel",
+    "model": "sale.order.cancel",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 506,
+    "name": "Sales Order Line",
+    "model": "sale.order.line",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 512,
+    "name": "Sale Options",
+    "model": "sale.order.option",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 513,
+    "name": "Quotation Template",
+    "model": "sale.order.template",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 514,
+    "name": "Quotation Template Line",
+    "model": "sale.order.template.line",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 515,
+    "name": "Quotation Template Option",
+    "model": "sale.order.template.option",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 508,
+    "name": "Sale Payment provider onboarding wizard",
+    "model": "sale.payment.provider.onboarding.wizard",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 507,
+    "name": "Sales Analysis Report",
+    "model": "sale.report",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 429,
+    "name": "Automatic sequence",
+    "model": "sequence.mixin",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 409,
+    "name": "SMS API",
+    "model": "sms.api",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 412,
+    "name": "Send SMS Wizard",
+    "model": "sms.composer",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 414,
+    "name": "SMS Resend",
+    "model": "sms.resend",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 413,
+    "name": "Resend Notification",
+    "model": "sms.resend.recipient",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 410,
+    "name": "Outgoing SMS",
+    "model": "sms.sms",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 411,
+    "name": "SMS Templates",
+    "model": "sms.template",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 415,
+    "name": "SMS Template Preview",
+    "model": "sms.template.preview",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 416,
+    "name": "SMS Template Reset",
+    "model": "sms.template.reset",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 418,
+    "name": "Snailmail Confirm",
+    "model": "snailmail.confirm",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 494,
+    "name": "Snailmail Confirm Invoice",
+    "model": "snailmail.confirm.invoice",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 417,
+    "name": "Snailmail Letter",
+    "model": "snailmail.letter",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 419,
+    "name": "Format Error Sending a Snailmail Letter",
+    "model": "snailmail.letter.format.error",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 420,
+    "name": "Update address of partner",
+    "model": "snailmail.letter.missing.required.fields",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 399,
+    "name": "Spreadsheet Dashboard",
+    "model": "spreadsheet.dashboard",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 398,
+    "name": "Group of dashboards",
+    "model": "spreadsheet.dashboard.group",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 619,
+    "name": "Stock Assign Serial Numbers",
+    "model": "stock.assign.serial",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 632,
+    "name": "Backorder Confirmation",
+    "model": "stock.backorder.confirmation",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 631,
+    "name": "Backorder Confirmation Line",
+    "model": "stock.backorder.confirmation.line",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 622,
+    "name": "Change Product Quantity",
+    "model": "stock.change.product.qty",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 630,
+    "name": "Immediate Transfer",
+    "model": "stock.immediate.transfer",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 629,
+    "name": "Immediate Transfer Line",
+    "model": "stock.immediate.transfer.line",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 625,
+    "name": "Inventory Adjustment Reference / Reason",
+    "model": "stock.inventory.adjustment.name",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 623,
+    "name": "Conflict in Inventory",
+    "model": "stock.inventory.conflict",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 624,
+    "name": "Inventory Adjustment Warning",
+    "model": "stock.inventory.warning",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 593,
+    "name": "Inventory Locations",
+    "model": "stock.location",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 600,
+    "name": "Lot/Serial",
+    "model": "stock.lot",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 595,
+    "name": "Stock Move",
+    "model": "stock.move",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 596,
+    "name": "Product Moves (Stock Move Line)",
+    "model": "stock.move.line",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 641,
+    "name": "Snooze Orderpoint",
+    "model": "stock.orderpoint.snooze",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 640,
+    "name": "Stock Package Destination",
+    "model": "stock.package.destination",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 608,
+    "name": "Stock package type",
+    "model": "stock.package.type",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 607,
+    "name": "Stock Package Level",
+    "model": "stock.package_level",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 602,
+    "name": "Transfer",
+    "model": "stock.picking",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 601,
+    "name": "Picking Type",
+    "model": "stock.picking.type",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 592,
+    "name": "Putaway Rule",
+    "model": "stock.putaway.rule",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 603,
+    "name": "Quants",
+    "model": "stock.quant",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 604,
+    "name": "Packages",
+    "model": "stock.quant.package",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 633,
+    "name": "Stock Quantity History",
+    "model": "stock.quantity.history",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 643,
+    "name": "Stock supplier replenishment information",
+    "model": "stock.replenishment.info",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 644,
+    "name": "Stock warehouse replenishment option",
+    "model": "stock.replenishment.option",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 642,
+    "name": "Stock Request an Inventory Count",
+    "model": "stock.request.count",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 621,
+    "name": "Return Picking",
+    "model": "stock.return.picking",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 620,
+    "name": "Return Picking Line",
+    "model": "stock.return.picking.line",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 594,
+    "name": "Inventory Routes",
+    "model": "stock.route",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 597,
+    "name": "Stock Rule",
+    "model": "stock.rule",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 634,
+    "name": "Stock Rules report",
+    "model": "stock.rules.report",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 628,
+    "name": "Run Scheduler Manually",
+    "model": "stock.scheduler.compute",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 606,
+    "name": "Scrap",
+    "model": "stock.scrap",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 609,
+    "name": "Storage Category",
+    "model": "stock.storage.category",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 610,
+    "name": "Storage Category Capacity",
+    "model": "stock.storage.category.capacity",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 616,
+    "name": "Traceability Report",
+    "model": "stock.traceability.report",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 638,
+    "name": "Stock Track Confirmation",
+    "model": "stock.track.confirmation",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 639,
+    "name": "Stock Track Line",
+    "model": "stock.track.line",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 645,
+    "name": "Stock Valuation Layer",
+    "model": "stock.valuation.layer",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 646,
+    "name": "Wizard model to reavaluate a stock inventory for a product",
+    "model": "stock.valuation.layer.revaluation",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 605,
+    "name": "Warehouse",
+    "model": "stock.warehouse",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 599,
+    "name": "Minimum Inventory Rule",
+    "model": "stock.warehouse.orderpoint",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 635,
+    "name": "Warn Insufficient Quantity",
+    "model": "stock.warn.insufficient.qty",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 636,
+    "name": "Warn Insufficient Scrap Quantity",
+    "model": "stock.warn.insufficient.qty.scrap",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 171,
+    "name": "Template Reset Mixin",
+    "model": "template.reset.mixin",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 145,
+    "name": "Product UoM Categories",
+    "model": "uom.category",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 146,
+    "name": "Product Unit of Measure",
+    "model": "uom.uom",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 153,
+    "name": "UTM Campaign",
+    "model": "utm.campaign",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 154,
+    "name": "UTM Medium",
+    "model": "utm.medium",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 155,
+    "name": "UTM Mixin",
+    "model": "utm.mixin",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 156,
+    "name": "UTM Source",
+    "model": "utm.source",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 157,
+    "name": "UTM Source Mixin",
+    "model": "utm.source.mixin",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 158,
+    "name": "Campaign Stage",
+    "model": "utm.stage",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 159,
+    "name": "UTM Tag",
+    "model": "utm.tag",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 477,
+    "name": "Validate Account Move",
+    "model": "validate.account.move",
+    "state": "base",
+    "transient": true
+  },
+  {
+    "id": 648,
+    "name": "Vendor Delay Report",
+    "model": "vendor.delay.report",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 142,
+    "name": "Assets Utils",
+    "model": "web_editor.assets",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 143,
+    "name": "Web Editor Converter Test",
+    "model": "web_editor.converter.test",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 144,
+    "name": "Web Editor Converter Subtest",
+    "model": "web_editor.converter.test.sub",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 140,
+    "name": "Tours",
+    "model": "web_tour.tour",
+    "state": "base",
+    "transient": false
+  },
+  {
+    "id": 10,
+    "name": "Create Menu Wizard",
+    "model": "wizard.ir.model.menu.create",
+    "state": "base",
+    "transient": true
+  }
+]

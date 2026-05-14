@@ -1,5 +1,5 @@
 import pytest
-from agents.sql_agent import SQLAgent
+from agents import SQLAgent
 from tools.sql_executor import SQLExecutor
 
 agent = SQLAgent()
