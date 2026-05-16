@@ -24,7 +24,7 @@ logger = get_logger(__name__)
 
 # ── Construction de l'agent (une seule fois au démarrage) ─────────────────────
 
-_llm = get_llm(LLMProvider.GROQ)
+_llm = get_llm(LLMProvider.GROQ_LLAMA33)
 
 _agent = create_react_agent(
     model=_llm,

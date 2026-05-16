@@ -24,6 +24,8 @@ def run_orchestrator(
         session_id: str | None = None,
         history: list | None = None,
         on_step=None,
+        llm_provider=None,
+
 ) -> dict[str, Any]:
     session_id = session_id or str(uuid.uuid4())
     logger.info(f"[orchestrator] session={session_id} question='{question[:80]}'")
@@ -40,6 +42,7 @@ def run_orchestrator(
         "confirmation_summary": "",
         "metadata": {},
         "on_step": on_step,
+        "llm_provider": llm_provider,
     }
 
     config = {"configurable": {"thread_id": session_id}}

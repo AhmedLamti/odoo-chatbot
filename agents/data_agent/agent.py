@@ -1,36 +1,25 @@
-"""
-Data Agent avec mémoire sémantique persistante et affichage des étapes de raisonnement.
-
-Cycle de vie :
-1. Nouvelle question → recherche des souvenirs pertinents dans Qdrant
-2. Souvenirs injectés dans le system prompt comme exemples
-3. Agent ReAct stream ses étapes en temps réel :
-   - Étape 0  : résultat de la recherche mémorielle
-   - Étape N  : appel d'outil (nom lisible + paramètres résumés)
-   - Étape N+1: résultat de cet outil
-   - Étape fin: formulation de la réponse finale
-4. Si succès → extraction d'un nouveau souvenir → sauvegarde dans Qdrant
-"""
-
 import json
 import logging
 from typing import Callable
 
 from langchain_core.messages import AIMessage, ToolMessage
-from langchain_groq import ChatGroq
 from langgraph.checkpoint.memory import MemorySaver
 from langgraph.prebuilt import create_react_agent
 
 from agents.data_agent.memory_extractor import extract_memory
 from agents.data_agent.memory_store import MemoryStore
 from agents.data_agent.tools import (
+    format_response,
     generate_chart,
-    get_model_for_concept,
-    odoo_fields_get,
+    get_schema_for_question,
+    plan_query,
+    # get_model_for_concept,
+    # odoo_fields_get,
     odoo_read_group,
     odoo_search_count,
     odoo_search_read,
 )
+from shared.llm_factory import get_llm, LLMProvider
 
 logger = logging.getLogger(__name__)
 
@@ -39,13 +28,19 @@ logger = logging.getLogger(__name__)
 BASE_SYSTEM_PROMPT = """Tu es un agent expert Odoo 16 qui répond aux questions
 sur les données de l'entreprise en utilisant les outils disponibles.
 
-Tu as accès aux outils suivants:
-- get_model_for_concept : trouve le nom technique d'un modèle Odoo
-- odoo_fields_get       : liste les champs d'un modèle
-- odoo_search_count     : compte des enregistrements (utilise pour 'combien de X ?')
-- odoo_search_read      : récupère des enregistrements depuis Odoo
-- odoo_read_group       : regroupe et agrège des données (prend un string JSON en entrée)
-- generate_chart        : génère un graphique (uniquement si demandé explicitement)
+Outils disponibles :
+- get_schema_for_question : utilise cet outil quand tu as besoin de connaître 
+  les modèles, champs ou relations Odoo pertinents pour la question
+- plan_query : utilise cet outil quand la question nécessite plusieurs appels 
+  Odoo enchaînés ou des jointures entre modèles
+- odoo_search_count : utilise cet outil quand tu dois compter des enregistrements
+- odoo_search_read : utilise cet outil quand tu dois récupérer des enregistrements
+- odoo_read_group : utilise cet outil quand tu dois agréger ou regrouper des données
+- generate_chart : utilise cet outil uniquement si l'utilisateur demande explicitement 
+  une visualisation
+- format_response : utilise cet outil comme DERNIÈRE étape obligatoire avant de répondre.
+  Passe raw_answer=<ta réponse brute> et question=<la question originale de l'utilisateur>.
+  Ne génère JAMAIS de réponse finale sans passer par cet outil.
 
 Contraintes Odoo 16:
 - is_customer et is_supplier n'existent plus → customer_rank > 0 et supplier_rank > 0
@@ -60,12 +55,15 @@ Si les données sont vides, dis-le clairement.
 # ── Libellés lisibles des outils ──────────────────────────────────────────────
 
 TOOL_LABELS: dict[str, str] = {
-    "get_model_for_concept": "Identification du modèle Odoo",
-    "odoo_fields_get": "Récupération des champs disponibles",
+    "get_schema_for_question": "Analyse du schéma Odoo",
+    "plan_query": "Planification de l'ordre d'execution des requetes",
+    # "get_model_for_concept": "Identification du modèle Odoo",
+    # "odoo_fields_get": "Récupération des champs disponibles",
     "odoo_search_count": "Comptage des enregistrements",
     "odoo_search_read": "Lecture des données",
     "odoo_read_group": "Agrégation et regroupement",
     "generate_chart": "Génération du graphique",
+    "format_response": "Formulation de la réponse finale"
 }
 
 # ── Mots-clés indiquant une exécution en erreur ────────────────────────────────
@@ -79,25 +77,28 @@ _ERROR_KEYWORDS = [
 # ── Singletons ─────────────────────────────────────────────────────────────────
 
 TOOLS = [
-    get_model_for_concept,
-    odoo_fields_get,
+    get_schema_for_question,
+    plan_query,
+    # get_model_for_concept,
+    # odoo_fields_get,
     odoo_search_count,
     odoo_search_read,
     odoo_read_group,
     generate_chart,
+    format_response,
 ]
 
 _short_term_memory = MemorySaver()
 _memory_store = MemoryStore()
-_llm = ChatGroq(model="meta-llama/llama-4-scout-17b-16e-instruct", temperature=0)
+_llm = get_llm(LLMProvider.GEMINI_FLASH)
 
 
 # ── Construction de l'agent ────────────────────────────────────────────────────
 
-def _build_agent(extra_context: str):
+def _build_agent(extra_context: str, llm):
     system = BASE_SYSTEM_PROMPT + extra_context
     return create_react_agent(
-        model=_llm,
+        model=llm,
         tools=TOOLS,
         prompt=system,
         checkpointer=_short_term_memory,
@@ -177,6 +178,8 @@ def run_data_agent(state: dict) -> dict:
     question = state["question"]
     thread_id = state.get("session_id", "1")
     on_step = state.get("on_step", None)
+    provider = state.get("llm_provider", None)
+    llm = get_llm(provider) if provider else _llm
 
     callback = on_step or _default_step_callback
     logger.info(f"[data_agent] question='{question[:80]}' thread={thread_id}")
@@ -196,7 +199,7 @@ def run_data_agent(state: dict) -> dict:
     callback(0, mem_msg)
 
     # ── Construction et streaming ──────────────────────────────────────────────
-    agent = _build_agent(memory_context)
+    agent = _build_agent(memory_context, llm=llm)
     config = {"configurable": {"thread_id": thread_id}}
     all_messages: list = []
     steps: list[str] = [mem_msg]
@@ -238,6 +241,8 @@ def run_data_agent(state: dict) -> dict:
                     step_number += 1
 
     answer = all_messages[-1].content if all_messages else ""
+    if not isinstance(answer, str):
+        answer = json.dumps(answer, ensure_ascii=False, default=str)
 
     # ── Sauvegarde mémorielle (best-effort) ────────────────────────────────────
     _try_save_memory(question, all_messages, answer)

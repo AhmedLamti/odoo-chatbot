@@ -24,6 +24,7 @@ class OrchestratorState(TypedDict):
 
     # ── Résultat final ────────────────────────────────────────────────────────
     answer: str
+    llm_provider: Any | None  # ← nouveau
     sources: list[str]  # RAG uniquement
     steps: list[str]  # Data agent uniquement
     needs_confirmation: bool  # Action agent uniquement

@@ -1,5 +1,5 @@
-from pydantic_settings import BaseSettings
 from dotenv import load_dotenv
+from pydantic_settings import BaseSettings
 
 load_dotenv()
 
@@ -7,23 +7,19 @@ load_dotenv()
 class Settings(BaseSettings):
     # ── Ollama (embeddings uniquement) ──────────────────────
     ollama_base_url: str = "http://localhost:11434"
-    ollama_embed_model: str = "nomic-embed-text"
-
-    # Garder pour compatibilité schema_selector fallback
-    ollama_llm_model: str = "llama3.2:3b"
-    ollama_sql_model: str = "llama3.2:3b"
+    ollama_embed_model: str = ""
 
     # ── Cerebras (Router + SQL) ──────────────────────────────
     cerebras_api_key: str = ""
-    cerebras_model: str = "llama3.1-8b"
+    cerebras_model: str = ""
 
     # ── Gemini (RAG) ─────────────────────────────────────────
     gemini_api_key: str = ""
-    gemini_model: str = "gemini-2.0-flash"
+    gemini_model: str = ""
 
     # ── Groq (Chart + Analysis) ──────────────────────────────
     groq_api_key: str = ""
-    groq_model: str = "llama-3.3-70b-versatile"
+    groq_model: str = ""
 
     # ── PostgreSQL ───────────────────────────────────────────
     postgres_host: str = "localhost"
@@ -57,6 +53,10 @@ class Settings(BaseSettings):
     # ── App ──────────────────────────────────────────────────
     app_env: str = "development"
     log_level: str = "INFO"
+
+    default_llm_provider: str = "gemini_flash"
+
+    openai_api_key: str = "fw_TSbk9dvX73ixJaxWiQ2Rh"
 
     @property
     def postgres_url(self) -> str:

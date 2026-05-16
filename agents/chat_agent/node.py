@@ -7,7 +7,7 @@ from shared.utils import get_logger
 
 logger = get_logger(__name__)
 
-_llm = get_llm(LLMProvider.GROQ)
+_llm = get_llm(LLMProvider.GROQ_LLAMA33)
 
 
 def chat_node(state: OrchestratorState) -> dict:

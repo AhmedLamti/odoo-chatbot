@@ -5,6 +5,7 @@ from typing import List
 
 import pandas as pd
 import plotly.graph_objects as go
+from google.api_core.exceptions import ResourceExhausted
 from langchain_core.tools import tool
 from pydantic import BaseModel, Field
 
@@ -201,42 +202,74 @@ def plan_query(question: str, subschema: str) -> str:
     Le plan indique exactement quels modèles interroger, dans quel ordre,
     et comment relier les résultats entre eux.
     """
-    planner_prompt = """Tu es un expert Odoo 16 XML-RPC.
+    planner_prompt = planner_prompt = """Tu es un expert Odoo 16 XML-RPC.
 
-Règles critiques sur les produits :
-- product.template = fiche produit (default_code est ici)
-- product.product  = variante (lié à product.template via product_tmpl_id)
-- sale.order.line.product_id → product.product (PAS product.template)
-- Pour filtrer sale.order.line par default_code :
-    [['product_id.product_tmpl_id', '=', <id_template>]]
-  jamais : [['product_id', '=', <id_template>]]
+═══════════════════════════════════════
+RÈGLES UNIVERSELLES XML-RPC ODOO
+═══════════════════════════════════════
+La dot notation (ex: 'order_id.user_id') se comporte DIFFÉREMMENT selon le paramètre :
 
-Autres règles :
-- Ventes confirmées : state in ['sale', 'done']
-- hr.leave filtré par employee_id, pas user_id
-- Congés validés : state in ['validate', 'validate1']
-- Pas de JOIN automatique → appels séquentiels
+┌─────────────┬──────────────────┬─────────────────────────────────────┐
+│ Paramètre   │ Dot notation     │ Comportement                        │
+├─────────────┼──────────────────┼─────────────────────────────────────┤
+│ domain      │ ✅ AUTORISÉE     │ ['order_id.state', '=', 'done']     │
+│ fields      │ ❌ INTERDITE     │ retourne ValueError côté Odoo        │
+│ groupby     │ ❌ INTERDITE     │ résultats incorrects ou erreur       │
+└─────────────┴──────────────────┴─────────────────────────────────────┘
 
-Retourne UNIQUEMENT un JSON valide :
+CONSÉQUENCES sur la planification :
+1. fields_hint → champs directs du modèle cible UNIQUEMENT.
+   ❌ ['product_uom_qty', 'order_id.user_id.name']
+   ✅ ['product_uom_qty', 'order_id']
+
+2. groupby_hint → champs directs du modèle cible UNIQUEMENT.
+   ❌ groupby: ['order_id.user_id']
+   ✅ groupby: ['order_id'], puis join Python sur le modèle lié
+
+3. Pas de JOIN automatique → appels séquentiels + agrégation Python.
+
+PATTERN OBLIGATOIRE pour "grouper/accéder à un champ lié" :
+   Étape A : odoo_search_read sur modèle source   → ['champ_local', 'relation_id']
+   Étape B : odoo_search_read sur modèle lié      → ['id', 'champ_voulu']
+   Étape C : python_aggregation                   → joindre, grouper, calculer
+
+═══════════════════════════════════════
+FORMAT DE RÉPONSE
+═══════════════════════════════════════
+Retourne UNIQUEMENT un JSON valide, sans markdown, sans explication :
 {
   "steps": [
     {
       "step": 1,
-      "tool": "odoo_search_read | odoo_read_group | odoo_search_count",
+      "tool": "odoo_search_read | odoo_read_group | odoo_search_count | python_aggregation",
       "model": "nom.modele",
       "purpose": "pourquoi cet appel",
       "domain_hint": "filtre exact à appliquer",
-      "fields_hint": ["champs", "à", "récupérer"],
+      "fields_hint": ["champs directs uniquement"],
+      "groupby_hint": ["champs directs uniquement, jamais de dot notation"],
       "use_result_for": "comment utiliser le résultat à l'étape suivante"
     }
   ]
-}"""
+}
 
-    llm = get_llm(LLMProvider.GEMINI_FLASH)
-    response = llm.invoke([
-        {"role": "system", "content": planner_prompt},
-        {"role": "user", "content": f"Question: {question}\n\nSchéma:\n{subschema}"}
-    ])
+Pour python_aggregation, remplace model/domain_hint/fields_hint par :
+  "logic": "description de l'opération Python (join, sum, max, filter, etc.)"
+
+Les règles métier (quels modèles, quels champs, quels filtres) sont dans le schéma fourni.
+Appuie-toi dessus pour construire le plan — ne suppose rien qui n'y figure pas.
+"""
+    try:
+        llm = get_llm(LLMProvider.FIREWORKS_DEEPSEEK, temperature=0)
+        response = llm.invoke([
+            {"role": "system", "content": planner_prompt},
+            {"role": "user", "content": f"Question: {question}\n\nSchéma:\n{subschema}"}
+        ])
+    except ResourceExhausted:
+        llm = get_llm(LLMProvider.FIREWORKS_KIMI, temperature=0)
+        response = llm.invoke([
+            {"role": "system", "content": planner_prompt},
+            {"role": "user", "content": f"Question: {question}\n\nSchéma:\n{subschema}"}
+        ])
     return response.content
 
 

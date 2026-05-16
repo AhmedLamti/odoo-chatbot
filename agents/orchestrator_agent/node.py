@@ -14,7 +14,7 @@ logger = get_logger(__name__)
 _VALID_ROUTES = {"rag", "data", "action", "chat"}
 _FALLBACK = "chat"
 
-_llm = get_llm(LLMProvider.GROQ)
+_llm = get_llm(LLMProvider.GROQ_LLAMA33)
 
 
 def orchestrator_node(state: OrchestratorState) -> dict:
