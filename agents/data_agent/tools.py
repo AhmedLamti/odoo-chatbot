@@ -8,8 +8,9 @@ import plotly.graph_objects as go
 from langchain_core.tools import tool
 from pydantic import BaseModel, Field
 
-from agents.data_agent.model_catalogue import resolve_model
+from agents.data_agent.model_catalogue.schema_retriever import retrieve_schema_for_question
 from core.odoo_client import odoo_client
+from shared.llm_factory import get_llm, LLMProvider
 
 logger = logging.getLogger(__name__)
 
@@ -191,52 +192,137 @@ class ChartInput(BaseModel):
 
 
 # ── Tools ──────────────────────────────────────────────────────────────────────
+@tool
+def plan_query(question: str, subschema: str) -> str:
+    """
+    Génère un plan d'exécution étape par étape pour répondre à une question Odoo.
+
+    APPELLE CET OUTIL après get_schema_for_question et avant toute requête.
+    Le plan indique exactement quels modèles interroger, dans quel ordre,
+    et comment relier les résultats entre eux.
+    """
+    planner_prompt = """Tu es un expert Odoo 16 XML-RPC.
+
+Règles critiques sur les produits :
+- product.template = fiche produit (default_code est ici)
+- product.product  = variante (lié à product.template via product_tmpl_id)
+- sale.order.line.product_id → product.product (PAS product.template)
+- Pour filtrer sale.order.line par default_code :
+    [['product_id.product_tmpl_id', '=', <id_template>]]
+  jamais : [['product_id', '=', <id_template>]]
+
+Autres règles :
+- Ventes confirmées : state in ['sale', 'done']
+- hr.leave filtré par employee_id, pas user_id
+- Congés validés : state in ['validate', 'validate1']
+- Pas de JOIN automatique → appels séquentiels
+
+Retourne UNIQUEMENT un JSON valide :
+{
+  "steps": [
+    {
+      "step": 1,
+      "tool": "odoo_search_read | odoo_read_group | odoo_search_count",
+      "model": "nom.modele",
+      "purpose": "pourquoi cet appel",
+      "domain_hint": "filtre exact à appliquer",
+      "fields_hint": ["champs", "à", "récupérer"],
+      "use_result_for": "comment utiliser le résultat à l'étape suivante"
+    }
+  ]
+}"""
+
+    llm = get_llm(LLMProvider.GEMINI_FLASH)
+    response = llm.invoke([
+        {"role": "system", "content": planner_prompt},
+        {"role": "user", "content": f"Question: {question}\n\nSchéma:\n{subschema}"}
+    ])
+    return response.content
 
 
 @tool
-def get_model_for_concept(concept: str) -> str:
+def get_schema_for_question(question: str) -> str:
     """
-    Trouve le nom technique du modele Odoo correspondant a un concept metier.
+    Trouve les modèles Odoo pertinents pour une question et retourne leur
+    schéma complet : noms techniques, champs disponibles, types, et relations
+    entre modèles (jointures).
 
-    Utilise cet outil quand tu ne connais pas le nom exact du modele.
+    APPELLE CET OUTIL EN PREMIER avant toute requête Odoo.
+    Il remplace get_model_for_concept et odoo_fields_get.
 
-    Exemples:
-      'commandes clients'  -> 'sale.order'
-      'factures'           -> 'account.move'
-      'employes'           -> 'hr.employee'
-      'fournisseurs'       -> 'res.partner'
-    """
-    try:
-        model = resolve_model(concept)
-        logger.info(f"[get_model_for_concept] '{concept}' -> '{model}'")
-        return model
-    except Exception as e:
-        logger.error(f"[get_model_for_concept] {e}")
-        return f"Erreur: {e}"
+    Ce que tu obtiens en retour :
+      - Les modèles Odoo à utiliser (ex: hr.leave, hr.employee)
+      - Les champs disponibles et leurs types
+      - Les relations many2one pour naviguer entre modèles (jointures)
 
+    Exemples d'utilisation :
+      'congés des employés'
+          → hr.leave (employee_id, state, number_of_days...)
+          → hr.employee (user_id, department_id...)
 
-@tool
-def odoo_fields_get(model: str) -> str:
-    """
-    Liste les champs disponibles d'un modele Odoo (nom, type, label).
+      'commercial ayant vendu le plus de produit E-COM11'
+          → product.template (default_code...)
+          → sale.order.line (product_id, product_uom_qty...)
+          → sale.order (user_id → res.users...)
+          → hr.employee (user_id → res.users...)
 
-    Utilise cet outil avant odoo_search_read ou odoo_read_group pour
-    connaitre les champs disponibles et leurs types.
-
-    Types importants:
-      many2one   -> retourne [id, "Nom"] dans search_read
-      selection  -> valeurs fixes ('sale', 'done', 'posted'...)
-      date/datetime -> groupable par ':month', ':year' via odoo_read_group
+      'factures impayées des clients'
+          → account.move (move_type, state, payment_state, amount_total...)
+          → res.partner (customer_rank...)
     """
     try:
-        fields = odoo_client.fields_get(model)
-        lines = [f"Champs de '{model}':"]
-        for fname, finfo in list(fields.items())[:50]:
-            lines.append(f"  - {fname} ({finfo.get('type')}) : {finfo.get('string')}")
-        return "\n".join(lines)
+        result = retrieve_schema_for_question(question)
+        logger.info("[get_schema_for_question] sous-schéma assemblé pour : '%s'", question[:60])
+        return result
     except Exception as e:
-        logger.error(f"[odoo_fields_get] {model}: {e}")
-        return f"Erreur: {e}"
+        logger.error("[get_schema_for_question] %s", e)
+        return f"Erreur lors de la récupération du schéma : {e}"
+
+
+# @tool
+# def get_model_for_concept(concept: str) -> str:
+#     """
+#     Trouve le nom technique du modele Odoo correspondant a un concept metier.
+#
+#     Utilise cet outil quand tu ne connais pas le nom exact du modele.
+#
+#     Exemples:
+#       'commandes clients'  -> 'sale.order'
+#       'factures'           -> 'account.move'
+#       'employes'           -> 'hr.employee'
+#       'fournisseurs'       -> 'res.partner'
+#     """
+#     try:
+#         model = resolve_model(concept)
+#         logger.info(f"[get_model_for_concept] '{concept}' -> '{model}'")
+#         return model
+#     except Exception as e:
+#         logger.error(f"[get_model_for_concept] {e}")
+#         return f"Erreur: {e}"
+#
+#
+# @tool
+# def odoo_fields_get(model: str) -> str:
+#     """
+#     Liste les champs disponibles d'un modele Odoo (nom, type, label).
+#
+#     Utilise cet outil avant odoo_search_read ou odoo_read_group pour
+#     connaitre les champs disponibles et leurs types.
+#
+#     Types importants:
+#       many2one   -> retourne [id, "Nom"] dans search_read
+#       selection  -> valeurs fixes ('sale', 'done', 'posted'...)
+#       date/datetime -> groupable par ':month', ':year' via odoo_read_group
+#     """
+#     try:
+#         fields = odoo_client.fields_get(model)
+#         lines = [f"Champs de '{model}':"]
+#         for fname, finfo in list(fields.items())[:50]:
+#             lines.append(f"  - {fname} ({finfo.get('type')}) : {finfo.get('string')}")
+#         return "\n".join(lines)
+#     except Exception as e:
+#         logger.error(f"[odoo_fields_get] {model}: {e}")
+#         return f"Erreur: {e}"
 
 
 @tool(args_schema=SearchCountInput)
@@ -507,6 +593,34 @@ def generate_chart(
 
 # Stockage interne du dernier graphique généré (accessible par l'API)
 _last_chart_store: dict = {"json": None, "title": None}
+
+
+@tool
+def format_response(raw_answer: str, question: str) -> str:
+    """
+    Formate la réponse finale en un message clair, structuré et agréable.
+    Utilise cet outil comme DERNIÈRE étape, juste avant de répondre à l'utilisateur.
+    """
+    _formatter_llm = get_llm(LLMProvider.GEMINI_FLASH_LITE)
+    response = _formatter_llm.invoke([
+        {
+            "role": "system",
+            "content": """Tu es un assistant qui formate les réponses de manière claire et professionnelle.
+
+Règles :
+- Utilise des emojis pertinents (📊 pour stats, 👤 pour personnes, 💰 pour finances, ✅ pour succès...)
+- Structure avec des sauts de ligne si plusieurs informations
+- Sois concis mais complet
+- Réponds dans la même langue que la question
+- Ne rajoute pas d'informations que tu n'as pas reçues
+- Si c'est un chiffre simple, une ligne suffit"""
+        },
+        {
+            "role": "user",
+            "content": f"Question posée : {question}\nRéponse brute : {raw_answer}\n\nFormate cette réponse."
+        }
+    ])
+    return response.content
 
 
 def get_last_chart() -> dict | None:
