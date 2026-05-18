@@ -25,6 +25,8 @@ def run_orchestrator(
         history: list | None = None,
         on_step=None,
         llm_provider=None,
+        odoo_user_email: str | None = None,
+        odoo_api_key: str | None = None,
 
 ) -> dict[str, Any]:
     session_id = session_id or str(uuid.uuid4())
@@ -43,6 +45,9 @@ def run_orchestrator(
         "metadata": {},
         "on_step": on_step,
         "llm_provider": llm_provider,
+        "odoo_user_email": odoo_user_email,
+        "odoo_api_key": odoo_api_key,
+
     }
 
     config = {"configurable": {"thread_id": session_id}}
@@ -77,5 +82,6 @@ def run_orchestrator(
         "steps": final_state.get("steps", []),
         "needs_confirmation": final_state.get("needs_confirmation", False),
         "confirmation_summary": final_state.get("confirmation_summary", ""),
+        "pending_action": final_state.get("pending_action"),
         "metadata": final_state.get("metadata", {}),
     }

@@ -12,11 +12,11 @@ class OdooClient:
     Client XML-RPC Odoo partagé — authentification par API Key
     """
 
-    def __init__(self):
+    def __init__(self, username: str | None = None, api_key: str | None = None):
         self.url = settings.odoo_url
         self.db = settings.odoo_db
-        self.username = settings.odoo_username
-        self.api_key = settings.odoo_api_key
+        self.username = username #or settings.odoo_username
+        self.api_key = api_key #or settings.odoo_api_key
         self._uid = None
 
     @with_retry(max_attempts=3, delay=1.0, backoff=2.0)
@@ -102,6 +102,10 @@ class OdooClient:
             if v.get("type") not in EXCLUDED_TYPES
                and not any(k.startswith(p) for p in EXCLUDED_PREFIXES)
         }
+
+
+def get_odoo_client(username: str | None = None, api_key: str | None = None) -> OdooClient:
+    return OdooClient(username=username, api_key=api_key)
 
 
 odoo_client = OdooClient()

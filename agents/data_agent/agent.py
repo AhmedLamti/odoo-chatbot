@@ -11,13 +11,13 @@ from agents.data_agent.memory_store import MemoryStore
 from agents.data_agent.tools import (
     format_response,
     generate_chart,
-    get_schema_for_question,
+    # get_schema_for_question,
     plan_query,
     # get_model_for_concept,
     # odoo_fields_get,
     odoo_read_group,
     odoo_search_count,
-    odoo_search_read,
+    odoo_search_read, search_similar_models, select_models, get_models_schema,
 )
 from shared.llm_factory import get_llm, LLMProvider
 
@@ -29,8 +29,12 @@ BASE_SYSTEM_PROMPT = """Tu es un agent expert Odoo 16 qui répond aux questions
 sur les données de l'entreprise en utilisant les outils disponibles.
 
 Outils disponibles :
-- get_schema_for_question : utilise cet outil quand tu as besoin de connaître 
-  les modèles, champs ou relations Odoo pertinents pour la question
+- search_similar_models : utilise cet outil quand tu as besoin d'identifier 
+  quels modèles Odoo sont concernés par la question.
+- select_models : utilise cet outil pour affiner les candidats retournés par 
+  search_similar_models et ne garder que les modèles vraiment utiles.
+- get_models_schema : utilise cet outil quand tu connais les modèles à interroger 
+  et que tu as besoin de leurs champs et relations exacts.
 - plan_query : utilise cet outil quand la question nécessite plusieurs appels 
   Odoo enchaînés ou des jointures entre modèles
 - odoo_search_count : utilise cet outil quand tu dois compter des enregistrements
@@ -55,15 +59,15 @@ Si les données sont vides, dis-le clairement.
 # ── Libellés lisibles des outils ──────────────────────────────────────────────
 
 TOOL_LABELS: dict[str, str] = {
-    "get_schema_for_question": "Analyse du schéma Odoo",
+    "search_similar_models": "Recherche des modèles similaires",
+    "select_models": "Sélection des modèles pertinents",
+    "get_models_schema": "Récupération du schéma exact",
     "plan_query": "Planification de l'ordre d'execution des requetes",
-    # "get_model_for_concept": "Identification du modèle Odoo",
-    # "odoo_fields_get": "Récupération des champs disponibles",
     "odoo_search_count": "Comptage des enregistrements",
     "odoo_search_read": "Lecture des données",
     "odoo_read_group": "Agrégation et regroupement",
     "generate_chart": "Génération du graphique",
-    "format_response": "Formulation de la réponse finale"
+    "format_response": "Formulation de la réponse finale",
 }
 
 # ── Mots-clés indiquant une exécution en erreur ────────────────────────────────
@@ -77,10 +81,10 @@ _ERROR_KEYWORDS = [
 # ── Singletons ─────────────────────────────────────────────────────────────────
 
 TOOLS = [
-    get_schema_for_question,
+    search_similar_models,
+    select_models,
+    get_models_schema,
     plan_query,
-    # get_model_for_concept,
-    # odoo_fields_get,
     odoo_search_count,
     odoo_search_read,
     odoo_read_group,
@@ -180,6 +184,8 @@ def run_data_agent(state: dict) -> dict:
     on_step = state.get("on_step", None)
     provider = state.get("llm_provider", None)
     llm = get_llm(provider) if provider else _llm
+    odoo_user_email = state.get("odoo_user_email")
+    odoo_api_key = state.get("odoo_api_key")
 
     callback = on_step or _default_step_callback
     logger.info(f"[data_agent] question='{question[:80]}' thread={thread_id}")
@@ -199,7 +205,34 @@ def run_data_agent(state: dict) -> dict:
     callback(0, mem_msg)
 
     # ── Construction et streaming ──────────────────────────────────────────────
-    agent = _build_agent(memory_context, llm=llm)
+    credentials_context = f"""
+
+    Credentials Odoo du user connecté :
+    - odoo_user_email = {json.dumps(odoo_user_email)}
+    - odoo_api_key = {json.dumps(odoo_api_key)}
+
+    RÈGLE OBLIGATOIRE :
+    Pour chaque appel aux outils suivants :
+    - odoo_search_count
+    - odoo_search_read
+    - odoo_read_group
+
+    tu dois TOUJOURS inclure :
+    - odoo_user_email
+    - odoo_api_key
+
+    Exemple :
+    odoo_search_read(
+      model="sale.order",
+      domain="[]",
+      fields=["id", "name"],
+      limit=10,
+      odoo_user_email={json.dumps(odoo_user_email)},
+      odoo_api_key={json.dumps(odoo_api_key)}
+    )
+    """
+
+    agent = _build_agent(memory_context + credentials_context, llm=llm)
     config = {"configurable": {"thread_id": thread_id}}
     all_messages: list = []
     steps: list[str] = [mem_msg]

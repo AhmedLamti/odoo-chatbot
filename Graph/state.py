@@ -31,3 +31,6 @@ class OrchestratorState(TypedDict):
     confirmation_summary: str  # Action agent uniquement
     metadata: dict[str, Any]
     on_step: Optional[Callable]
+    pending_action: dict | None
+    odoo_user_email: str | None
+    odoo_api_key: str | None

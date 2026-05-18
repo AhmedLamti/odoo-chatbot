@@ -52,6 +52,7 @@ def action_agent_node(state: OrchestratorState) -> dict:
         "answer": result["answer"],
         "needs_confirmation": result["needs_confirmation"],
         "confirmation_summary": result["confirmation_summary"],
+        "pending_action": result["pending_action"],
         "active_agent": "action_agent",
     }
 
@@ -85,17 +86,18 @@ def _run(question: str, session_id: str, history: list) -> dict:
     response = _agent.invoke({"messages": messages})
     answer: str = response["messages"][-1].content
 
-    needs_confirmation, summary = _extract_confirmation(response["messages"])
+    needs_confirmation, summary, pending_action = _extract_confirmation(response["messages"])
 
     return {
         "answer": answer,
         "messages": response["messages"],
         "needs_confirmation": needs_confirmation,
         "confirmation_summary": summary,
+        "pending_action": pending_action,
     }
 
 
-def _extract_confirmation(messages: list) -> tuple[bool, str]:
+def _extract_confirmation(messages: list) -> tuple[bool, str, dict | None]:
     """
     Remonte la liste de messages pour détecter un payload WAITING_CONFIRMATION
     émis par request_confirmation.
@@ -104,10 +106,16 @@ def _extract_confirmation(messages: list) -> tuple[bool, str]:
         content = getattr(msg, "content", None)
         if not isinstance(content, str):
             continue
+
         try:
             data = json.loads(content)
             if data.get("status") == "WAITING_CONFIRMATION":
-                return True, data.get("summary", "")
+                return (
+                    True,
+                    data.get("summary", ""),
+                    data.get("pending_action"),
+                )
         except (json.JSONDecodeError, AttributeError):
             continue
-    return False, ""
+
+    return False, "", None
