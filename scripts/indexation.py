@@ -1,252 +1,127 @@
-"""
-Script d'indexation Odoo -> Qdrant optimisé.
-Corrections apportées :
-1. Gestion bilingue (EN/FR) renforcée dans le texte du document.
-2. Inclusion légère des relations o2m/m2m pour le contexte sans le bruit.
-3. Priorisation des champs métier lors de la troncature (évite de perdre les champs importants).
-4. Nettoyage des labels génériques (Name, ID) pour éviter la dilution sémantique.
-5. Exemple de fonction de recherche avec boost 'is_core'.
-"""
-
-import argparse
+import hashlib
 import json
-import logging
-import re
+import time
 
-logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
-logger = logging.getLogger(__name__)
-
-# ── Qdrant & Embedding ────────────────────────────────────────────────────────
+import requests
 from qdrant_client import QdrantClient
-from qdrant_client.models import Distance, PointStruct, VectorParams, Filter, FieldCondition, MatchValue
+from qdrant_client.models import Distance, VectorParams, PointStruct
 
-try:
-    import ollama
-
-    _EMBED_BACKEND = "ollama"
-except ImportError:
-    _EMBED_BACKEND = "openai"  # Fallback vers OpenAI par défaut si ollama absent
-
-# ── Configuration ──────────────────────────────────────────────────────────────
-
+# Configuration
+INPUT_FILE = "schema_odoo_enrichi_rag_complexe.json"
 QDRANT_URL = "http://localhost:6333"
-COLLECTION_NAME = "odoo_schema_v2"
-EMBED_MODEL_OLLAMA = "nomic-embed-text-v2-moe"
-EMBED_DIM_OLLAMA = 768
-EMBED_DIM_OPENAI = 1536
-BATCH_SIZE = 50
-
-# ── Filtres et Priorités ──────────────────────────────────────────────────────
-
-# Champs à ignorer totalement
-NOISE_FIELD_PREFIXES = ("activity_", "message_", "mail_", "website_", "access_", "campaign_", "medium_", "source_",
-                        "image_", "avatar_", "can_", "has_", "display_", "__")
-NOISE_FIELD_EXACT = {"create_uid", "write_uid", "create_date", "write_date", "color", "active", "display_name",
-                     "__last_update", "id"}
-
-# Modèles techniques à ignorer
-SKIP_MODEL_PREFIXES = ("web_editor.", "ir.qweb.", "ir.actions.", "ir.ui.", "ir.model.", "report.",
-                       "publisher_warranty.", "account.edi.", "base_setup.", "base_import.", "bus.",
-                       "phone_validation.", "rating.")
-
-# Types de champs légers (on indexe juste le nom de la relation)
-RELATIONAL_TYPES = {"one2many", "many2many"}
-
-# Mots-clés de labels génériques à dé-prioriser pour éviter la dilution
-GENERIC_LABELS = {"name", "type", "id", "display name", "nom", "état", "status"}
-
-# ── AMÉLIORATION : Synonymes enrichis (EN/FR) ────────────────────────────────
-
-MODEL_SYNONYMS = {
-    "hr.leave": "congés absences vacances arrêt maladie time off leaves holiday absence management",
-    "hr.employee": "employé salarié personnel collaborateur agent employee staff worker human resources",
-    "sale.order": "vente commande bon de commande devis sale order quotation so deals",
-    "account.move": "facture invoice comptabilité avoir credit note payment billing accounting",
-    "product.template": "produit article catalogue fiche produit product item master sku",
-    "res.partner": "client fournisseur contact partenaire partner customer vendor supplier",
-    "stock.quant": "stock quantité inventaire entrepôt quantity on hand warehouse inventory",
-}
-
-CORE_MODELS = {
-    "hr.leave", "hr.employee", "hr.contract", "sale.order", "sale.order.line",
-    "account.move", "account.move.line", "purchase.order", "product.template",
-    "stock.quant", "project.task", "crm.lead", "res.partner"
-}
+COL_MODELS = "odoo_models_v2"
+COL_FIELDS = "odoo_fields_v2"
+OLLAMA_URL = "http://localhost:11434"
+EMBEDDING_MODEL = "bge-m3"
+VECTOR_SIZE = 1024
+SKIP_PREFIXES = ("message_", "activity_", "website_", "access_", "audit_", "create_", "write_")
+SKIP_EXACT = {"__last_update", "display_name", "id", "sequence"}
+qdrant = QdrantClient(url=QDRANT_URL)
 
 
-# ── Fonctions Utilitaires ─────────────────────────────────────────────────────
+def is_technical_model(model_name: str) -> bool:
+    """Filtre amélioré pour ignorer les tests et les outils techniques."""
+    tech_pre = ("ir.", "mail.", "bus.", "utm.", "base.", "web.", "report.", "base_import.", "test.")
+    # On garde les essentiels
+    whitelist = {"res.partner", "res.users", "res.company", "res.groups", "res.currency"}
 
-def load_schema(path: str) -> dict:
-    with open(path, "r", encoding="utf-8") as f:
-        content = f.read()
-    fixed = re.sub(r",\s*([}\]])", r"\1", content)
-    return json.loads(fixed)
+    if model_name in whitelist: return False
 
+    # Exclure les modèles de test, les mixins et les wizards
+    if any(x in model_name for x in [".tests.", "test_", "mixin", "wizard"]):
+        return True
 
-def embed_text(text: str) -> list[float]:
-    if _EMBED_BACKEND == "ollama":
-        return ollama.embed(model=EMBED_MODEL_OLLAMA, input=text)["embeddings"][0]
-    # Implémentation OpenAI si nécessaire...
-    return []
-
-
-# ── AMÉLIORATION : Construction du document texte ───────────────────────────
-
-def build_enhanced_document(model_name: str, meta: dict) -> str:
-    """
-    Construit un document texte optimisé :
-    - Incorpore les noms techniques (langue universelle).
-    - Priorise les champs métier.
-    - Ajoute les relations o2m/m2m sans détails excessifs.
-    """
-    fields = meta.get("fields", {})
-    description = meta.get("description", model_name)
-
-    lines = [
-        f"Technical Model: {model_name}",
-        f"Business Label: {description}",
-    ]
-
-    if model_name in MODEL_SYNONYMS:
-        lines.append(f"Keywords: {MODEL_SYNONYMS[model_name]}")
-
-    biz_fields = []
-    rel_fields = []
-
-    for fname, finfo in fields.items():
-        ftype = finfo.get("type", "")
-        flabel = finfo.get("description", "").lower()
-
-        # Filtrage du bruit
-        if fname in NOISE_FIELD_EXACT or any(fname.startswith(p) for p in NOISE_FIELD_PREFIXES):
-            continue
-
-        # Gestion des relations (o2m/m2m) pour le contexte
-        if ftype in RELATIONAL_TYPES:
-            rel_model = finfo.get("related_model", "unknown")
-            rel_fields.append(f"  - Linked to {rel_model} ({fname})")
-            continue
-
-        # Filtrage des types binaires/HTML lourds
-        if ftype in ["binary", "html"]:
-            continue
-
-        # Formatage : Nom technique + Label pour le bilinguisme
-        # Si le label est trop générique, on lui donne moins d'importance visuelle
-        if flabel in GENERIC_LABELS:
-            biz_fields.append((1, f"  - {fname} ({ftype})"))  # Priorité basse
-        else:
-            biz_fields.append((0, f"  - {fname}: {finfo.get('description')} ({ftype})"))  # Priorité haute
-
-    # Tri par priorité (champs spécifiques en premier) et limitation à 80 champs
-    biz_fields.sort(key=lambda x: x[0])
-    lines.append("Business Fields:")
-    lines.extend([f[1] for f in biz_fields[:80]])
-
-    if rel_fields:
-        lines.append("Relationships:")
-        lines.extend(rel_fields[:20])
-
-    return "\n".join(lines)
+    return model_name.startswith(tech_pre)
 
 
-# ── Indexation Principale ─────────────────────────────────────────────────────
+def get_embedding(text: str, retries=3):
+    """Génère un embedding avec gestion de retry en cas d'erreur 500."""
+    if not text or len(text.strip()) == 0:
+        text = "n/a"
 
-def index_schema(schema: dict, client: QdrantClient):
-    points = []
-    point_id = 0
+    payload = {"model": EMBEDDING_MODEL, "prompt": f"search_document: {text[:3000]}"}
 
-    for model_name, meta in schema.items():
-        # Filtrage des modèles techniques
-        if any(model_name.startswith(p) for p in SKIP_MODEL_PREFIXES):
-            continue
-
-        # On vérifie si le modèle contient assez de substance
-        if len(meta.get("fields", {})) < 3:
-            continue
-
-        doc_text = build_enhanced_document(model_name, meta)
-        is_core = model_name in CORE_MODELS
-
+    for i in range(retries):
         try:
-            vector = embed_text(doc_text)
-            points.append(PointStruct(
-                id=point_id,
-                vector=vector,
-                payload={
-                    "model_name": model_name,
-                    "description": meta.get("description", ""),
-                    "is_core": is_core,
-                    "text": doc_text
-                }
-            ))
-            point_id += 1
+            res = requests.post(f"{OLLAMA_URL}/api/embeddings", json=payload, timeout=60)
+            res.raise_for_status()
+            return res.json()["embedding"]
         except Exception as e:
-            logger.error(f"Erreur embedding {model_name}: {e}")
-
-        if len(points) >= BATCH_SIZE:
-            client.upsert(collection_name=COLLECTION_NAME, points=points)
-            points = []
-            logger.info(f"Indexé {point_id} modèles...")
-
-    if points:
-        client.upsert(collection_name=COLLECTION_NAME, points=points)
+            if i < retries - 1:
+                print(f"⚠️ Erreur Ollama ({e}), tentative {i + 1}/3 dans 2s...")
+                time.sleep(2)
+                continue
+            else:
+                print(f"❌ Échec définitif pour le texte : {text[:50]}...")
+                raise e
 
 
-# ── AMÉLIORATION : Recherche avec Boost 'is_core' ───────────────────────────
+def index():
+    with open(INPUT_FILE, "r", encoding="utf-8") as f:
+        schema = json.load(f)
 
-def search_models(client: QdrantClient, query: str, limit: int = 5):
-    """
-    Exemple de recherche utilisant le score de similarité
-    tout en favorisant les modèles 'core'.
-    """
-    query_vector = embed_text(query)
+    # (Ré)Initialisation des collections
+    for col in [COL_MODELS, COL_FIELDS]:
+        qdrant.recreate_collection(col, vectors_config=VectorParams(size=VECTOR_SIZE, distance=Distance.COSINE))
 
-    # On récupère plus de résultats pour appliquer un reranking manuel sur le boost
-    results = client.search(
-        collection_name=COLLECTION_NAME,
-        query_vector=query_vector,
-        limit=limit * 2
-    )
+    for model_name, data in schema.items():
+        # 1. Premier filtre sur le nom du modèle
+        if is_technical_model(model_name):
+            continue
 
-    final_results = []
-    for res in results:
-        score = res.score
-        # Application d'un boost de 15% pour les modèles structurants (CORE)
-        if res.payload.get("is_core"):
-            score *= 1.15
+        # 2. Nettoyage et préparation des champs (Étape CRUCIALE)
+        fields = data.get("fields", {})
+        field_points = []
 
-        final_results.append({
-            "model": res.payload["model_name"],
-            "score": score,
-            "original_score": res.score
-        })
+        for f_name, f_info in fields.items():
+            # Application de vos filtres de champs techniques
+            if any(f_name.startswith(p) for p in SKIP_PREFIXES):
+                continue
+            if f_name in SKIP_EXACT:
+                continue
 
-    # Tri par nouveau score boosté
-    final_results.sort(key=lambda x: x["score"], reverse=True)
-    return final_results[:limit]
+            # Si le champ survit, on prépare son point pour la collection COL_FIELDS
+            f_desc = f_info.get("description", "pas de description")
+            f_text = f"Champ: {f_name} (Modèle {model_name}). Type: {f_info.get('type')}. Fonction: {f_desc}"
 
+            try:
+                f_vector = get_embedding(f_text)
+                field_points.append(PointStruct(
+                    id=int(hashlib.md5(f"{model_name}_{f_name}".encode()).hexdigest()[:15], 16),
+                    vector=f_vector,
+                    payload={
+                        "model_name": model_name,
+                        "field_name": f_name,
+                        "type": f_info.get("type"),
+                        "description": f_desc
+                    }
+                ))
+            except:
+                continue
 
-# ── Main ──────────────────────────────────────────────────────────────────────
+        # 3. CONDITION DE SORTIE : Si aucun champ métier n'est trouvé, on ignore le modèle
+        if not field_points:
+            print(f"⏩ Ignoré : {model_name} (0 champ métier après nettoyage)")
+            continue
 
-def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--schema", default="schema_odoo.json")
-    parser.add_argument("--reset", action="store_true")
-    args = parser.parse_args()
+        # 4. Si on arrive ici, le modèle est valide : on indexe le MODÈLE (COL_MODELS)
+        try:
+            desc_text = f"Modèle: {model_name}. Description: {data.get('description_enrichie', '')}"
+            model_vector = get_embedding(desc_text)
 
-    client = QdrantClient(url=QDRANT_URL)
+            qdrant.upsert(COL_MODELS, points=[PointStruct(
+                id=int(hashlib.md5(model_name.encode()).hexdigest()[:15], 16),
+                vector=model_vector,
+                payload={"model_name": model_name, "desc": data.get('description_enrichie')}
+            )])
 
-    if args.reset:
-        client.recreate_collection(
-            collection_name=COLLECTION_NAME,
-            vectors_config=VectorParams(size=EMBED_DIM_OLLAMA, distance=Distance.COSINE),
-        )
+            # 5. On indexe ses CHAMPS (COL_FIELDS)
+            qdrant.upsert(COL_FIELDS, points=field_points)
+            print(f"✅ Indexé : {model_name} ({len(field_points)} champs métiers)")
 
-    schema = load_schema(args.schema)
-    index_schema(schema, client)
-    logger.info("Indexation terminée avec succès.")
+        except Exception as e:
+            print(f"❌ Erreur sur {model_name} : {e}")
 
 
 if __name__ == "__main__":
-    main()
+    index()

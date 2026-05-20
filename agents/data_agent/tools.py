@@ -10,6 +10,7 @@ from google.api_core.exceptions import ResourceExhausted
 from langchain_core.tools import tool
 from pydantic import BaseModel, Field
 from qdrant_client import QdrantClient
+from qdrant_client.models import Filter, FieldCondition, MatchValue
 
 from core.odoo_client import get_odoo_client
 from shared.llm_factory import get_llm, LLMProvider
@@ -19,10 +20,11 @@ logger = logging.getLogger(__name__)
 # ── Configuration RAG ──────────────────────────────────────────────────────────
 
 _QDRANT_URL = "http://localhost:6333"
-_COLLECTION_NAME = "odoo_schema_v3"
+COL_MODELS = "odoo_models_v3"
+COL_FIELDS = "odoo_fields_v3"
 _OLLAMA_URL = "http://localhost:11434"
 _EMBEDDING_MODEL = "bge-m3"
-_SCHEMA_FILE = "schema_odoo_enrichi_rag_complexe.json"
+_SCHEMA_FILE = "schema_odoo_enrichi_rag_complexe_enriched.json"
 
 _qdrant = QdrantClient(url=_QDRANT_URL)
 
@@ -31,20 +33,49 @@ with open(_SCHEMA_FILE, encoding="utf-8") as _f:
     _SCHEMA: dict = json.load(_f)
 logger.info("[RAG] %d modèles Odoo chargés depuis %s", len(_SCHEMA), _SCHEMA_FILE)
 
-# Champs techniques à exclure du schéma retourné
-_SKIP_PREFIXES = ("message_", "activity_", "website_")
-_SKIP_EXACT = {
-    "__last_update",
-    "create_uid",
-    "create_date",
-    "write_uid",
-    "write_date",
-    "display_name",
+MASTER_BOOST = {
+    "vend": ["user_id", "member_id"], "commercia": ["user_id", "member_id"],
+    "respons": ["user_id", "manager_id"], "clien": ["partner_id"],
+    "fournisseur": ["partner_id", "seller_ids"], "partenaire": ["partner_id"],
+    "tier": ["partner_id"], "contac": ["partner_id"],
+    "sociét": ["company_id"], "entrepris": ["company_id"], "filial": ["company_id"],
+    "équip": ["team_id"], "département": ["department_id"],
+    "employ": ["employee_id", "user_id"], "manag": ["parent_id", "manager_id"],
+    "statut": ["state", "invoice_status", "delivery_status", "payment_state"],
+    "état": ["state", "kanban_state"], "étap": ["stage_id", "state"],
+    "phas": ["stage_id"], "valid": ["state"], "confirm": ["state"],
+    "brouillon": ["state"], "annul": ["state"],
+    "gagn": ["stage_id", "probability"], "perdu": ["stage_id", "lost_reason_id"],
+    "factur": ["invoice_status", "invoice_ids", "move_id"],
+    "pay": ["payment_state", "is_paid"], "ouvert": ["state"],
+    "clôtur": ["state", "date_closed"],
+    "montant": ["amount_total", "amount_untaxed", "price_unit", "expected_revenue"],
+    "total": ["amount_total", "amount_untaxed"], "somme": ["amount_total"],
+    "ca ": ["amount_total"], "chiffre d'affaires": ["amount_total"],
+    "revenu": ["expected_revenue", "recurring_revenue"], "prix": ["price_unit", "amount_total"],
+    "tax": ["tax_id", "taxes_id", "tax_ids"], "tva": ["tax_id", "taxes_id", "tax_ids"],
+    "devis": ["currency_id", "company_currency_id"], "monnaie": ["currency_id"],
+    "solde": ["balance", "credit", "debit"], "crédit": ["credit"], "débit": ["debit"],
+    "produi": ["product_id", "product_tmpl_id"], "articl": ["product_id", "product_tmpl_id"],
+    "variant": ["product_id"], "quantit": ["product_uom_qty", "qty_done", "quantity", "product_qty"],
+    "qté": ["product_uom_qty", "qty_done", "quantity"],
+    "stock": ["qty_available", "virtual_available", "location_id"],
+    "emplac": ["location_id", "location_dest_id"], "lot": ["lot_id", "lot_name"],
+    "séri": ["lot_id"], "poids": ["weight"], "unité": ["product_uom"],
+    "date": ["date", "date_order", "date_deadline", "create_date"],
+    "quand": ["date", "create_date"], "échéanc": ["date_deadline", "validity_date"],
+    "cré": ["create_uid", "create_date"], "auteur": ["create_uid"],
+    "modifi": ["write_uid", "write_date"], "derni": ["write_date"],
+    "début": ["date_start"], "fin": ["date_stop", "date_end"],
+    "réf": ["name", "ref", "reference", "client_order_ref"], "numéro": ["name", "number"],
+    "nom": ["name", "display_name"], "desc": ["name", "description", "note"],
+    "projet": ["project_id"], "tâch": ["task_id"], "command": ["order_id"],
+    "étiquet": ["tag_ids", "category_id"], "catégor": ["categ_id", "category_id"],
+    "motif": ["lost_reason_id", "reason"]
 }
 
 
 # ── Helpers internes ───────────────────────────────────────────────────────────
-
 
 def _parse_domain(domain: str | list) -> list:
     if isinstance(domain, list):
@@ -142,401 +173,73 @@ def _apply_date_granularity(
     return list(grouped.values())
 
 
-INTENT_MODEL_RULES = [
-    (
-        ["vendu", "vente", "vendeur", "commercial", "salesperson", "seller"],
-        ["sale.order", "sale.order.line", "res.users"],
-    ),
-    (
-        ["produit", "article", "default_code", "sku", "référence", "reference"],
-        ["product.template", "product.product", "sale.order.line"],
-    ),
-    (
-        ["congé", "conges", "absence", "jours de congé", "leave", "time off"],
-        ["hr.employee", "hr.leave", "hr.leave.allocation", "hr.leave.type"],
-    ),
-    (
-        ["facture", "factures", "impayé", "impayée", "impayées", "invoice", "unpaid"],
-        ["account.move", "account.move.line", "res.partner"],
-    ),
-    (["client", "clients", "customer"], ["res.partner"]),
-    (
-        ["paiement", "règlement", "payment", "paid"],
-        ["account.payment", "account.move", "account.move.line"],
-    ),
-]
-
-
-def detect_required_models(question: str) -> list[str]:
-    q = question.lower()
-    models = []
-
-    for keywords, required_models in INTENT_MODEL_RULES:
-        if any(keyword in q for keyword in keywords):
-            models.extend(required_models)
-
-    return list(dict.fromkeys(models))
-
-
-def _model_name_to_id(model_name: str) -> int:
-    import hashlib
-
-    return int(hashlib.md5(model_name.encode()).hexdigest()[:15], 16)
-
-
-def get_rule_candidates(model_names: list[str]) -> list[dict]:
-    candidates = []
-
-    for model_name in model_names:
-        try:
-            records = _qdrant.retrieve(
-                collection_name=_COLLECTION_NAME,
-                ids=[_model_name_to_id(model_name)],
-                with_payload=True,
-                with_vectors=False,
-            )
-
-            for record in records:
-                payload = record.payload or {}
-                candidates.append(
-                    {
-                        "model_name": payload.get("model_name", model_name),
-                        "score": 1.0,
-                        "source": "rule",
-                        "description_enrichie": payload.get("description_enrichie", ""),
-                        "fields": payload.get("fields", []),
-                        "relations": payload.get("relations", []),
-                    }
-                )
-
-        except Exception as e:
-            logger.warning("[get_rule_candidates] %s: %s", model_name, e)
-
-    return candidates
-
-
-def expand_candidates_with_relations(
-        candidates: list[dict], depth: int = 1
-) -> list[dict]:
+def expand_schema_with_relations(selected_models_dict: dict) -> dict:
     """
-    Ajoute les modèles liés aux candidats via les champs related_model.
-    Exemple: sale.order.line -> sale.order, product.product, product.template, res.users
+    Prend en entrée le dictionnaire des modèles et champs choisis par l'Agent.
+    Retourne un sous-schéma complet incluant automatiquement les modèles liés nécessaires.
     """
-    model_names = {c.get("model_name") for c in candidates if c.get("model_name")}
+    final_sub_schema = {}
+    models_to_process = list(selected_models_dict.keys())
+    processed_models = set()
 
-    expanded = set(model_names)
+    for model_name in models_to_process:
+        if model_name not in _SCHEMA or model_name in processed_models:
+            continue
 
-    current_level = set(model_names)
+        processed_models.add(model_name)
 
-    for _ in range(depth):
-        next_level = set()
+        # On initialise la coquille vide pour ce modèle dans notre schéma final
+        final_sub_schema[model_name] = {
+            "description": _SCHEMA[model_name].get("description", ""),
+            "fields": {}
+        }
 
-        for model_name in current_level:
-            model_data = _SCHEMA.get(model_name, {})
-            fields = model_data.get("fields", {})
+        selected_fields = selected_models_dict[model_name]
 
-            for field_name, field_data in fields.items():
-                related_model = field_data.get("related_model")
+        # On peuple les champs sélectionnés
+        for field_name in selected_fields:
+            if field_name in _SCHEMA[model_name].get("fields", {}):
+                raw_field_data = _SCHEMA[model_name]["fields"][field_name]
 
+                # 1. NETTOYAGE DIRECT DU CHAMP PRINCIPAL
+                clean_field = {
+                    "type": raw_field_data.get("type", ""),
+                    "description": raw_field_data.get("description", "")
+                }
+                if "related_model" in raw_field_data:
+                    clean_field["related_model"] = raw_field_data["related_model"]
+
+                final_sub_schema[model_name]["fields"][field_name] = clean_field
+
+                # 2. LA MAGIE OPÈRE ICI : Si c'est un champ relationnel
+                related_model = raw_field_data.get("related_model")
                 if related_model and related_model in _SCHEMA:
-                    if related_model not in expanded:
-                        expanded.add(related_model)
-                        next_level.add(related_model)
+                    # On ajoute le modèle lié entier au schéma final
+                    if related_model not in final_sub_schema:
 
-        current_level = next_level
-
-    final_candidates = {}
-
-    for candidate in candidates:
-        model_name = candidate.get("model_name")
-        if model_name:
-            final_candidates[model_name] = candidate
-
-    for model_name in expanded:
-        if model_name not in final_candidates:
-            model_data = _SCHEMA.get(model_name, {})
-
-            relations = []
-            for field_name, field_data in model_data.get("fields", {}).items():
-                related_model = field_data.get("related_model")
-                if related_model:
-                    relations.append(
-                        {
-                            "field": field_name,
-                            "type": field_data.get("type"),
-                            "related_model": related_model,
-                            "description": field_data.get("description", ""),
+                        clean_related_schema = {
+                            "description": _SCHEMA[related_model].get("description", ""),
+                            "fields": {}
                         }
-                    )
 
-            final_candidates[model_name] = {
-                "model_name": model_name,
-                "score": 0.0,
-                "source": "relation_expansion",
-                "description_enrichie": model_data.get("description_enrichie", ""),
-                "fields": list(model_data.get("fields", {}).keys()),
-                "relations": relations,
-            }
+                        # 3. NETTOYAGE DIRECT DES CHAMPS DU MODÈLE LIÉ
+                        for rel_f_name, rel_f_data in _SCHEMA[related_model].get("fields", {}).items():
+                            clean_rel_field = {
+                                "type": rel_f_data.get("type", ""),
+                                "description": rel_f_data.get("description", "")
+                            }
+                            if "related_model" in rel_f_data:
+                                clean_rel_field["related_model"] = rel_f_data["related_model"]
 
-    return list(final_candidates.values())
+                            clean_related_schema["fields"][rel_f_name] = clean_rel_field
 
+                        # On l'ajoute au schéma final
+                        final_sub_schema[related_model] = clean_related_schema
 
-IMPORTANT_FIELDS = {
-    "identity": {
-        "id",
-        "name",
-        "display_name",
-        "code",
-        "ref",
-        "barcode",
-        "default_code",
-    },
-    "status": {"state", "active", "payment_state", "invoice_status", "delivery_status"},
-    "dates": {
-        "date",
-        "date_order",
-        "create_date",
-        "write_date",
-        "invoice_date",
-        "date_done",
-        "scheduled_date",
-        "effective_date",
-        "commitment_date",
-        "validity_date",
-    },
-    "amounts": {
-        "amount_total",
-        "amount_untaxed",
-        "amount_tax",
-        "price_total",
-        "price_subtotal",
-        "price_unit",
-        "balance",
-        "debit",
-        "credit",
-        "residual",
-        "quantity",
-        "product_uom_qty",
-        "qty_done",
-        "qty_delivered",
-        "qty_invoiced",
-        "qty_available",
-    },
-    "people": {
-        "user_id",
-        "salesman_id",
-        "partner_id",
-        "commercial_partner_id",
-        "employee_id",
-        "responsible_id",
-        "manager_id",
-        "create_uid",
-        "write_uid",
-    },
-    "product": {
-        "product_id",
-        "product_tmpl_id",
-        "product_template_id",
-        "product_variant_id",
-        "product_variant_ids",
-        "categ_id",
-        "category_id",
-        "uom_id",
-        "product_uom",
-        "product_uom_id",
-        "product_uom_qty",
-    },
-    "sales": {
-        "order_id",
-        "order_line",
-        "sale_id",
-        "sale_order_id",
-        "sale_line_id",
-        "invoice_lines",
-        "invoice_ids",
-        "team_id",
-        "warehouse_id",
-    },
-    "accounting": {
-        "move_id",
-        "move_line_ids",
-        "line_ids",
-        "journal_id",
-        "account_id",
-        "payment_id",
-        "move_type",
-        "payment_state",
-        "partner_bank_id",
-        "currency_id",
-        "company_currency_id",
-    },
-    "stock": {
-        "picking_id",
-        "picking_ids",
-        "picking_type_id",
-        "move_ids",
-        "move_line_ids",
-        "location_id",
-        "location_dest_id",
-        "warehouse_id",
-        "lot_id",
-        "quant_id",
-    },
-    "purchase": {
-        "purchase_id",
-        "purchase_order_id",
-        "purchase_line_id",
-        "purchase_line_ids",
-        "partner_id",
-        "vendor_id",
-        "supplier_id",
-    },
-    "hr": {
-        "employee_id",
-        "department_id",
-        "job_id",
-        "holiday_status_id",
-        "request_date_from",
-        "request_date_to",
-        "number_of_days",
-        "parent_id",
-        "user_id",
-    },
-    "crm": {
-        "lead_id",
-        "opportunity_id",
-        "stage_id",
-        "probability",
-        "expected_revenue",
-        "campaign_id",
-        "source_id",
-        "medium_id",
-        "team_id",
-        "user_id",
-        "partner_id",
-    },
-    "company_context": {"company_id", "company_ids", "currency_id"},
-}
-SKIP_FIELD_PREFIXES = (
-    "message_",
-    "activity_",
-    "website_",
-    "access_",
-    "avatar_",
-    "image_",
-)
+                        logger.info(
+                            f"🔗 Auto-Expansion: Ajout de '{related_model}' (nettoyé) requis par '{model_name}.{field_name}'")
 
-SKIP_FIELD_EXACT = {
-    "__last_update",
-    "write_uid",
-    "write_date",
-    "create_uid",
-    "create_date",
-    "display_name",
-    "has_message",
-    "message_ids",
-    "message_follower_ids",
-    "message_partner_ids",
-    "website_message_ids",
-}
-
-
-def compact_candidate(candidate, question="", candidate_model_names=None):
-    candidate_model_names = set(candidate_model_names or [])
-    q = question.lower()
-    q_tokens = set(q.replace("'", " ").replace("-", " ").split())
-
-    all_important_fields = set()
-    for fields in IMPORTANT_FIELDS.values():
-        all_important_fields.update(fields)
-
-    def should_skip_field(field_name):
-        if field_name in SKIP_FIELD_EXACT:
-            return True
-        return any(field_name.startswith(prefix) for prefix in SKIP_FIELD_PREFIXES)
-
-    selected_fields = []
-    selected_relations = []
-
-    fields = candidate.get("fields", [])
-    relations = candidate.get("relations", [])
-
-    for field in fields:
-        field_name = field if isinstance(field, str) else field.get("name", "")
-        if not field_name or should_skip_field(field_name):
-            continue
-
-        score = 0
-
-        if field_name in all_important_fields:
-            score += 5
-
-        if field_name.lower() in q:
-            score += 6
-
-        field_parts = set(field_name.lower().replace("_", " ").split())
-        if field_parts & q_tokens:
-            score += 2
-
-        if score > 0:
-            selected_fields.append((score, field_name))
-
-    for rel in relations:
-        rel_text = str(rel).lower()
-
-        score = 0
-
-        if any(skip in rel_text for skip in ["mail.", "ir.", "bus.", "web.", "base."]):
-            continue
-
-        if any(model in rel_text for model in candidate_model_names):
-            score += 5
-
-        if any(
-                word in rel_text
-                for word in [
-                    "user",
-                    "partner",
-                    "product",
-                    "order",
-                    "invoice",
-                    "move",
-                    "line",
-                    "company",
-                    "employee",
-                    "payment",
-                    "picking",
-                    "stock",
-                    "purchase",
-                    "sale",
-                ]
-        ):
-            score += 3
-
-        if any(token in rel_text for token in q_tokens):
-            score += 2
-
-        if score > 0:
-            selected_relations.append((score, rel))
-
-    selected_fields = [
-        field
-        for score, field in sorted(selected_fields, key=lambda x: x[0], reverse=True)
-    ][:25]
-
-    selected_relations = [
-        rel
-        for score, rel in sorted(selected_relations, key=lambda x: x[0], reverse=True)
-    ][:15]
-
-    return {
-        "model_name": candidate.get("model_name"),
-        "score": candidate.get("score"),
-        "source": candidate.get("source"),
-        "description_enrichie": candidate.get("description_enrichie", "")[:600],
-        "fields": selected_fields,
-        "relations": selected_relations,
-    }
+    return final_sub_schema
 
 
 # ── Input schemas ──────────────────────────────────────────────────────────────
@@ -738,8 +441,11 @@ Appuie-toi dessus pour construire le plan — ne suppose rien qui n'y figure pas
 
 class VectorSearchInput(BaseModel):
     question: str = Field(description="Question métier posée par l'utilisateur.")
-    top_k: int = Field(
-        default=8, description="Nombre de modèles candidats à retourner (défaut 8)."
+    top_k_models: int = Field(
+        default=4, description="Nombre de modèles candidats à retourner (défaut 4)."
+    )
+    top_k_fields: int = Field(
+        default=15, description="Nombre de champs à retourner par modèle (défaut 15)."
     )
 
 
@@ -773,77 +479,89 @@ def _get_embedding(text: str) -> list[float]:
 
 
 @tool(args_schema=VectorSearchInput)
-def search_similar_models(question: str, top_k: int = 25) -> str:
+def search_similar_models(question: str, top_k_models: int = 4, top_k_fields: int = 15) -> str:
     """
-    — Recherche par similarité vectorielle dans Qdrant.
+    Recherche les modèles Odoo et les champs potentiels liés à la question.
 
-    Retourne les modèles Odoo les plus proches sémantiquement de la question,
-    avec leur score de similarité et leur description fonctionnelle.
+    Cet outil effectue une recherche vectorielle en deux étapes :
+    1. Identifie les modèles (tables) les plus pertinents (ex: sale.order, res.partner).
+    2. Pour chaque modèle, identifie les champs (colonnes) les plus probables en utilisant
+       un dictionnaire de boost métier (ex: 'créé par' -> 'create_uid').
 
-    APPELLE CET OUTIL EN PREMIER, avant select_models et get_models_schema.
+    Args:
+        question: La question originale de l'utilisateur ou une version reformulée techniquement.
+        top_k_models: Nombre de modèles à explorer (par défaut 5).
+        top_k_fields: Nombre de champs à ramener par modèle (par défaut 50).
 
-    Exemple :
-      'factures clients impayées'
-        → account.move (0.85), account.payment (0.71), res.partner (0.65)...
+    Returns:
+        Un dictionnaire JSON au format { "model_name": ["field1", "field2", ...] }.
     """
     try:
-        vector = _get_embedding(question)
+        result_schema = {}
+        query_vector = _get_embedding(question)
+        question_lower = question.lower()
 
-        results = _qdrant.query_points(
-            collection_name=_COLLECTION_NAME,
-            query=vector,
-            limit=top_k,
+        # --- ÉTAPE 1 : RECHERCHE DES MODÈLES ---
+        model_hits = _qdrant.query_points(
+            collection_name=COL_MODELS,
+            query=query_vector,
+            limit=8
         ).points
 
-        vector_candidates = []
+        scored_models = []
+        for hit in model_hits:
+            m_name = hit.payload.get("model_name")
+            weight = hit.payload.get("weight", 1.0)
+            final_score = hit.score * weight
+            scored_models.append({"model_name": m_name, "score": final_score})
 
-        for r in results:
-            payload = r.payload or {}
-            vector_candidates.append(
-                {
-                    "model_name": payload.get("model_name"),
-                    "score": round(float(r.score), 3),
-                    "source": "vector",
-                    "description_enrichie": payload.get("description_enrichie", ""),
-                    "fields": payload.get("fields", []),
-                    "relations": payload.get("relations", []),
-                }
-            )
+        # Tri par score pondéré
+        scored_models.sort(key=lambda x: x["score"], reverse=True)
+        top_models_names = [m["model_name"] for m in scored_models[:top_k_models]]
 
-        required_models = detect_required_models(question)
-        rule_candidates = get_rule_candidates(required_models)
+        if not top_models_names:
+            return "Aucun modèle trouvé."
 
-        merged = {}
+        for model_name in top_models_names:
 
-        for c in vector_candidates + rule_candidates:
-            model_name = c.get("model_name")
-            if not model_name:
-                continue
+            # On récupère les 50 meilleurs champs spécifiquement pour CE modèle
+            field_hits = _qdrant.query_points(
+                collection_name=COL_FIELDS,
+                query=query_vector,
+                query_filter=Filter(
+                    must=[
+                        FieldCondition(
+                            key="model_name",
+                            match=MatchValue(value=model_name)
+                        )
+                    ]
+                ),
+                limit=150
+            ).points
 
-            if model_name not in merged:
-                merged[model_name] = c
-            else:
-                if c.get("source") == "rule":
-                    merged[model_name]["source"] = "vector+rule"
-                    merged[model_name]["score"] = max(
-                        merged[model_name]["score"], c["score"]
-                    )
+            refined_fields = []
+            for hit in field_hits:
+                f_name = hit.payload.get("field_name")
+                score = hit.score
 
-        final_candidates = list(merged.values())
+                # --- APPLICATION DU MASTER_BOOST ---
+                for keyword, target_fields in MASTER_BOOST.items():
+                    if keyword in question_lower and f_name in target_fields:
+                        score += 2.0  # Bonus massif pour correspondance métier
 
-        # Ajouter les modèles liés aux candidats trouvés
-        final_candidates = expand_candidates_with_relations(final_candidates, depth=1)
+                refined_fields.append({"name": f_name, "score": score})
 
-        candidate_model_names = [
-            c.get("model_name") for c in final_candidates if c.get("model_name")
-        ]
+            # Tri final des champs après boost pour CE modèle
+            refined_fields.sort(key=lambda x: x["score"], reverse=True)
 
-        final_candidates = [
-            compact_candidate(c, question, candidate_model_names)
-            for c in final_candidates
-        ]
+            # On garde les K meilleurs champs
+            predicted_fields = [f["name"] for f in refined_fields[:top_k_fields]]
 
-        return json.dumps(final_candidates[:20], ensure_ascii=False)
+            # On ajoute ce modèle et ses champs au dictionnaire de résultat
+            if predicted_fields:
+                result_schema[model_name] = predicted_fields
+
+        return json.dumps(result_schema, ensure_ascii=False)
 
     except Exception as e:
         logger.error("[search_similar_models] %s", e)
@@ -851,298 +569,157 @@ def search_similar_models(question: str, top_k: int = 25) -> str:
 
 
 @tool(args_schema=SelectModelsInput)
+@tool
 def select_models(question: str, candidates: str) -> str:
     """
-    — Demande au LLM de choisir les modèles pertinents parmi les candidats.
+    Valide les modèles/champs finaux et récupère le schéma technique détaillé.
 
-    Prend en entrée la question et les candidats retournés par search_similar_models.
-    Retourne uniquement les noms de modèles strictement nécessaires pour répondre.
+    L'Agent doit analyser les 'candidates' fournis par search_similar_models et ne garder
+    que ce qui est strictement nécessaire pour répondre à la question.
 
-    APPELLE CET OUTIL après search_similar_models, avant get_models_schema.
+    FONCTIONNALITÉS AVANCÉES :
+    - Auto-Expansion : Si tu sélectionnes un champ relationnel (ex: 'seller_ids'), l'outil
+      ajoutera automatiquement le modèle lié (ex: 'product.supplierinfo') au schéma.
+    - Nettoyage : Filtre le bruit pour ne garder que les métadonnées utiles au 'plan_query'.
 
-    Exemple :
-      Candidats : [account.move, account.payment, res.partner, ...]
-      Question  : 'factures clients impayées'
-        → Sélection : ['account.move', 'res.partner']
+    Args:
+        question: La question de l'utilisateur (pour le contexte de sélection).
+        candidates: Le JSON string retourné par 'search_similar_models'.
+
+    Returns:
+        Un sous-schéma JSON enrichi contenant les types de champs, les descriptions
+        et les modèles liés. C'est la base de données finale pour générer la requête Odoo.
     """
+    # 1. Demander au LLM de faire le tri dans les candidats
+    prompt = f"""
+    Tu es un expert Odoo. Voici la question de l'utilisateur : "{question}"
+    Voici les modèles et champs candidats trouvés par la recherche : {candidates}
+
+    Sélectionne UNIQUEMENT les modèles et les champs strictement nécessaires pour répondre à la question.
+    Réponds UNIQUEMENT au format JSON strict, où les clés sont les modèles et les valeurs sont des listes de champs.
+    Exemple de format attendu : {{"product.template": ["name", "seller_ids"], "res.company": ["name"]}}
+    """
+
+    _llm = get_llm(LLMProvider.GEMINI_FLASH_LITE)
+    response = _llm.invoke([{"role": "user", "content": prompt}])
+
     try:
-        try:
-            if isinstance(candidates, list):
-                raw_list = candidates
-            else:
-                raw_list = json.loads(candidates)
+        # On nettoie la réponse pour extraire le JSON (au cas où il y a des balises ```json)
+        clean_json = response.content.strip().strip('```json').strip('```')
+        selected_dict = json.loads(clean_json)
+    except json.JSONDecodeError:
+        logger.error("Le LLM n'a pas renvoyé un JSON valide pour select_models.")
+        return "{}"
 
-            #  Fix : normaliser peu importe ce que l'agent a passé
-            candidates_list = []
-            for item in raw_list:
-                if isinstance(item, dict):
-                    # Format complet : {"model_name": ..., "score": ..., "description_enrichie": ...}
-                    candidates_list.append(item)
-                elif isinstance(item, str):
-                    # Format dégradé : l'agent a passé juste les noms → reconstruire depuis le schéma
-                    candidates_list.append(
-                        {
-                            "model_name": item,
-                            "score": 0.0,
-                            "description_enrichie": _SCHEMA.get(item, {}).get(
-                                "description_enrichie", ""
-                            ),
-                        }
-                    )
-        except Exception as e:
-            logger.error("[select_models] %s", e)
+    # 2. On passe le choix de l'Agent dans notre moulinette d'auto-expansion
+    #final_schema = expand_schema_with_relations(selected_dict)
 
-        system_prompt = (
-            system_prompt
-        ) = """Tu es un expert Odoo ERP et modélisation de données.
-
-On te donne :
-1. une question métier posée par un utilisateur
-2. une liste de modèles candidats issus d'une recherche RAG/vectorielle, de règles métier et/ou d'une expansion relationnelle
-
-Chaque candidat peut contenir :
-- model_name
-- score
-- source : vector, rule, vector+rule, relation_expansion
-- description_enrichie
-- fields
-- relations
-
-Ta mission :
-sélectionner les modèles Odoo nécessaires pour répondre correctement à la question.
-
-═══════════════════════════════════════
-PRINCIPE IMPORTANT
-═══════════════════════════════════════
-
-Ne sélectionne pas seulement les modèles qui ressemblent sémantiquement à la question.
-
-Tu dois sélectionner les modèles nécessaires pour relier :
-
-1. le FILTRE demandé
-   Exemple : default_code, date, état, client, produit, employé, société
-
-2. l'ÉVÉNEMENT ou DOCUMENT métier
-   Exemple : vente, facture, paiement, livraison, achat, congé, stock
-
-3. la SORTIE attendue
-   Exemple : vendeur, client, produit, montant, quantité, personne, utilisateur
-
-4. les MODÈLES-PONTS nécessaires
-   Exemple : sale.order.line relie produit vendu et commande
-             sale.order relie commande et vendeur
-             account.move.line relie facture et produit/comptes
-
-Un modèle peut être nécessaire même s'il n'est pas mentionné explicitement dans la question.
-
-═══════════════════════════════════════
-RÈGLES DE SÉLECTION
-═══════════════════════════════════════
-
-- Inclure le modèle qui contient le champ de filtre demandé.
-- Inclure le modèle qui représente l'objet métier principal de la question.
-- Inclure le modèle qui contient la sortie attendue.
-- Inclure les modèles nécessaires pour connecter ces éléments par relations.
-- Tu peux sélectionner des modèles avec source="relation_expansion" s'ils servent de pont relationnel.
-- Ne supprime jamais un modèle relationnel important uniquement parce que son score vectoriel est faible.
-- Si deux modèles produit sont possibles, garder product.product ET product.template.
-- Si la question parle de vendeur, commercial, salesperson, personne qui a vendu, inclure res.users.
-- Si la question parle de client, acheteur, contact, inclure res.partner.
-- Si la question parle de produit vendu, quantité vendue ou référence produit dans une vente, inclure sale.order.line.
-- Si la question parle de commande, vente, devis confirmé, montant de vente ou vendeur de commande, inclure sale.order.
-- Si la question parle de facture, impayé, paiement client ou facture fournisseur, inclure account.move.
-- Si la question parle de lignes de facture, produits facturés, comptes comptables ou montants détaillés, inclure account.move.line.
-- Si la question parle de paiement ou règlement, inclure account.payment.
-- Si la question parle de stock, disponibilité, mouvement ou livraison, inclure stock.quant, stock.move ou stock.picking selon les candidats disponibles.
-- Si la question parle d'employé, RH, congé ou absence, inclure les modèles hr.* pertinents disponibles.
-- Écarter les modèles techniques comme ir.*, mail.*, bus.*, base.*, web.* sauf s'ils sont indispensables pour répondre.
-- Écarter les modèles de chatter, followers, messages, activités et pièces jointes sauf si la question les demande explicitement.
-- En cas de doute entre un modèle métier principal et un modèle technique, privilégier le modèle métier.
-- En cas de doute entre plusieurs modèles métier connectés, garde ceux qui sont nécessaires pour construire un chemin relationnel complet.
-
-═══════════════════════════════════════
-EXEMPLES DE RAISONNEMENT
-═══════════════════════════════════════
-
-Question :
-"quelles sont les personnes qui ont vendu le produit ayant le default_code E-COM11"
-
-Analyse :
-- default_code est un filtre produit → product.product et/ou product.template
-- vendu indique une vente réelle → sale.order.line
-- la commande de vente peut porter le vendeur → sale.order
-- personnes/vendeurs correspond aux utilisateurs commerciaux → res.users
-- chemin relationnel possible :
-  product.product/product.template ← sale.order.line → sale.order → res.users
-
-Réponse :
-{
-  "selected_models": [
-    "sale.order.line",
-    "sale.order",
-    "product.product",
-    "product.template",
-    "res.users"
-  ],
-  "reasoning": "Question sur les vendeurs d'un produit filtré par default_code : il faut les produits, les lignes de vente, les commandes et les utilisateurs vendeurs."
-}
-
-Question :
-"quels sont les clients qui ont des factures impayées"
-
-Analyse :
-- factures impayées → account.move
-- clients → res.partner
-- filtre facture client : move_type/state/payment_state
-- account.move contient généralement partner_id vers res.partner
-
-Réponse :
-{
-  "selected_models": [
-    "account.move",
-    "res.partner"
-  ],
-  "reasoning": "Les factures client impayées sont dans account.move et les clients sont reliés via partner_id vers res.partner."
-}
-
-Question :
-"quels produits ont été les plus vendus ce mois-ci"
-
-Analyse :
-- produits vendus et quantités → sale.order.line
-- produit → product.product/product.template
-- période/date et état de vente peuvent venir de sale.order via order_id
-- agrégation par produit
-
-Réponse :
-{
-  "selected_models": [
-    "sale.order.line",
-    "sale.order",
-    "product.product",
-    "product.template"
-  ],
-  "reasoning": "Le classement des produits vendus nécessite les lignes de vente, les produits et les commandes pour filtrer la période et l'état."
-}
-
-═══════════════════════════════════════
-FORMAT DE SORTIE OBLIGATOIRE
-═══════════════════════════════════════
-
-Retourne UNIQUEMENT un JSON valide.
-Pas de markdown.
-Pas de texte avant ou après.
-Pas de commentaires.
-
-Format exact :
-{
-  "selected_models": ["model.a", "model.b"],
-  "reasoning": "explication courte"
-}
-"""
-
-        user_prompt = (
-            f'Question : "{question}"\n\n'
-            f"Candidats :\n{candidates_list}"
-            f"Retourne uniquement le JSON de sélection."
-        )
-
-        try:
-            llm = get_llm(LLMProvider.FIREWORKS_DEEPSEEK, temperature=0)
-            response = llm.invoke(
-                [
-                    {"role": "system", "content": system_prompt},
-                    {"role": "user", "content": user_prompt},
-                ]
-            )
-        except ResourceExhausted:
-            llm = get_llm(LLMProvider.GROQ_QWEN3, temperature=0)
-            response = llm.invoke(
-                [
-                    {"role": "system", "content": system_prompt},
-                    {"role": "user", "content": user_prompt},
-                ]
-            )
-
-        raw = response.content.strip().replace("```json", "").replace("```", "").strip()
-        result = json.loads(raw)
-
-        selected = result.get("selected_models", [])
-        reasoning = result.get("reasoning", "")
-
-        logger.info(
-            "[select_models] sélection: %s | raison: %s", selected, reasoning[:80]
-        )
-        return json.dumps(
-            {"selected_models": selected, "reasoning": reasoning}, ensure_ascii=False
-        )
-
-    except Exception as e:
-        logger.error("[select_models] %s", e)
-        return f"Erreur sélection modèles : {e}"
+    # 3. On renvoie le sous-schéma parfait, léger, et complet avec ses relations !
+    return json.dumps(selected_dict, ensure_ascii=False)
 
 
-@tool(args_schema=GetSchemaInput)
-def get_models_schema(model_names: List[str]) -> str:
-    """
-    — Retourne le schéma exact (champs, types, relations) des modèles sélectionnés.
-
-    Prend en entrée la liste retournée par select_models.
-    Retourne un sous-schéma complet prêt à être utilisé pour construire les requêtes Odoo.
-
-    APPELLE CET OUTIL après select_models, avant plan_query.
-
-    Ce que tu obtiens :
-      - Champs disponibles avec leur type et description
-      - Relations many2one vers d'autres modèles (pour les jointures)
-      - Description fonctionnelle de chaque modèle
-    """
-    try:
-        schema_output = {}
-
-        for model_name in model_names:
-            if model_name not in _SCHEMA:
-                logger.warning(
-                    "[get_models_schema] modèle '%s' absent du schéma", model_name
-                )
-                continue
-
-            model_data = _SCHEMA[model_name]
-            fields_raw = model_data.get("fields", {})
-
-            fields_clean = {}
-            for field_name, field_data in fields_raw.items():
-                if field_name in _SKIP_EXACT:
-                    continue
-                if any(field_name.startswith(p) for p in _SKIP_PREFIXES):
-                    continue
-                fields_clean[field_name] = {
-                    "type": field_data.get("type", ""),
-                    "description": field_data.get("description", ""),
-                    **(
-                        {"related_model": field_data["related_model"]}
-                        if "related_model" in field_data
-                        else {}
-                    ),
-                }
-
-            schema_output[model_name] = {
-                "description": model_data.get("description", ""),
-                "description_enrichie": model_data.get("description_enrichie", ""),
-                "fields": fields_clean,
-            }
-
-        if not schema_output:
-            return "Aucun modèle trouvé dans le schéma."
-
-        logger.info(
-            "[get_models_schema] schéma retourné pour : %s", list(schema_output.keys())
-        )
-        return json.dumps(schema_output, ensure_ascii=False)
-
-    except Exception as e:
-        logger.error("[get_models_schema] %s", e)
-        return f"Erreur récupération schéma : {e}"
+# @tool(args_schema=GetSchemaInput)
+# def get_models_schema(model_names: List[str]) -> str:
+#     """
+#     — Retourne le schéma exact (champs, types, relations) des modèles sélectionnés.
+#
+#     Prend en entrée la liste retournée par select_models.
+#     Retourne un sous-schéma complet prêt à être utilisé pour construire les requêtes Odoo.
+#
+#     APPELLE CET OUTIL après select_models, avant plan_query.
+#
+#     Ce que tu obtiens :
+#       - Champs disponibles avec leur type et description
+#       - Relations many2one vers d'autres modèles (pour les jointures)
+#       - Description fonctionnelle de chaque modèle
+#     """
+#     try:
+#         schema_output = {}
+#
+#         for model_name in model_names:
+#             if model_name not in _SCHEMA:
+#                 logger.warning(
+#                     "[get_models_schema] modèle '%s' absent du schéma", model_name
+#                 )
+#                 continue
+#
+#             model_data = _SCHEMA[model_name]
+#             fields_raw = model_data.get("fields", {})
+#
+#             candidate = {
+#                 "model_name": model_name,
+#                 "score": 1.0,
+#                 "source": "schema_compaction",
+#                 "description_enrichie": model_data.get("description_enrichie", ""),
+#                 "fields": list(fields_raw.keys()),
+#                 "relations": [
+#                     {
+#                         "field": field_name,
+#                         "type": field_data.get("type"),
+#                         "related_model": field_data.get("related_model"),
+#                         "description": field_data.get("description", ""),
+#                     }
+#                     for field_name, field_data in fields_raw.items()
+#                     if field_data.get("related_model")
+#                 ],
+#             }
+#
+#             compact = compact_candidate(
+#                 candidate,
+#                 question="",
+#                 candidate_model_names=model_names,
+#             )
+#
+#             selected_field_names = set(compact.get("fields", []))
+#
+#             for rel in compact.get("relations", []):
+#                 if isinstance(rel, dict) and rel.get("field"):
+#                     selected_field_names.add(rel["field"])
+#
+#             fields_clean = {}
+#
+#             for field_name in selected_field_names:
+#                 field_data = fields_raw.get(field_name)
+#
+#                 if not field_data:
+#                     continue
+#
+#                 if field_name in _SKIP_EXACT:
+#                     continue
+#
+#                 if any(field_name.startswith(p) for p in _SKIP_PREFIXES):
+#                     continue
+#
+#                 fields_clean[field_name] = {
+#                     "type": field_data.get("type", ""),
+#                     "description": field_data.get("description", ""),
+#                     **(
+#                         {"related_model": field_data["related_model"]}
+#                         if "related_model" in field_data
+#                         else {}
+#                     ),
+#                 }
+#
+#             schema_output[model_name] = {
+#                 "description": model_data.get("description", ""),
+#                 "description_enrichie": model_data.get("description_enrichie", "")[
+#                     :600
+#                 ],
+#                 "fields": fields_clean,
+#             }
+#
+#         if not schema_output:
+#             return "Aucun modèle trouvé dans le schéma."
+#
+#         logger.info(
+#             "[get_models_schema] schéma retourné pour : %s", list(schema_output.keys())
+#         )
+#
+#         return json.dumps(schema_output, ensure_ascii=False)
+#
+#     except Exception as e:
+#         logger.error("[get_models_schema] %s", e)
+#         return f"Erreur récupération schéma : {e}"
 
 
 # @tool
@@ -1258,9 +835,7 @@ def odoo_search_read(
     try:
         parsed = _parse_domain(domain)
         client = get_odoo_client(username=odoo_user_email, api_key=odoo_api_key)
-        results = client.search_read(
-            model, parsed, fields, limit or 80, order or ""
-        )
+        results = client.search_read(model, parsed, fields, limit or 80, order or "")
         logger.info(f"[odoo_search_read] {model}: {len(results)} enregistrements")
         if not results:
             return "Aucun resultat."

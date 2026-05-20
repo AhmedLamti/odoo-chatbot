@@ -17,7 +17,10 @@ from agents.data_agent.tools import (
     # odoo_fields_get,
     odoo_read_group,
     odoo_search_count,
-    odoo_search_read, search_similar_models, select_models, get_models_schema,
+    odoo_search_read,
+    search_similar_models,
+    select_models,
+    #get_models_schema,
 )
 from shared.llm_factory import get_llm, LLMProvider
 
@@ -30,11 +33,9 @@ sur les données de l'entreprise en utilisant les outils disponibles.
 
 Outils disponibles :
 - search_similar_models : utilise cet outil quand tu as besoin d'identifier 
-  quels modèles Odoo sont concernés par la question.
+  les modèles et les champs Odoo sont concernés par la question.
 - select_models : utilise cet outil pour affiner les candidats retournés par 
   search_similar_models et ne garder que les modèles vraiment utiles.
-- get_models_schema : utilise cet outil quand tu connais les modèles à interroger 
-  et que tu as besoin de leurs champs et relations exacts.
 - plan_query : utilise cet outil quand la question nécessite plusieurs appels 
   Odoo enchaînés ou des jointures entre modèles
 - odoo_search_count : utilise cet outil quand tu dois compter des enregistrements
@@ -59,9 +60,8 @@ Si les données sont vides, dis-le clairement.
 # ── Libellés lisibles des outils ──────────────────────────────────────────────
 
 TOOL_LABELS: dict[str, str] = {
-    "search_similar_models": "Recherche des modèles similaires",
-    "select_models": "Sélection des modèles pertinents",
-    "get_models_schema": "Récupération du schéma exact",
+    "search_similar_models": "Recherche des modèles et champs similaires",
+    "select_models": "Rerourne le schema des modèles pertinents",
     "plan_query": "Planification de l'ordre d'execution des requetes",
     "odoo_search_count": "Comptage des enregistrements",
     "odoo_search_read": "Lecture des données",
@@ -73,9 +73,17 @@ TOOL_LABELS: dict[str, str] = {
 # ── Mots-clés indiquant une exécution en erreur ────────────────────────────────
 
 _ERROR_KEYWORDS = [
-    "erreur", "error", "exception", "impossible",
-    "n'existe pas", "not found", "introuvable",
-    "invalid", "invalide", "failed", "échec",
+    "erreur",
+    "error",
+    "exception",
+    "impossible",
+    "n'existe pas",
+    "not found",
+    "introuvable",
+    "invalid",
+    "invalide",
+    "failed",
+    "échec",
 ]
 
 # ── Singletons ─────────────────────────────────────────────────────────────────
@@ -83,7 +91,7 @@ _ERROR_KEYWORDS = [
 TOOLS = [
     search_similar_models,
     select_models,
-    get_models_schema,
+    #get_models_schema,
     plan_query,
     odoo_search_count,
     odoo_search_read,
@@ -99,6 +107,7 @@ _llm = get_llm(LLMProvider.GEMINI_FLASH)
 
 # ── Construction de l'agent ────────────────────────────────────────────────────
 
+
 def _build_agent(extra_context: str, llm):
     system = BASE_SYSTEM_PROMPT + extra_context
     return create_react_agent(
@@ -110,6 +119,7 @@ def _build_agent(extra_context: str, llm):
 
 
 # ── Formateurs d'étapes ────────────────────────────────────────────────────────
+
 
 def _format_tool_args(tool_name: str, args: dict) -> str:
     """Résume les arguments d'un appel d'outil en une ligne lisible."""
@@ -175,6 +185,7 @@ def _default_step_callback(step: int, message: str) -> None:
 
 # ── Point d'entrée principal ───────────────────────────────────────────────────
 
+
 def run_data_agent(state: dict) -> dict:
     """
     Exécute le data agent — appelé par LangGraph comme node.
@@ -196,8 +207,8 @@ def run_data_agent(state: dict) -> dict:
 
     if relevant_memories:
         mem_msg = (
-                f"Mémoire : {len(relevant_memories)} expérience(s) similaire(s) trouvée(s) — "
-                + ", ".join(f"« {m.question_summary[:35]} »" for m in relevant_memories)
+            f"Mémoire : {len(relevant_memories)} expérience(s) similaire(s) trouvée(s) — "
+            + ", ".join(f"« {m.question_summary[:35]} »" for m in relevant_memories)
         )
     else:
         mem_msg = "Mémoire : aucune expérience similaire — démarrage à froid"
@@ -239,9 +250,9 @@ def run_data_agent(state: dict) -> dict:
     step_number = 1
 
     for event in agent.stream(
-            {"messages": [("user", question)]},
-            config=config,
-            stream_mode="updates",  # un événement par nœud du graph LangGraph
+        {"messages": [("user", question)]},
+        config=config,
+        stream_mode="updates",  # un événement par nœud du graph LangGraph
     ):
         for _node_name, node_output in event.items():
             for msg in node_output.get("messages", []):
@@ -289,12 +300,16 @@ def run_data_agent(state: dict) -> dict:
 
 # ── Gestion mémoire ────────────────────────────────────────────────────────────
 
+
 def _is_failed_execution(messages: list, answer: str) -> bool:
     if any(kw in answer.lower() for kw in _ERROR_KEYWORDS):
         return True
     for msg in messages:
         if isinstance(msg, ToolMessage):
-            if any(kw in str(msg.content).lower() for kw in ["error", "erreur", "traceback", "exception"]):
+            if any(
+                kw in str(msg.content).lower()
+                for kw in ["error", "erreur", "traceback", "exception"]
+            ):
                 return True
     return False
 
@@ -309,6 +324,8 @@ def _try_save_memory(question: str, messages: list, answer: str) -> None:
         memory = extract_memory(question, messages)
         if memory:
             saved = _memory_store.save(memory)
-            logger.info(f"[memory] {'Sauvegardé' if saved else 'Doublon ignoré'} : '{memory.question_summary[:60]}'")
+            logger.info(
+                f"[memory] {'Sauvegardé' if saved else 'Doublon ignoré'} : '{memory.question_summary[:60]}'"
+            )
     except Exception as e:
         logger.warning(f"[memory] Sauvegarde échouée (non bloquant) : {e}")
