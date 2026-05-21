@@ -57,6 +57,7 @@ class Settings(BaseSettings):
     default_llm_provider: str = "gemini_flash"
 
     openai_api_key: str = "fw_TSbk9dvX73ixJaxWiQ2Rh"
+    anthropic_api_key: str = ""
 
     @property
     def postgres_url(self) -> str:

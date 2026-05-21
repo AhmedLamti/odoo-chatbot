@@ -26,11 +26,14 @@ logger = get_logger(__name__)
 
 _llm = get_llm(LLMProvider.GROQ_LLAMA33)
 
-_agent = create_react_agent(
-    model=_llm,
-    tools=ACTION_AGENT_TOOLS,
-    prompt=SYSTEM_PROMPT,
-)
+def _build_agent(extra_context: str, llm):
+    system = SYSTEM_PROMPT + extra_context
+    return create_react_agent(
+        model=llm,
+        tools=ACTION_AGENT_TOOLS,
+        prompt=system
+    )
+
 
 
 # ── Node LangGraph ────────────────────────────────────────────────────────────
@@ -44,8 +47,45 @@ def action_agent_node(state: OrchestratorState) -> dict:
     question = state["question"]
     history = state.get("messages", [])
     session_id = state["session_id"]
+    provider = state.get("llm_provider", None)
 
-    result = _run(question, session_id, history)
+    llm = get_llm(provider) if provider else _llm
+    odoo_user_email = state.get("odoo_user_email")
+    odoo_api_key = state.get("odoo_api_key")
+    credentials_context = f"""
+
+        Credentials Odoo du user connecté :
+        - odoo_user_email = {json.dumps(odoo_user_email)}
+        - odoo_api_key = {json.dumps(odoo_api_key)}
+
+        RÈGLE OBLIGATOIRE :
+        Pour chaque appel aux outils suivants :
+        discover_model,
+        get_model_fields,
+        search_records,
+        create_record,
+        update_record,
+        delete_record,
+        execute_action,
+        send_email,
+
+        tu dois TOUJOURS inclure :
+        - odoo_user_email
+        - odoo_api_key
+
+        Exemple :
+        search_record(
+          model="sale.order",
+          domain="[]",
+          fields=["id", "name"],
+          limit=10,
+          odoo_user_email={json.dumps(odoo_user_email)},
+          odoo_api_key={json.dumps(odoo_api_key)}
+        )
+        """
+
+    agent = _build_agent(credentials_context + credentials_context, llm=llm)
+    result = _run(question, session_id, history,agent)
 
     return {
         "messages": result["messages"],
@@ -79,11 +119,11 @@ def run_action_agent(question: str, session_id: str, history: list | None = None
 
 # ── Logique interne ───────────────────────────────────────────────────────────
 
-def _run(question: str, session_id: str, history: list) -> dict:
+def _run(question: str, session_id: str, history: list,agent) -> dict:
     messages = list(history)
     messages.append(("user", question))
 
-    response = _agent.invoke({"messages": messages})
+    response = agent.invoke({"messages": messages})
     answer: str = response["messages"][-1].content
 
     needs_confirmation, summary, pending_action = _extract_confirmation(response["messages"])

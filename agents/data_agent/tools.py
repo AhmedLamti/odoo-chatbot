@@ -8,7 +8,7 @@ import plotly.graph_objects as go
 import requests
 from google.api_core.exceptions import ResourceExhausted
 from langchain_core.tools import tool
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field ,validator
 from qdrant_client import QdrantClient
 from qdrant_client.models import Filter, FieldCondition, MatchValue
 
@@ -448,6 +448,12 @@ class VectorSearchInput(BaseModel):
         default=15, description="Nombre de champs à retourner par modèle (défaut 15)."
     )
 
+    @validator('top_k_models', 'top_k_fields', pre=True)
+    def coerce_to_int(cls, v):
+        if isinstance(v, str) and v.isdigit():
+            return int(v)
+        return v
+
 
 class SelectModelsInput(BaseModel):
     question: str = Field(description="Question métier originale.")
@@ -612,7 +618,7 @@ def select_models(question: str, candidates: str) -> str:
         return "{}"
 
     # 2. On passe le choix de l'Agent dans notre moulinette d'auto-expansion
-    #final_schema = expand_schema_with_relations(selected_dict)
+    # final_schema = expand_schema_with_relations(selected_dict)
 
     # 3. On renvoie le sous-schéma parfait, léger, et complet avec ses relations !
     return json.dumps(selected_dict, ensure_ascii=False)

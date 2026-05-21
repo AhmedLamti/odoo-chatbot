@@ -9,6 +9,7 @@ Ajouter un nouveau provider = modifier uniquement ce fichier.
 """
 from enum import Enum
 
+from langchain_anthropic import ChatAnthropic
 from langchain_cerebras import ChatCerebras
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_groq import ChatGroq
@@ -18,6 +19,7 @@ from config.settings import settings
 
 
 class LLMProvider(str, Enum):
+    ANTHROPIC_SONNET = "claude-3-5-sonnet-latest"
     # Groq — modèles
     GROQ_LLAMA33 = "groq_llama33"  # ✅ tool calling stable  — recommandé agent
     GROQ_QWEN3 = "groq_qwen3"  # ✅ meilleur raisonnement sur Groq
@@ -121,6 +123,12 @@ def get_llm(
             openai_api_base=_FIREWORKS_BASE_URL,
             temperature=temperature,
             **extra,
+        )
+    if provider == LLMProvider.ANTHROPIC_SONNET:
+        return ChatAnthropic(
+            model_name="claude-3-5-sonnet-latest",
+            temperature=0,
+            anthropic_api_key=settings.anthropic_api_key,
         )
 
     raise ValueError(f"Provider inconnu : {provider}")
