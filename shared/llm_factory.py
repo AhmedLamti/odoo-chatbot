@@ -21,9 +21,9 @@ from config.settings import settings
 class LLMProvider(str, Enum):
     ANTHROPIC_SONNET = "claude-3-5-sonnet-latest"
     # Groq — modèles
-    GROQ_LLAMA33 = "groq_llama33"  # ✅ tool calling stable  — recommandé agent
-    GROQ_QWEN3 = "groq_qwen3"  # ✅ meilleur raisonnement sur Groq
-    GROQ_LLAMA4 = "groq_llama4"  # ⚠️  tool calling instable — éviter pour agent
+    GROQ_LLAMA33 = "groq_llama33"
+    GROQ_QWEN3 = "groq_qwen3"
+    GROQ_LLAMA4 = "groq_llama4"
 
     # Google
     GEMINI_FLASH = "gemini_flash"  # ✅ meilleur tool calling global
@@ -126,7 +126,7 @@ def get_llm(
         )
     if provider == LLMProvider.ANTHROPIC_SONNET:
         return ChatAnthropic(
-            model_name="claude-3-5-sonnet-latest",
+            model_name="claude-haiku-4-5-20251001",
             temperature=0,
             anthropic_api_key=settings.anthropic_api_key,
         )
