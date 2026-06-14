@@ -362,13 +362,13 @@ RÈGLES UNIVERSELLES XML-RPC ODOO
 ═══════════════════════════════════════
 La dot notation (ex: 'order_id.user_id') se comporte DIFFÉREMMENT selon le paramètre :
 
-┌─────────────┬──────────────────┬─────────────────────────────────────┐
-│ Paramètre   │ Dot notation     │ Comportement                        │
-├─────────────┼──────────────────┼─────────────────────────────────────┤
-│ domain      │ ✅ AUTORISÉE     │ ['order_id.state', '=', 'done']     │
-│ fields      │ ❌ INTERDITE     │ retourne ValueError côté Odoo        │
-│ groupby     │ ❌ INTERDITE     │ résultats incorrects ou erreur       │
-└─────────────┴──────────────────┴─────────────────────────────────────┘
+┌─────────────┬───────────────┬──────────────────────────────────┐
+│ Paramètre   │ Dot notation  │ Comportement                     │
+├─────────────┼───────────────┼──────────────────────────────────┤
+│ domain      │ AUTORISÉE     │ ['order_id.state', '=', 'done']  │
+│ fields      │ INTERDITE     │ retourne ValueError côté Odoo    │
+│ groupby     │ INTERDITE     │ résultats incorrects ou erreur   │
+└─────────────┴───────────────┴──────────────────────────────────┘
 
 CONSÉQUENCES sur la planification :
 1. fields_hint → champs directs du modèle cible UNIQUEMENT.
@@ -507,7 +507,7 @@ def search_similar_models(question: str, top_k_models: int = 4, top_k_fields: in
         query_vector = _get_embedding(question)
         question_lower = question.lower()
 
-        # --- ÉTAPE 1 : RECHERCHE DES MODÈLES ---
+        # --- RECHERCHE DES MODÈLES ---
         model_hits = _qdrant.query_points(
             collection_name=COL_MODELS,
             query=query_vector,

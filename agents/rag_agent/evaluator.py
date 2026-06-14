@@ -1,44 +1,56 @@
 import logging
 
-from langchain_groq import ChatGroq
-
-from config.settings import settings
+from langchain_core.language_models import BaseChatModel
 
 logger = logging.getLogger(__name__)
 
-llm = ChatGroq(
-    model="meta-llama/llama-4-scout-17b-16e-instruct",
-    api_key=settings.groq_api_key,
-    temperature=0,
-)
+# ── Prompt ─────────────────────────────────────────────────────────────────────
 
-EVALUATE_PROMPT = """You are a relevance evaluator for Odoo documentation answers.
+_EVALUATE_PROMPT = """You are a relevance evaluator for Odoo documentation answers.
 
 Given a question and an answer, evaluate if the answer is relevant and complete.
 
 Reply with ONLY one of these two words:
-- RELEVANT if the answer correctly addresses the question using the documentation
-- NOT_RELEVANT if the answer is incomplete, off-topic, or says it could not find information
+- RELEVANT     if the answer correctly addresses the question using the documentation
+- NOT_RELEVANT if the answer is incomplete, off-topic, or says it could not find
+               information
 """
 
+# ── Constantes publiques ───────────────────────────────────────────────────────
 
-def evaluate_relevance(question: str, answer: str) -> str:
+RELEVANT     = "RELEVANT"
+NOT_RELEVANT = "NOT_RELEVANT"
+
+
+# ── Fonction publique ──────────────────────────────────────────────────────────
+
+
+def evaluate_relevance(question: str, answer: str, llm: BaseChatModel) -> str:
     """
-    Évalue si la réponse est pertinente par rapport à la question.
-    Retourne 'RELEVANT' ou 'NOT_RELEVANT'.
+    Évalue si *answer* répond correctement à *question*.
+
+    Args:
+        question: La question originale de l'utilisateur.
+        answer:   La réponse générée par le RAG.
+        llm:      Instance LangChain déjà construite par llm_factory.
+
+    Returns:
+        ``"RELEVANT"`` ou ``"NOT_RELEVANT"``.
+        En cas d'erreur LLM, retourne ``"RELEVANT"`` (fail-open
+        pour ne pas bloquer l'utilisateur).
     """
     try:
         response = llm.invoke([
-            {"role": "system", "content": EVALUATE_PROMPT},
-            {"role": "user", "content": f"Question: {question}\nAnswer: {answer}"}
+            {"role": "system", "content": _EVALUATE_PROMPT},
+            {
+                "role": "user",
+                "content": f"Question: {question}\nAnswer: {answer}",
+            },
         ])
-        result = response.content.strip().upper()
-        if "NOT_RELEVANT" in result:
-            verdict = "NOT_RELEVANT"
-        else:
-            verdict = "RELEVANT"
-        logger.info(f"Évaluation: {verdict}")
+        raw     = response.content.strip().upper()
+        verdict = NOT_RELEVANT if NOT_RELEVANT in raw else RELEVANT
+        logger.info("[evaluator] verdict=%s", verdict)
         return verdict
-    except Exception as e:
-        logger.error(f"Erreur evaluator: {e}")
-        return "RELEVANT"
+    except Exception as exc:
+        logger.error("[evaluator] Erreur lors de l'évaluation : %s", exc)
+        return RELEVANT  # fail-open

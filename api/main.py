@@ -10,7 +10,7 @@ from pydantic import BaseModel, Field
 from agents.action_agent.tools import create_record, update_record, delete_record, execute_action, send_email
 from agents.orchestrator_agent import run_orchestrator
 
-app = FastAPI(title="Odoo AI Platform")
+app = FastAPI(title="Odoo AI Agent")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:8071"],  # ton Odoo

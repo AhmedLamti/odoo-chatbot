@@ -1,49 +1,72 @@
+# ── etl/embedder.py ───────────────────────────────────────────────────────────
+# Génère les embeddings pour chaque chunk avant stockage dans Qdrant.
+#
+# Utilise le singleton partagé de shared/embedding.py pour éviter
+# d'instancier le modèle plusieurs fois (chunker + embedder + retriever).
+# ──────────────────────────────────────────────────────────────────────────────
+
 import logging
-from llama_index.embeddings.ollama import OllamaEmbedding
-from config.settings import settings
+
+from shared.embedding import embed_documents
 
 logger = logging.getLogger(__name__)
+
+_BATCH_SIZE = 32
 
 
 class OllamaEmbedder:
     """
-    Génère les embeddings avec nomic-embed-text via Ollama
+    Génère les embeddings via Ollama pour les chunks de documentation.
     """
-
-    def __init__(self):
-        self.embed_model = OllamaEmbedding(
-            model_name=settings.ollama_embed_model,
-            base_url=settings.ollama_base_url,
-        )
 
     def embed_chunks(self, chunks: list[dict]) -> list[dict]:
         """
-        Ajoute les embeddings à chaque chunk
-        Retourne les chunks enrichis avec le vecteur
+        Ajoute le vecteur d'embedding à chaque chunk.
+
+        Le contenu stocké dans Qdrant (payload) reste inchangé.
+        Les préfixes éventuels sont gérés dans shared/embedding.py.
+
+        Args:
+            chunks: Liste de dicts ``{content, metadata}``.
+
+        Returns:
+            Même liste enrichie d'une clé ``embedding`` (list[float]).
+            Les batches en échec sont ignorés (logged).
         """
-        logger.info(f"Génération des embeddings pour {len(chunks)} chunks...")
+        logger.info("[embedder] %d chunks à embedder...", len(chunks))
 
-        embedded_chunks = []
-        batch_size = 32
+        embedded_chunks: list[dict] = []
+        total_batches = -(-len(chunks) // _BATCH_SIZE)  # ceil division
 
-        for i in range(0, len(chunks), batch_size):
-            batch = chunks[i:i + batch_size]
+        for batch_idx, batch_start in enumerate(range(0, len(chunks), _BATCH_SIZE)):
+            batch = chunks[batch_start : batch_start + _BATCH_SIZE]
             texts = [c["content"] for c in batch]
 
             try:
-                embeddings = self.embed_model.get_text_embedding_batch(texts)
+                embeddings = embed_documents(texts)
 
                 for chunk, embedding in zip(batch, embeddings):
-                    embedded_chunks.append({
-                        **chunk,
-                        "embedding": embedding
-                    })
+                    embedded_chunks.append({**chunk, "embedding": embedding})
 
-                logger.info(f"Batch {i // batch_size + 1} traité ({len(embedded_chunks)}/{len(chunks)})")
+                logger.info(
+                    "[embedder] Batch %d/%d — %d/%d chunks traités",
+                    batch_idx + 1,
+                    total_batches,
+                    len(embedded_chunks),
+                    len(chunks),
+                )
 
-            except Exception as e:
-                logger.error(f"Erreur embedding batch {i}: {e}")
-                continue
+            except Exception as exc:
+                logger.error(
+                    "[embedder] Batch %d/%d échoué : %s — ignoré",
+                    batch_idx + 1,
+                    total_batches,
+                    exc,
+                )
 
-        logger.info(f"Embeddings générés: {len(embedded_chunks)}/{len(chunks)}")
+        logger.info(
+            "[embedder] Terminé : %d/%d chunks embeddés",
+            len(embedded_chunks),
+            len(chunks),
+        )
         return embedded_chunks

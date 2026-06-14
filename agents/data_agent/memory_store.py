@@ -45,7 +45,7 @@ class MemoryStore:
         if self._embed_model is None:
             from llama_index.embeddings.ollama import OllamaEmbedding
             self._embed_model = OllamaEmbedding(
-                model_name=settings.ollama_embed_model,
+                model_name="nomic-embed-text",
                 base_url=settings.ollama_base_url,
             )
         return self._embed_model

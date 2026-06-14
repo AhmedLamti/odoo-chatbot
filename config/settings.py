@@ -31,7 +31,7 @@ class Settings(BaseSettings):
     # ── Qdrant ───────────────────────────────────────────────
     qdrant_host: str = "localhost"
     qdrant_port: int = 6333
-    qdrant_collection: str = "odoo_docs"
+    qdrant_collection: str = "odoo_docs_1"
 
     # ── GitHub ───────────────────────────────────────────────
     github_token: str
